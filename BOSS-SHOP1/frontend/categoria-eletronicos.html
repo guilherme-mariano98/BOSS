@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eletrônicos - BOSS SHOPP</title>
+    <link rel="stylesheet" href="optimized-styles.css">
+    <link rel="stylesheet" href="panel-buttons.css">
+    <link rel="stylesheet" href="pages.css">
+    <link rel="stylesheet" href="categoria-styles.css">
+    <link rel="stylesheet" href="enhanced-styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: #f8f9fa;
+            overflow-x: hidden;
+        }
+        
+        .category-header {
+            background: linear-gradient(135deg, #ff6b35 0%, #ff8c42 50%, #ffa45c 100%);
+            padding: 100px 0;
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+        
+        .category-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 50%, rgba(255,255,255,0.2) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 50%, rgba(255,255,255,0.15) 0%, transparent 50%);
+            animation: pulse 8s ease-in-out infinite;
+        }
+        
+        .category-header::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: rotate 30s linear infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+        
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        
+        .category-header h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            font-weight: 900;
+            text-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            position: relative;
+            z-index: 1;
+            animation: slideDown 0.8s ease-out;
+            background: linear-gradient(to right, #fff, #ffd700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .category-header h1 i {
+            margin-right: 15px;
+            animation: bounce 2s ease-in-out infinite;
+            text-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .category-header p {
+            font-size: 1.4rem;
+            opacity: 0.95;
+            position: relative;
+            z-index: 1;
+            animation: slideUp 0.8s ease-out;
+            max-width: 700px;
+            margin: 0 auto 20px;
+        }
+        
+        .category-stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .category-stat {
+            text-align: center;
+            background: rgba(255,255,255,0.15);
+            padding: 15px 25px;
+            border-radius: 15px;
+            backdrop-filter: blur(5px);
+            min-width: 120px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .category-stat-number {
+            font-size: 2rem;
+            font-weight: 800;
+            display: block;
+            color: #ffd700;
+        }
+        
+        .category-stat-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .products-section {
+            padding: 80px 0;
+            background: white;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 15px;
+            font-weight: 800;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, #ff6b35, #ff8c42, #ffa45c);
+            border-radius: 2px;
+        }
+        
+        .section-title p {
+            font-size: 1.1rem;
+            color: #666;
+            max-width: 600px;
+            margin: 20px auto 0;
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 35px;
+            margin-top: 50px;
+        }
+        
+        .product-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 2px solid rgba(255,107,53,0.1);
+            animation: cardAppear 0.6s ease-out backwards;
+            position: relative;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        @keyframes cardAppear {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+        
+        .product-card:nth-child(1) { animation-delay: 0.1s; }
+        .product-card:nth-child(2) { animation-delay: 0.2s; }
+        .product-card:nth-child(3) { animation-delay: 0.3s; }
+        .product-card:nth-child(4) { animation-delay: 0.4s; }
+        .product-card:nth-child(5) { animation-delay: 0.5s; }
+        .product-card:nth-child(6) { animation-delay: 0.6s; }
+        .product-card:nth-child(7) { animation-delay: 0.7s; }
+        .product-card:nth-child(8) { animation-delay: 0.8s; }
+        
+        .product-card:hover {
+            transform: translateY(-15px) scale(1.03);
+            box-shadow: 0 20px 50px rgba(255,107,53,0.3);
+            border-color: #ff6b35;
+        }
+        
+        .product-image {
+            width: 100%;
+            height: 250px;
+            background: linear-gradient(135deg, #fff5f0 0%, #ffe8dc 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: #ff6b35;
+            position: relative;
+            overflow: hidden;
+            flex-grow: 1;
+        }
+        
+        .product-image::before {
+            content: '';
+            position: absolute;
+            width: 150%;
+            height: 150%;
+            background: radial-gradient(circle, rgba(255,107,53,0.1) 0%, transparent 70%);
+            animation: pulse 3s ease-in-out infinite;
+        }
+        
+        .product-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="50" height="50" xmlns="http://www.w3.org/2000/svg"><circle cx="25" cy="25" r="1" fill="white" opacity="0.1"/></svg>');
+            background-size: 50px 50px;
+            opacity: 0.3;
+        }
+        
+        .product-image i {
+            position: relative;
+            z-index: 1;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .product-card:hover .product-image i {
+            transform: scale(1.2) rotate(10deg);
+            text-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+        
+        .product-info {
+            padding: 25px;
+            background: white;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .product-category {
+            display: inline-block;
+            background: linear-gradient(135deg, #ff6b35 0%, #ff8c42 100%);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+            box-shadow: 0 3px 10px rgba(255,107,53,0.3);
+        }
+        
+        .product-name {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: #333;
+            line-height: 1.4;
+            transition: color 0.3s ease;
+        }
+        
+        .product-card:hover .product-name {
+            color: #ff6b35;
+        }
+        
+        .product-description {
+            font-size: 0.95rem;
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+        
+        .product-price-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .product-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #ff6b35;
+        }
+        
+        .product-old-price {
+            font-size: 1rem;
+            color: #999;
+            text-decoration: line-through;
+        }
+        
+        .product-rating {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-bottom: 15px;
+        }
+        
+        .stars {
+            color: #ffc107;
+        }
+        
+        .rating-count {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .add-to-cart-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #ff6b35 0%, #ff8c42 100%);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 5px 15px rgba(255,107,53,0.3);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .add-to-cart-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+        
+        .add-to-cart-btn:hover::before {
+            left: 100%;
+        }
+        
+        .add-to-cart-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255,107,53,0.5);
+            background: linear-gradient(135deg, #ff8c42 0%, #ff6b35 100%);
+        }
+        
+        .add-to-cart-btn i {
+            margin-right: 8px;
+        }
+        
+        .breadcrumb {
+            padding: 25px 0;
+            font-size: 1rem;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .breadcrumb a {
+            color: #ff6b35;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .breadcrumb a:hover {
+            color: #ff8c42;
+            text-decoration: none;
+        }
+        
+        .breadcrumb strong {
+            color: #333;
+            font-weight: 700;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Responsive Improvements */
+        @media (max-width: 768px) {
+            .category-header {
+                padding: 70px 0;
+            }
+            
+            .category-header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .category-header p {
+                font-size: 1.1rem;
+            }
+            
+            .category-stats {
+                gap: 20px;
+            }
+            
+            .category-stat {
+                padding: 10px 15px;
+                min-width: 100px;
+            }
+            
+            .category-stat-number {
+                font-size: 1.5rem;
+            }
+            
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: 25px;
+            }
+            
+            .product-image {
+                height: 200px;
+                font-size: 3rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .category-header h1 {
+                font-size: 2rem;
+            }
+            
+            .category-header p {
+                font-size: 1rem;
+            }
+            
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="footer-styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-top">
+                <div class="header-links">
+                    <a href="sobre.html" class="header-link">Sobre</a>
+                    <a href="atendimento.html" class="header-link">Atendimento</a>
+                    <a href="#" class="header-link">Vendedor</a>
+                    <a href="#" class="header-link">Download</a>
+                    <a href="#" class="header-link">Conecte-se</a>
+                </div>
+                <div class="header-social">
+                    <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-content">
+                <div class="logo">
+                    <a href="index.html">
+                        <img src="boss-shop-logo.png" alt="BOSS SHOPP" class="logo-image">
+                    </a>
+                </div>
+                
+                <div class="search-bar">
+                    <input type="text" placeholder="Buscar produtos...">
+                    <button><i class="fas fa-search"></i></button>
+                </div>
+                
+                <div class="nav-icons">
+                    <a href="#" class="nav-icon"><i class="fas fa-user"></i></a>
+                    <a href="#" class="nav-icon"><i class="fas fa-heart"></i></a>
+                    <a href="#" class="nav-icon cart-icon">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-count">0</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Breadcrumb -->
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="index.html">Home</a> / <a href="categorias.html">Categorias</a> / <strong>Eletrônicos</strong>
+        </div>
+    </div>
+
+    <!-- Category Header -->
+    <section class="category-header">
+        <div class="container">
+            <h1><i class="fas fa-laptop"></i> Eletrônicos</h1>
+            <p>Dispositivos eletrônicos e gadgets</p>
+            
+            <div class="category-stats">
+                <div class="category-stat">
+                    <span class="category-stat-number">280+</span>
+                    <span class="category-stat-label">Produtos</span>
+                </div>
+                <div class="category-stat">
+                    <span class="category-stat-number">★ 4.7</span>
+                    <span class="category-stat-label">Avaliação</span>
+                </div>
+                <div class="category-stat">
+                    <span class="category-stat-number">96%</span>
+                    <span class="category-stat-label">Satisfação</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="products-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Produtos em Destaque</h2>
+                <p>Confira nossos produtos mais populares na categoria Eletrônicos</p>
+            </div>
+            <div class="products-grid">
+
+                <!-- Produto 1 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <div class="product-info">
+                        <span class="product-category">Smartphones</span>
+                        <h3 class="product-name">Smartphone Premium</h3>
+                        <p class="product-description">Smartphone com câmera de 108MP e 5G</p>
+                        <div class="product-rating">
+                            <span class="stars">★★★★☆</span>
+                            <span class="rating-count">(189)</span>
+                        </div>
+                        <div class="product-price-container">
+                            <div class="product-price">R$ 1760.00</div>
+                            <div class="product-old-price">R$ 2200.00</div>
+                        </div>
+                        <button class="add-to-cart-btn">
+                            <i class="fas fa-shopping-cart"></i> Adicionar ao Carrinho
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Produto 2 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <i class="fas fa-laptop"></i>
+                    </div>
+                    <div class="product-info">
+                        <span class="product-category">Computadores</span>
+                        <h3 class="product-name">Notebook Ultrafino</h3>
+                        <p class="product-description">Notebook com processador i7 e SSD 512GB</p>
+                        <div class="product-rating">
+                            <span class="stars">★★★★☆</span>
+                            <span class="rating-count">(92)</span>
+                        </div>
+                        <div class="product-price-container">
+                            <div class="product-price">R$ 2975.00</div>
+                        </div>
+                        <button class="add-to-cart-btn">
+                            <i class="fas fa-shopping-cart"></i> Adicionar ao Carrinho
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Produto 3 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <i class="fas fa-headphones"></i>
+                    </div>
+                    <div class="product-info">
+                        <span class="product-category">Áudio</span>
+                        <h3 class="product-name">Smart TV 55"</h3>
+                        <p class="product-description">TV 4K com HDR e sistema Android</p>
+                        <div class="product-rating">
+                            <span class="stars">★★★★☆</span>
+                            <span class="rating-count">(134)</span>
+                        </div>
+                        <div class="product-price-container">
+                            <div class="product-price">R$ 1750.00</div>
+                            <div class="product-old-price">R$ 2100.00</div>
+                        </div>
+                        <button class="add-to-cart-btn">
+                            <i class="fas fa-shopping-cart"></i> Adicionar ao Carrinho
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Produto 4 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <i class="fas fa-tv"></i>
+                    </div>
+                    <div class="product-info">
+                        <span class="product-category">Áudio</span>
+                        <h3 class="product-name">Fone Bluetooth Sem Fio</h3>
+                        <p class="product-description">Fone com cancelamento de ruído ativo</p>
+                        <div class="product-rating">
+                            <span class="stars">★★★★☆</span>
+                            <span class="rating-count">(267)</span>
+                        </div>
+                        <div class="product-price-container">
+                            <div class="product-price">R$ 224.90</div>
+                            <div class="product-old-price">R$ 299.90</div>
+                        </div>
+                        <button class="add-to-cart-btn">
+                            <i class="fas fa-shopping-cart"></i> Adicionar ao Carrinho
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Produto 5 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <i class="fas fa-tablet-alt"></i>
+                    </div>
+                    <div class="product-info">
+                        <span class="product-category">Tablets</span>
+                        <h3 class="product-name">Tablet 10 polegadas</h3>
+                        <p class="product-description">Tablet com processador octa-core e 128GB</p>
+                        <div class="product-rating">
+                            <span class="stars">★★★★☆</span>
+                            <span class="rating-count">(142)</span>
+                        </div>
+                        <div class="product-price-container">
+                            <div class="product-price">R$ 899.90</div>
+                            <div class="product-old-price">R$ 999.90</div>
+                        </div>
+                        <button class="add-to-cart-btn">
+                            <i class="fas fa-shopping-cart"></i> Adicionar ao Carrinho
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Produto 6 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <i class="fas fa-camera"></i>
+                    </div>
+                    <div class="product-info">
+                        <span class="product-category">Fotografia</span>
+                        <h3 class="product-name">Câmera Digital 4K</h3>
+                        <p class="product-description">Câmera com lentes intercambiáveis</p>
+                        <div class="product-rating">
+                            <span class="stars">★★★★★</span>
+                            <span class="rating-count">(89)</span>
+                        </div>
+                        <div class="product-price-container">
+                            <div class="product-price">R$ 2199.90</div>
+                            <div class="product-old-price">R$ 2499.90</div>
+                        </div>
+                        <button class="add-to-cart-btn">
+                            <i class="fas fa-shopping-cart"></i> Adicionar ao Carrinho
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Produto 7 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <i class="fas fa-volume-up"></i>
+                    </div>
+                    <div class="product-info">
+                        <span class="product-category">Áudio</span>
+                        <h3 class="product-name">Caixa de Som Bluetooth</h3>
+                        <p class="product-description">Caixa de som portátil com 20W RMS</p>
+                        <div class="product-rating">
+                            <span class="stars">★★★★☆</span>
+                            <span class="rating-count">(201)</span>
+                        </div>
+                        <div class="product-price-container">
+                            <div class="product-price">R$ 159.90</div>
+                        </div>
+                        <button class="add-to-cart-btn">
+                            <i class="fas fa-shopping-cart"></i> Adicionar ao Carrinho
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Produto 8 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <i class="fas fa-battery-full"></i>
+                    </div>
+                    <div class="product-info">
+                        <span class="product-category">Acessórios</span>
+                        <h3 class="product-name">Carregador Portátil 20000mAh</h3>
+                        <p class="product-description">Carregador rápido com 3 portas USB</p>
+                        <div class="product-rating">
+                            <span class="stars">★★★★☆</span>
+                            <span class="rating-count">(312)</span>
+                        </div>
+                        <div class="product-price-container">
+                            <div class="product-price">R$ 129.90</div>
+                            <div class="product-old-price">R$ 149.90</div>
+                        </div>
+                        <button class="add-to-cart-btn">
+                            <i class="fas fa-shopping-cart"></i> Adicionar ao Carrinho
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+        <!-- Footer Moderno e Responsivo -->
+    <footer class="modern-footer">
+        <div class="container">
+            <!-- Seção Principal do Footer -->
+            <div class="footer-main">
+                <div class="footer-grid">
+                    <!-- Coluna 1: Sobre a Empresa -->
+                    <div class="footer-column">
+                        <div class="footer-logo">
+                            <img src="boss-shop-logo.png" alt="BOSS SHOPP" class="footer-logo-img">
+                            <h3>BOSS SHOPP</h3>
+                        </div>
+                        <p class="footer-description">
+                            Sua loja online de confiança, oferecendo produtos de qualidade com preços competitivos e entrega rápida em todo o Brasil.
+                        </p>
+                        <div class="footer-social">
+                            <a href="#" class="social-link" aria-label="Facebook">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                            <a href="#" class="social-link" aria-label="Instagram">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="#" class="social-link" aria-label="Twitter">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                            <a href="#" class="social-link" aria-label="WhatsApp">
+                                <i class="fab fa-whatsapp"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Coluna 2: Links Rápidos -->
+                    <div class="footer-column">
+                        <h4 class="footer-title">Links Rápidos</h4>
+                        <ul class="footer-links">
+                            <li><a href="index.html">Início</a></li>
+                            <li><a href="categorias.html">Categorias</a></li>
+                            <li><a href="sobre.html">Sobre Nós</a></li>
+                            <li><a href="como-comprar.html">Como Comprar</a></li>
+                            <li><a href="frete-entrega.html">Frete e Entrega</a></li>
+                            <li><a href="devolucoes.html">Trocas e Devoluções</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Coluna 3: Categorias -->
+                    <div class="footer-column">
+                        <h4 class="footer-title">Categorias</h4>
+                        <ul class="footer-links">
+                            <li><a href="categoria-moda.html">Moda</a></li>
+                            <li><a href="categoria-eletronicos.html">Eletrônicos</a></li>
+                            <li><a href="categoria-casa.html">Casa e Decoração</a></li>
+                            <li><a href="categoria-esportes.html">Esportes</a></li>
+                            <li><a href="categoria-games.html">Games</a></li>
+                            <li><a href="categoria-infantil.html">Infantil</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Coluna 4: Atendimento -->
+                    <div class="footer-column">
+                        <h4 class="footer-title">Atendimento</h4>
+                        <div class="contact-info">
+                            <div class="contact-item">
+                                <i class="fas fa-phone"></i>
+                                <span>(11) 4002-8922</span>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fas fa-envelope"></i>
+                                <span>contato@bossshopp.com</span>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fas fa-clock"></i>
+                                <span>Seg-Sex: 8h às 18h</span>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>São Paulo, SP</span>
+                            </div>
+                        </div>
+                        <a href="central-ajuda.html" class="help-button">
+                            <i class="fas fa-headset"></i>
+                            Central de Ajuda
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Seção de Pagamento e Segurança -->
+            <div class="footer-payment">
+                <div class="payment-security">
+                    <div class="payment-methods">
+                        <h5>Formas de Pagamento</h5>
+                        <div class="payment-icons">
+                            <i class="fab fa-cc-visa" title="Visa"></i>
+                            <i class="fab fa-cc-mastercard" title="Mastercard"></i>
+                            <i class="fab fa-cc-amex" title="American Express"></i>
+                            <i class="fab fa-pix" title="PIX"></i>
+                            <i class="fas fa-barcode" title="Boleto"></i>
+                        </div>
+                    </div>
+                    <div class="security-badges">
+                        <h5>Segurança</h5>
+                        <div class="security-icons">
+                            <i class="fas fa-shield-alt" title="Site Seguro"></i>
+                            <i class="fas fa-lock" title="SSL"></i>
+                            <i class="fas fa-certificate" title="Certificado"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Rodapé Inferior -->
+            <div class="footer-bottom">
+                <div class="footer-bottom-content">
+                    <div class="copyright">
+                        <p>&copy; 2025 BOSS SHOPP. Todos os direitos reservados.</p>
+                    </div>
+                    <div class="footer-legal">
+                        <a href="#" class="legal-link">Política de Privacidade</a>
+                        <a href="#" class="legal-link">Termos de Uso</a>
+                        <a href="#" class="legal-link">Cookies</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

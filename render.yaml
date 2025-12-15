@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: boss-shop
+    env: python
+    buildCommand: |
+      pip install --upgrade pip
+      pip install -r requirements.txt
+    startCommand: python simple_start.py
+    envVars:
+      - key: PORT
+        generateValue: true
+      - key: DEBUG
+        value: "True"
+      - key: DJANGO_SETTINGS_MODULE
+        value: "boss_shopp.settings"
+    autoDeploy: true

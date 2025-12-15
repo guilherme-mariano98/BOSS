@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste do Carrinho</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .test-btn { 
+            background: #ff6b35; 
+            color: white; 
+            padding: 10px 20px; 
+            border: none; 
+            border-radius: 5px; 
+            cursor: pointer; 
+            margin: 10px;
+        }
+        .cart-info { 
+            background: #f0f0f0; 
+            padding: 15px; 
+            border-radius: 5px; 
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>🧪 Teste do Sistema de Carrinho</h1>
+    
+    <div class="cart-info">
+        <h3>Status do Carrinho:</h3>
+        <p>Itens no carrinho: <span id="cartCount">0</span></p>
+        <p>Carrinho no localStorage: <span id="localStorageCart">vazio</span></p>
+    </div>
+    
+    <h3>Testes:</h3>
+    <button class="test-btn" onclick="testAddToCart()">Testar addToCart()</button>
+    <button class="test-btn" onclick="checkLocalStorage()">Verificar localStorage</button>
+    <button class="test-btn" onclick="clearCart()">Limpar Carrinho</button>
+    <button class="test-btn" onclick="goToCart()">Ir para Carrinho</button>
+    
+    <div id="results"></div>
+
+    <script>
+        // Função addToCart (cópia da implementação do index.html)
+        let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+
+        function addToCart(name, price, originalPrice = null, category = 'Produto', image = null) {
+            console.log('🛒 addToCart chamada:', { name, price, originalPrice, category, image });
+            
+            const id = Date.now() + Math.random();
+            
+            const product = {
+                id: id,
+                name: name,
+                price: parseFloat(price),
+                originalPrice: originalPrice ? parseFloat(originalPrice) : null,
+                category: category,
+                image: image,
+                quantity: 1
+            };
+
+            console.log('📦 Produto criado:', product);
+
+            const existingItem = cart.find(item => item.name === name && item.price === price);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+                console.log('✅ Quantidade atualizada:', existingItem);
+                showResult(`Quantidade de "${name}" atualizada!`, 'success');
+            } else {
+                cart.push(product);
+                console.log('✅ Produto adicionado:', product);
+                showResult(`"${name}" adicionado ao carrinho!`, 'success');
+            }
+            
+            localStorage.setItem('cart', JSON.stringify(cart));
+            console.log('💾 Carrinho salvo no localStorage:', cart);
+            
+            updateCartCount();
+            
+            return true;
+        }
+
+        function updateCartCount() {
+            const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+            document.getElementById('cartCount').textContent = itemCount;
+            console.log('🔢 Contador atualizado:', itemCount);
+        }
+
+        function testAddToCart() {
+            console.log('🧪 Iniciando teste...');
+            addToCart('Produto Teste', 99.90, 129.90, 'Teste', null);
+        }
+
+        function checkLocalStorage() {
+            const cartData = localStorage.getItem('cart');
+            document.getElementById('localStorageCart').textContent = cartData || 'vazio';
+            console.log('💾 localStorage cart:', cartData);
+            
+            if (cartData) {
+                const parsedCart = JSON.parse(cartData);
+                console.log('📋 Carrinho parseado:', parsedCart);
+            }
+        }
+
+        function clearCart() {
+            cart = [];
+            localStorage.removeItem('cart');
+            updateCartCount();
+            checkLocalStorage();
+            showResult('Carrinho limpo!', 'info');
+        }
+
+        function goToCart() {
+            window.location.href = 'BOSS-SHOP1/frontend/purchase.html';
+        }
+
+        function showResult(message, type) {
+            const results = document.getElementById('results');
+            const div = document.createElement('div');
+            div.style.cssText = `
+                padding: 10px;
+                margin: 10px 0;
+                border-radius: 5px;
+                background: ${type === 'success' ? '#d4edda' : type === 'error' ? '#f8d7da' : '#d1ecf1'};
+                border: 1px solid ${type === 'success' ? '#c3e6cb' : type === 'error' ? '#f5c6cb' : '#bee5eb'};
+                color: ${type === 'success' ? '#155724' : type === 'error' ? '#721c24' : '#0c5460'};
+            `;
+            div.textContent = message;
+            results.appendChild(div);
+            
+            setTimeout(() => div.remove(), 3000);
+        }
+
+        // Inicializar
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCartCount();
+            checkLocalStorage();
+        });
+    </script>
+</body>
+</html>

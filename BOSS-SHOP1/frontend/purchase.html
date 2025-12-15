@@ -1,0 +1,1909 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrinho de Compras - BOSS SHOPP</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #000000;
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .cart-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 30px;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .cart-header {
+            grid-column: 1 / -1;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cart-title {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .cart-title i {
+            font-size: 32px;
+            color: #ff6b35;
+        }
+
+        .cart-title h1 {
+            font-size: 32px;
+            font-weight: 700;
+            color: #333;
+        }
+
+        .cart-count {
+            background: #ff6b35;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .continue-shopping {
+            background: #f8f9fa;
+            color: #666;
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            border: 2px solid #e1e5e9;
+        }
+
+        .continue-shopping:hover {
+            background: #ff6b35;
+            color: white;
+            border-color: #ff6b35;
+        }
+
+        /* Cart Items */
+        .cart-items {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            height: fit-content;
+        }
+
+        .items-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .items-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .clear-cart {
+            background: none;
+            border: none;
+            color: #dc3545;
+            font-weight: 500;
+            cursor: pointer;
+            padding: 8px 16px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .clear-cart:hover {
+            background: #fee;
+        }
+
+        .cart-item {
+            display: grid;
+            grid-template-columns: 100px 1fr auto auto;
+            gap: 20px;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid #f0f0f0;
+            transition: all 0.3s ease;
+        }
+
+        .cart-item:hover {
+            background: #f8f9fa;
+            margin: 0 -20px;
+            padding: 20px;
+            border-radius: 12px;
+        }
+
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+
+        .item-image {
+            width: 100px;
+            height: 100px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #e1e5e9;
+            overflow: hidden;
+        }
+
+        .item-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .item-image i {
+            font-size: 32px;
+            color: #ccc;
+        }
+
+        .item-details h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .item-details p {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+
+        .item-price {
+            font-size: 20px;
+            font-weight: 600;
+            color: #ff6b35;
+        }
+
+        .item-original-price {
+            font-size: 16px;
+            color: #999;
+            text-decoration: line-through;
+            margin-left: 8px;
+        }
+
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 8px;
+        }
+
+        .qty-btn {
+            width: 32px;
+            height: 32px;
+            border: none;
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: #666;
+            transition: all 0.3s ease;
+        }
+
+        .qty-btn:hover {
+            background: #ff6b35;
+            color: white;
+        }
+
+        .qty-input {
+            width: 50px;
+            text-align: center;
+            border: none;
+            background: transparent;
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .remove-item {
+            background: none;
+            border: none;
+            color: #dc3545;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .remove-item:hover {
+            background: #fee;
+        }
+
+        /* Cart Summary */
+        .cart-summary {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            height: fit-content;
+            position: sticky;
+            top: 20px;
+        }
+
+        .summary-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .summary-title i {
+            color: #ff6b35;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .summary-row:last-child {
+            border-bottom: none;
+            padding-top: 20px;
+            margin-top: 20px;
+            border-top: 2px solid #f0f0f0;
+        }
+
+        .summary-label {
+            color: #666;
+            font-weight: 500;
+        }
+
+        .summary-value {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .total-value {
+            font-size: 24px;
+            color: #ff6b35;
+        }
+
+        .discount-section {
+            margin: 24px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            border: 2px dashed #e1e5e9;
+        }
+
+        .discount-title {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .discount-input {
+            display: flex;
+            gap: 8px;
+        }
+
+        .coupon-input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .coupon-input:focus {
+            outline: none;
+            border-color: #ff6b35;
+        }
+
+        .apply-coupon {
+            background: #ff6b35;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .apply-coupon:hover {
+            background: #f7931e;
+        }
+
+        .checkout-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+            color: white;
+            border: none;
+            padding: 18px;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 24px;
+        }
+
+        .checkout-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 107, 53, 0.3);
+        }
+
+        .security-badges {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #f0f0f0;
+        }
+
+        .security-badge {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #666;
+            font-size: 12px;
+        }
+
+        .security-badge i {
+            color: #28a745;
+        }
+
+        /* Empty Cart */
+        .empty-cart {
+            grid-column: 1 / -1;
+            background: white;
+            border-radius: 20px;
+            padding: 60px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .empty-cart i {
+            font-size: 80px;
+            color: #ddd;
+            margin-bottom: 24px;
+        }
+
+        .empty-cart h2 {
+            font-size: 32px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 16px;
+        }
+
+        .empty-cart p {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 32px;
+        }
+
+        .shop-now-btn {
+            background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+            color: white;
+            text-decoration: none;
+            padding: 16px 32px;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .shop-now-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 107, 53, 0.3);
+        }
+
+        .test-buttons {
+            margin-top: 30px;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .test-btn {
+            background: #ff6b35;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .test-btn:hover {
+            background: #f7931e;
+            transform: translateY(-1px);
+        }
+
+        /* Back Button */
+        .back-to-home {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+            padding: 12px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+
+        .back-to-home:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(-4px);
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 16px 24px;
+            border-radius: 12px;
+            color: white;
+            font-weight: 500;
+            z-index: 1000;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+        }
+
+        .toast.success {
+            background: #10b981;
+        }
+
+        .toast.error {
+            background: #ef4444;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .cart-container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 10px;
+            }
+
+            .cart-header {
+                padding: 20px;
+            }
+
+            .header-content {
+                flex-direction: column;
+                gap: 16px;
+                text-align: center;
+            }
+
+            .cart-item {
+                grid-template-columns: 80px 1fr;
+                gap: 16px;
+            }
+
+            .item-image {
+                width: 80px;
+                height: 80px;
+            }
+
+            .quantity-controls {
+                grid-column: 1 / -1;
+                justify-self: start;
+                margin-top: 12px;
+            }
+
+            .item-price {
+                grid-column: 1 / -1;
+                justify-self: end;
+                margin-top: 8px;
+            }
+
+            .cart-items,
+            .cart-summary {
+                padding: 20px;
+            }
+        }
+
+        /* Loading */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Address Section */
+        .address-section, .payment-section {
+            margin: 24px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            border: 2px solid #e1e5e9;
+        }
+
+        .section-title {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 16px;
+        }
+
+        .section-title i {
+            color: #ff6b35;
+        }
+
+        .address-options, .payment-options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .address-option, .payment-option {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            background: white;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .address-option:hover, .payment-option:hover {
+            border-color: #ff6b35;
+            background: #fff5f0;
+        }
+
+        .address-option input[type="radio"], .payment-option input[type="radio"] {
+            margin-right: 12px;
+        }
+
+        .address-option input[type="radio"]:checked + label,
+        .payment-option input[type="radio"]:checked + label {
+            color: #ff6b35;
+        }
+
+        .address-option.selected, .payment-option.selected {
+            border-color: #ff6b35;
+            background: #fff5f0;
+        }
+
+        .address-info {
+            flex: 1;
+        }
+
+        .address-info strong {
+            display: block;
+            margin-bottom: 4px;
+            color: #333;
+        }
+
+        .address-info p {
+            color: #666;
+            font-size: 14px;
+            margin: 0;
+        }
+
+        .new-address-form {
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid #e1e5e9;
+        }
+
+        .address-input, .card-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            font-size: 14px;
+        }
+
+        .address-input:focus, .card-input:focus {
+            outline: none;
+            border-color: #ff6b35;
+            box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
+        }
+
+        .address-input[readonly] {
+            background-color: #f8f9fa;
+            color: #666;
+            cursor: not-allowed;
+        }
+
+        .address-input[readonly]:focus {
+            border-color: #e1e5e9;
+            box-shadow: none;
+        }
+
+        .cep-success {
+            border-color: #28a745 !important;
+            background-color: #f8fff9;
+        }
+
+        .cep-error {
+            border-color: #dc3545 !important;
+            background-color: #fff8f8;
+        }
+
+        .address-tip {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 12px;
+            padding: 12px;
+            background: #e3f2fd;
+            border-radius: 8px;
+            font-size: 14px;
+            color: #1976d2;
+            border-left: 4px solid #2196f3;
+        }
+
+        .address-tip i {
+            color: #2196f3;
+        }
+
+        .required-field::after {
+            content: ' *';
+            color: #dc3545;
+            font-weight: bold;
+        }
+
+        .address-row, .card-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .payment-option label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            flex: 1;
+        }
+
+        .payment-option i {
+            font-size: 18px;
+            color: #666;
+        }
+
+        .payment-option.selected i {
+            color: #ff6b35;
+        }
+
+        .card-form {
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid #e1e5e9;
+        }
+
+        .installments {
+            margin-top: 8px;
+        }
+
+        .pix-info, .boleto-info {
+            margin-top: 16px;
+            padding: 12px;
+            background: #e3f2fd;
+            border-radius: 8px;
+            color: #1976d2;
+        }
+
+        .pix-info i, .boleto-info i {
+            margin-right: 8px;
+        }
+
+        /* Receipt Styles */
+        .receipt {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 20px auto;
+            font-family: 'Courier New', monospace;
+        }
+
+        .receipt-header {
+            text-align: center;
+            border-bottom: 2px dashed #ccc;
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+        }
+
+        .receipt-header h2 {
+            color: #ff6b35;
+            margin-bottom: 10px;
+        }
+
+        .receipt-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .receipt-section {
+            margin-bottom: 20px;
+        }
+
+        .receipt-section h4 {
+            color: #333;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 5px;
+        }
+
+        .receipt-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 0;
+            border-bottom: 1px dotted #ddd;
+        }
+
+        .receipt-total {
+            border-top: 2px solid #333;
+            padding-top: 10px;
+            margin-top: 20px;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .print-btn {
+            background: #ff6b35;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            margin: 10px 5px;
+            transition: all 0.3s ease;
+        }
+
+        .print-btn:hover {
+            background: #f7931e;
+        }
+
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            .receipt, .receipt * {
+                visibility: visible;
+            }
+            .receipt {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                box-shadow: none;
+            }
+            .print-btn {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-to-home">
+        <i class="fas fa-arrow-left"></i>
+        Voltar à loja
+    </a>
+
+    <div class="cart-container">
+        <!-- Header -->
+        <div class="cart-header">
+            <div class="header-content">
+                <div class="cart-title">
+                    <i class="fas fa-shopping-cart"></i>
+                    <h1>Carrinho de Compras</h1>
+                    <span class="cart-count" id="cartCount">0 itens</span>
+                </div>
+                <a href="index.html" class="continue-shopping">
+                    <i class="fas fa-arrow-left"></i>
+                    Continuar Comprando
+                </a>
+            </div>
+        </div>
+
+        <!-- Cart Items -->
+        <div class="cart-items">
+            <div class="items-header">
+                <h2 class="items-title">Seus Produtos</h2>
+                <button class="clear-cart" onclick="clearCart()">
+                    <i class="fas fa-trash"></i>
+                    Limpar Carrinho
+                </button>
+            </div>
+            
+            <div id="cartItemsList">
+                <!-- Items will be loaded here -->
+            </div>
+        </div>
+
+        <!-- Cart Summary -->
+        <div class="cart-summary">
+            <h2 class="summary-title">
+                <i class="fas fa-calculator"></i>
+                Resumo do Pedido
+            </h2>
+
+            <div class="summary-row">
+                <span class="summary-label">Subtotal (<span id="itemCount">0</span> itens)</span>
+                <span class="summary-value" id="subtotal">R$ 0,00</span>
+            </div>
+
+            <div class="summary-row">
+                <span class="summary-label">Frete</span>
+                <span class="summary-value" id="shipping">Grátis</span>
+            </div>
+
+            <div class="summary-row">
+                <span class="summary-label">Desconto</span>
+                <span class="summary-value" id="discount">- R$ 0,00</span>
+            </div>
+
+            <div class="summary-row">
+                <span class="summary-label">Total</span>
+                <span class="summary-value total-value" id="total">R$ 0,00</span>
+            </div>
+
+            <div class="discount-section">
+                <div class="discount-title">
+                    <i class="fas fa-tag"></i>
+                    Cupom de Desconto
+                </div>
+                <div class="discount-input">
+                    <input type="text" class="coupon-input" placeholder="Digite seu cupom" id="couponInput">
+                    <button class="apply-coupon" onclick="applyCoupon()">Aplicar</button>
+                </div>
+            </div>
+
+            <!-- Address Section -->
+            <div class="address-section">
+                <div class="section-title">
+                    <i class="fas fa-map-marker-alt"></i>
+                    Endereço de Entrega
+                </div>
+                <div class="address-options">
+                    <div class="address-option" onclick="selectAddress('saved')">
+                        <input type="radio" name="address" id="savedAddress" value="saved" checked>
+                        <label for="savedAddress">
+                            <div class="address-info">
+                                <strong>Endereço Cadastrado</strong>
+                                <p id="userAddress">Carregando endereço...</p>
+                            </div>
+                        </label>
+                    </div>
+                    <div class="address-option" onclick="selectAddress('new')">
+                        <input type="radio" name="address" id="newAddress" value="new">
+                        <label for="newAddress">
+                            <div class="address-info">
+                                <strong>Novo Endereço</strong>
+                                <p>Inserir um endereço diferente</p>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+                <div class="new-address-form" id="newAddressForm" style="display: none;">
+                    <div style="position: relative;">
+                        <input type="text" placeholder="CEP (00000-000)" id="newCep" class="address-input" maxlength="9" onblur="searchCEP()">
+                        <div class="cep-loading" id="cepLoading" style="display: none; position: absolute; right: 15px; top: 50%; transform: translateY(-50%);">
+                            <div class="loading" style="width: 16px; height: 16px; border-width: 2px;"></div>
+                        </div>
+                    </div>
+                    <div style="text-align: center; margin: 12px 0;">
+                        <button type="button" onclick="window.open('https://ruacep.com.br', '_blank')" 
+                                style="background: #6c757d; color: white; border: none; padding: 8px 16px; border-radius: 6px; font-size: 14px; cursor: pointer; transition: all 0.3s ease; display: inline-flex; align-items: center; gap: 6px;"
+                                onmouseover="this.style.background='#5a6268'" 
+                                onmouseout="this.style.background='#6c757d'">
+                            <i class="fas fa-search-location"></i>
+                            Não sei meu CEP
+                        </button>
+                    </div>
+                    <input type="text" placeholder="Rua" id="newStreet" class="address-input" readonly>
+                    <div class="address-row">
+                        <input type="text" placeholder="Número *" id="newNumber" class="address-input">
+                        <input type="text" placeholder="Complemento" id="newComplement" class="address-input">
+                    </div>
+                    <input type="text" placeholder="Bairro" id="newNeighborhood" class="address-input" readonly>
+                    <div class="address-row">
+                        <input type="text" placeholder="Cidade" id="newCity" class="address-input" readonly>
+                        <select id="newState" class="address-input">
+                            <option value="">Estado</option>
+                            <option value="AC">Acre</option>
+                            <option value="AL">Alagoas</option>
+                            <option value="AP">Amapá</option>
+                            <option value="AM">Amazonas</option>
+                            <option value="BA">Bahia</option>
+                            <option value="CE">Ceará</option>
+                            <option value="DF">Distrito Federal</option>
+                            <option value="ES">Espírito Santo</option>
+                            <option value="GO">Goiás</option>
+                            <option value="MA">Maranhão</option>
+                            <option value="MT">Mato Grosso</option>
+                            <option value="MS">Mato Grosso do Sul</option>
+                            <option value="MG">Minas Gerais</option>
+                            <option value="PA">Pará</option>
+                            <option value="PB">Paraíba</option>
+                            <option value="PR">Paraná</option>
+                            <option value="PE">Pernambuco</option>
+                            <option value="PI">Piauí</option>
+                            <option value="RJ">Rio de Janeiro</option>
+                            <option value="RN">Rio Grande do Norte</option>
+                            <option value="RS">Rio Grande do Sul</option>
+                            <option value="RO">Rondônia</option>
+                            <option value="RR">Roraima</option>
+                            <option value="SC">Santa Catarina</option>
+                            <option value="SP">São Paulo</option>
+                            <option value="SE">Sergipe</option>
+                            <option value="TO">Tocantins</option>
+                        </select>
+                    </div>
+                    <div style="margin-top: 12px; padding: 12px; background: #e3f2fd; border-radius: 8px; font-size: 14px; color: #1976d2;">
+                        <i class="fas fa-info-circle"></i>
+                        <strong>Dica:</strong> Digite o CEP e os campos serão preenchidos automaticamente
+                    </div>
+                </div>
+            </div>
+
+            <!-- Payment Section -->
+            <div class="payment-section">
+                <div class="section-title">
+                    <i class="fas fa-credit-card"></i>
+                    Forma de Pagamento
+                </div>
+                <div class="payment-options">
+                    <div class="payment-option" onclick="selectPayment('credit')">
+                        <input type="radio" name="payment" id="creditCard" value="credit" checked>
+                        <label for="creditCard">
+                            <i class="fas fa-credit-card"></i>
+                            <span>Cartão de Crédito</span>
+                        </label>
+                    </div>
+                    <div class="payment-option" onclick="selectPayment('debit')">
+                        <input type="radio" name="payment" id="debitCard" value="debit">
+                        <label for="debitCard">
+                            <i class="fas fa-money-check-alt"></i>
+                            <span>Cartão de Débito</span>
+                        </label>
+                    </div>
+                    <div class="payment-option" onclick="selectPayment('pix')">
+                        <input type="radio" name="payment" id="pix" value="pix">
+                        <label for="pix">
+                            <i class="fas fa-qrcode"></i>
+                            <span>PIX</span>
+                        </label>
+                    </div>
+                    <div class="payment-option" onclick="selectPayment('boleto')">
+                        <input type="radio" name="payment" id="boleto" value="boleto">
+                        <label for="boleto">
+                            <i class="fas fa-barcode"></i>
+                            <span>Boleto Bancário</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- Credit/Debit Card Form -->
+                <div class="card-form" id="cardForm">
+                    <input type="text" placeholder="Número do Cartão" id="cardNumber" class="card-input" maxlength="19">
+                    <input type="text" placeholder="Nome no Cartão" id="cardName" class="card-input">
+                    <div class="card-row">
+                        <input type="text" placeholder="MM/AA" id="cardExpiry" class="card-input" maxlength="5">
+                        <input type="text" placeholder="CVV" id="cardCvv" class="card-input" maxlength="3">
+                    </div>
+                    <div class="installments" id="installments">
+                        <select id="installmentSelect" class="card-input">
+                            <option value="1">1x sem juros</option>
+                            <option value="2">2x sem juros</option>
+                            <option value="3">3x sem juros</option>
+                            <option value="6">6x com juros</option>
+                            <option value="12">12x com juros</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- PIX Info -->
+                <div class="pix-info" id="pixInfo" style="display: none;">
+                    <p><i class="fas fa-info-circle"></i> Após finalizar, você receberá o código PIX para pagamento</p>
+                </div>
+
+                <!-- Boleto Info -->
+                <div class="boleto-info" id="boletoInfo" style="display: none;">
+                    <p><i class="fas fa-info-circle"></i> O boleto será gerado após a confirmação do pedido</p>
+                </div>
+            </div>
+
+            <button class="checkout-btn" onclick="proceedToCheckout()">
+                <i class="fas fa-lock"></i>
+                Finalizar Compra
+            </button>
+
+            <div class="security-badges">
+                <div class="security-badge">
+                    <i class="fas fa-shield-alt"></i>
+                    Compra Segura
+                </div>
+                <div class="security-badge">
+                    <i class="fas fa-truck"></i>
+                    Frete Grátis
+                </div>
+                <div class="security-badge">
+                    <i class="fas fa-undo"></i>
+                    Troca Fácil
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Empty Cart (hidden by default) -->
+    <div class="empty-cart" id="emptyCart" style="display: none;">
+        <i class="fas fa-shopping-cart"></i>
+        <h2>Seu carrinho está vazio</h2>
+        <p>Que tal adicionar alguns produtos incríveis?</p>
+        <a href="index.html" class="shop-now-btn">
+            <i class="fas fa-shopping-bag"></i>
+            Começar a Comprar
+        </a>
+        
+        <!-- Test buttons for adding products -->
+        <div class="test-buttons">
+            <button class="test-btn" onclick="testAddProduct1()">
+                <i class="fas fa-mobile-alt"></i>
+                Adicionar Smartphone
+            </button>
+            <button class="test-btn" onclick="testAddProduct2()">
+                <i class="fas fa-running"></i>
+                Adicionar Tênis
+            </button>
+            <button class="test-btn" onclick="testAddProduct3()">
+                <i class="fas fa-headphones"></i>
+                Adicionar Fone
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Cart data
+        let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+        let appliedCoupon = null;
+
+        // CEP Search Function
+        async function searchCEP() {
+            const cepInput = document.getElementById('newCep');
+            const cep = cepInput.value.replace(/\D/g, '');
+            
+            // Remove previous styling
+            cepInput.classList.remove('cep-success', 'cep-error');
+            
+            if (cep.length !== 8) {
+                if (cep.length > 0) {
+                    cepInput.classList.add('cep-error');
+                }
+                return;
+            }
+            
+            const loadingEl = document.getElementById('cepLoading');
+            loadingEl.style.display = 'block';
+            
+            // Clear previous data
+            document.getElementById('newStreet').value = '';
+            document.getElementById('newNeighborhood').value = '';
+            document.getElementById('newCity').value = '';
+            document.getElementById('newState').value = '';
+            
+            try {
+                const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+                const data = await response.json();
+                
+                if (!data.erro) {
+                    // Add success styling
+                    cepInput.classList.add('cep-success');
+                    
+                    // Fill address fields
+                    document.getElementById('newStreet').value = data.logradouro || '';
+                    document.getElementById('newNeighborhood').value = data.bairro || '';
+                    document.getElementById('newCity').value = data.localidade || '';
+                    document.getElementById('newState').value = data.uf || '';
+                    
+                    // Enable fields that were readonly
+                    document.getElementById('newStreet').readOnly = !data.logradouro;
+                    document.getElementById('newNeighborhood').readOnly = !data.bairro;
+                    document.getElementById('newCity').readOnly = !data.localidade;
+                    
+                    // Focus on number field
+                    setTimeout(() => {
+                        document.getElementById('newNumber').focus();
+                    }, 100);
+                    
+                    showToast('✅ Endereço encontrado! Complete o número.', 'success');
+                } else {
+                    cepInput.classList.add('cep-error');
+                    showToast('❌ CEP não encontrado. Preencha manualmente.', 'error');
+                    // Enable all fields for manual input
+                    document.getElementById('newStreet').readOnly = false;
+                    document.getElementById('newNeighborhood').readOnly = false;
+                    document.getElementById('newCity').readOnly = false;
+                    
+                    // Focus on street field
+                    setTimeout(() => {
+                        document.getElementById('newStreet').focus();
+                    }, 100);
+                }
+            } catch (error) {
+                console.error('Erro ao buscar CEP:', error);
+                cepInput.classList.add('cep-error');
+                showToast('🌐 Erro de conexão. Tente novamente.', 'error');
+                // Enable all fields for manual input
+                document.getElementById('newStreet').readOnly = false;
+                document.getElementById('newNeighborhood').readOnly = false;
+                document.getElementById('newCity').readOnly = false;
+            } finally {
+                loadingEl.style.display = 'none';
+            }
+        }
+
+        // Format CEP input
+        function formatCEP(input) {
+            let value = input.value.replace(/\D/g, '');
+            value = value.replace(/(\d{5})(\d{3})/, '$1-$2');
+            input.value = value;
+        }
+
+        // Clear address fields when CEP is cleared
+        function clearAddressFields() {
+            const cepValue = document.getElementById('newCep').value.replace(/\D/g, '');
+            if (cepValue.length < 8) {
+                document.getElementById('newStreet').value = '';
+                document.getElementById('newNeighborhood').value = '';
+                document.getElementById('newCity').value = '';
+                document.getElementById('newState').value = '';
+                
+                // Make fields editable again
+                document.getElementById('newStreet').readOnly = false;
+                document.getElementById('newNeighborhood').readOnly = false;
+                document.getElementById('newCity').readOnly = false;
+            }
+        }
+
+        // Initialize cart (load from localStorage)
+        function initializeCart() {
+            // Just render the cart as it is (empty or with existing items)
+            renderCart();
+        }
+
+        // Render cart items
+        function renderCart() {
+            const cartItemsList = document.getElementById('cartItemsList');
+            const emptyCart = document.getElementById('emptyCart');
+            const cartContainer = document.querySelector('.cart-container');
+
+            if (cart.length === 0) {
+                cartContainer.style.display = 'none';
+                emptyCart.style.display = 'block';
+                return;
+            }
+
+            cartContainer.style.display = 'grid';
+            emptyCart.style.display = 'none';
+
+            cartItemsList.innerHTML = cart.map(item => `
+                <div class="cart-item" data-id="${item.id}">
+                    <div class="item-image">
+                        ${item.image ? `<img src="${item.image}" alt="${item.name}">` : '<i class="fas fa-image"></i>'}
+                    </div>
+                    <div class="item-details">
+                        <h3>${item.name}</h3>
+                        <p>Categoria: ${item.category}</p>
+                        <p>Código: #${item.id.toString().padStart(6, '0')}</p>
+                    </div>
+                    <div class="quantity-controls">
+                        <button class="qty-btn" onclick="updateQuantity(${item.id}, ${item.quantity - 1})">-</button>
+                        <input type="number" class="qty-input" value="${item.quantity}" min="1" onchange="updateQuantity(${item.id}, this.value)">
+                        <button class="qty-btn" onclick="updateQuantity(${item.id}, ${item.quantity + 1})">+</button>
+                    </div>
+                    <div class="item-price">
+                        R$ ${item.price.toFixed(2).replace('.', ',')}
+                        ${item.originalPrice ? `<span class="item-original-price">R$ ${item.originalPrice.toFixed(2).replace('.', ',')}</span>` : ''}
+                        <button class="remove-item" onclick="removeItem(${item.id})">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+
+            updateSummary();
+        }
+
+        // Update quantity
+        function updateQuantity(id, newQuantity) {
+            newQuantity = parseInt(newQuantity);
+            if (newQuantity < 1) {
+                removeItem(id);
+                return;
+            }
+
+            const itemIndex = cart.findIndex(item => item.id === id);
+            if (itemIndex !== -1) {
+                cart[itemIndex].quantity = newQuantity;
+                localStorage.setItem('cart', JSON.stringify(cart));
+                renderCart();
+                showToast('Quantidade atualizada!', 'success');
+            }
+        }
+
+        // Remove item
+        function removeItem(id) {
+            if (confirm('Tem certeza que deseja remover este item?')) {
+                cart = cart.filter(item => item.id !== id);
+                localStorage.setItem('cart', JSON.stringify(cart));
+                renderCart();
+                showToast('Item removido do carrinho!', 'success');
+            }
+        }
+
+        // Clear cart
+        function clearCart() {
+            if (confirm('Tem certeza que deseja limpar todo o carrinho?')) {
+                cart = [];
+                localStorage.setItem('cart', JSON.stringify(cart));
+                renderCart();
+                showToast('Carrinho limpo!', 'success');
+            }
+        }
+
+        // Update summary
+        function updateSummary() {
+            const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const shipping = subtotal >= 99 ? 0 : 15.90;
+            const discountAmount = appliedCoupon ? subtotal * appliedCoupon.discount : 0;
+            const total = subtotal + shipping - discountAmount;
+
+            document.getElementById('cartCount').textContent = `${itemCount} ${itemCount === 1 ? 'item' : 'itens'}`;
+            document.getElementById('itemCount').textContent = itemCount;
+            document.getElementById('subtotal').textContent = `R$ ${subtotal.toFixed(2).replace('.', ',')}`;
+            document.getElementById('shipping').textContent = shipping === 0 ? 'Grátis' : `R$ ${shipping.toFixed(2).replace('.', ',')}`;
+            document.getElementById('discount').textContent = `- R$ ${discountAmount.toFixed(2).replace('.', ',')}`;
+            document.getElementById('total').textContent = `R$ ${total.toFixed(2).replace('.', ',')}`;
+        }
+
+        // Apply coupon
+        function applyCoupon() {
+            const couponInput = document.getElementById('couponInput');
+            const couponCode = couponInput.value.trim().toUpperCase();
+
+            const validCoupons = {
+                'DESCONTO10': { discount: 0.1, name: 'DESCONTO10' },
+                'BEMVINDO': { discount: 0.15, name: 'BEMVINDO' },
+                'FRETEGRATIS': { discount: 0.05, name: 'FRETEGRATIS' }
+            };
+
+            if (validCoupons[couponCode]) {
+                appliedCoupon = validCoupons[couponCode];
+                updateSummary();
+                showToast(`Cupom ${couponCode} aplicado com sucesso!`, 'success');
+                couponInput.value = '';
+            } else {
+                showToast('Cupom inválido ou expirado', 'error');
+            }
+        }
+
+        // Check if user is logged in
+        function isUserLoggedIn() {
+            const token = localStorage.getItem('boss_shopp_token');
+            if (!token) return false;
+            
+            try {
+                const tokenData = JSON.parse(atob(token));
+                // Check if token is not expired (24 hours)
+                const isValid = (Date.now() - tokenData.timestamp) < (24 * 60 * 60 * 1000);
+                return isValid;
+            } catch (error) {
+                return false;
+            }
+        }
+
+        // Load user address
+        function loadUserAddress() {
+            const userStr = localStorage.getItem('boss_shopp_user');
+            if (userStr) {
+                const user = JSON.parse(userStr);
+                const addressElement = document.getElementById('userAddress');
+                if (user.address && user.city && user.state) {
+                    addressElement.textContent = `${user.address}, ${user.city} - ${user.state}, ${user.zipCode || 'CEP não informado'}`;
+                } else {
+                    addressElement.textContent = 'Nenhum endereço cadastrado. Cadastre um endereço no seu perfil.';
+                }
+            }
+        }
+
+        // Select address option
+        function selectAddress(type) {
+            const newAddressForm = document.getElementById('newAddressForm');
+            const savedRadio = document.getElementById('savedAddress');
+            const newRadio = document.getElementById('newAddress');
+            
+            if (type === 'saved') {
+                savedRadio.checked = true;
+                newAddressForm.style.display = 'none';
+            } else {
+                newRadio.checked = true;
+                newAddressForm.style.display = 'block';
+            }
+        }
+
+        // Select payment method
+        function selectPayment(type) {
+            const cardForm = document.getElementById('cardForm');
+            const pixInfo = document.getElementById('pixInfo');
+            const boletoInfo = document.getElementById('boletoInfo');
+            const installments = document.getElementById('installments');
+            
+            // Hide all payment forms
+            cardForm.style.display = 'none';
+            pixInfo.style.display = 'none';
+            boletoInfo.style.display = 'none';
+            
+            // Update radio buttons
+            document.querySelectorAll('input[name="payment"]').forEach(radio => {
+                radio.checked = radio.value === type;
+            });
+            
+            // Show relevant form
+            if (type === 'credit' || type === 'debit') {
+                cardForm.style.display = 'block';
+                installments.style.display = type === 'credit' ? 'block' : 'none';
+            } else if (type === 'pix') {
+                pixInfo.style.display = 'block';
+            } else if (type === 'boleto') {
+                boletoInfo.style.display = 'block';
+            }
+        }
+
+        // Format card number
+        function formatCardNumber(input) {
+            let value = input.value.replace(/\s/g, '').replace(/[^0-9]/gi, '');
+            let formattedValue = value.match(/.{1,4}/g)?.join(' ') || value;
+            input.value = formattedValue;
+        }
+
+        // Format card expiry
+        function formatCardExpiry(input) {
+            let value = input.value.replace(/\D/g, '');
+            if (value.length >= 2) {
+                value = value.substring(0, 2) + '/' + value.substring(2, 4);
+            }
+            input.value = value;
+        }
+
+        // Generate receipt
+        function generateReceipt(orderData) {
+            const receiptHTML = `
+                <div class="receipt" id="receipt">
+                    <div class="receipt-header">
+                        <h2>BOSS SHOPP</h2>
+                        <p>Comprovante de Compra</p>
+                        <p>Pedido: #${orderData.orderNumber}</p>
+                        <p><strong>Código de Rastreamento: ${orderData.trackingCode}</strong></p>
+                        <p>Data: ${new Date().toLocaleString('pt-BR')}</p>
+                    </div>
+                    
+                    <div class="receipt-info">
+                        <div>
+                            <h4>Cliente:</h4>
+                            <p>${orderData.customer.name}</p>
+                            <p>${orderData.customer.email}</p>
+                        </div>
+                        <div>
+                            <h4>Entrega:</h4>
+                            <p>${orderData.address}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="receipt-section">
+                        <h4>Itens do Pedido:</h4>
+                        ${orderData.items.map(item => `
+                            <div class="receipt-item">
+                                <span>${item.quantity}x ${item.name}</span>
+                                <span>R$ ${(item.price * item.quantity).toFixed(2).replace('.', ',')}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                    
+                    <div class="receipt-section">
+                        <h4>Resumo:</h4>
+                        <div class="receipt-item">
+                            <span>Subtotal:</span>
+                            <span>R$ ${orderData.subtotal.toFixed(2).replace('.', ',')}</span>
+                        </div>
+                        <div class="receipt-item">
+                            <span>Frete:</span>
+                            <span>${orderData.shipping === 0 ? 'Grátis' : 'R$ ' + orderData.shipping.toFixed(2).replace('.', ',')}</span>
+                        </div>
+                        ${orderData.discount > 0 ? `
+                            <div class="receipt-item">
+                                <span>Desconto:</span>
+                                <span>- R$ ${orderData.discount.toFixed(2).replace('.', ',')}</span>
+                            </div>
+                        ` : ''}
+                        <div class="receipt-item receipt-total">
+                            <span>Total:</span>
+                            <span>R$ ${orderData.total.toFixed(2).replace('.', ',')}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="receipt-section">
+                        <h4>Pagamento:</h4>
+                        <p>${orderData.payment.method}</p>
+                        ${orderData.payment.details ? `<p>${orderData.payment.details}</p>` : ''}
+                    </div>
+                    
+                    <div style="text-align: center; margin-top: 30px;">
+                        <button class="print-btn" onclick="printReceipt()">
+                            <i class="fas fa-print"></i> Imprimir
+                        </button>
+                        <button class="print-btn" onclick="downloadReceipt()">
+                            <i class="fas fa-download"></i> Baixar PDF
+                        </button>
+                        <button class="print-btn" onclick="closeReceipt()">
+                            <i class="fas fa-times"></i> Fechar
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            // Create modal overlay
+            const overlay = document.createElement('div');
+            overlay.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.8);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 10000;
+                overflow-y: auto;
+                padding: 20px;
+            `;
+            overlay.innerHTML = receiptHTML;
+            document.body.appendChild(overlay);
+            
+            // Close on overlay click
+            overlay.addEventListener('click', (e) => {
+                if (e.target === overlay) {
+                    overlay.remove();
+                }
+            });
+        }
+
+        // Print receipt
+        function printReceipt() {
+            window.print();
+        }
+
+        // Download receipt as PDF (simplified)
+        function downloadReceipt() {
+            showToast('Funcionalidade de PDF será implementada em breve!', 'info');
+        }
+
+        // Close receipt
+        function closeReceipt() {
+            document.querySelector('.receipt').closest('div').remove();
+        }
+
+        // Save order to localStorage
+        function saveOrder(orderData) {
+            const userStr = localStorage.getItem('boss_shopp_user');
+            if (!userStr) return;
+            
+            const user = JSON.parse(userStr);
+            const userId = user.id || user.email;
+            
+            // Get existing orders
+            const ordersKey = `boss_shopp_orders_${userId}`;
+            const existingOrders = JSON.parse(localStorage.getItem(ordersKey) || '[]');
+            
+            // Add new order
+            existingOrders.unshift(orderData); // Add to beginning of array
+            
+            // Save back to localStorage
+            localStorage.setItem(ordersKey, JSON.stringify(existingOrders));
+            
+            console.log('Pedido salvo:', orderData);
+        }
+
+        // Get user orders
+        function getUserOrders() {
+            const userStr = localStorage.getItem('boss_shopp_user');
+            if (!userStr) return [];
+            
+            const user = JSON.parse(userStr);
+            const userId = user.id || user.email;
+            const ordersKey = `boss_shopp_orders_${userId}`;
+            
+            return JSON.parse(localStorage.getItem(ordersKey) || '[]');
+        }
+
+        // Proceed to checkout
+        function proceedToCheckout() {
+            if (cart.length === 0) {
+                showToast('Seu carrinho está vazio!', 'error');
+                return;
+            }
+
+            // Check if user is logged in
+            if (!isUserLoggedIn()) {
+                if (confirm('Você precisa estar logado para finalizar a compra. Deseja fazer login agora?')) {
+                    window.location.href = 'login.html';
+                }
+                return;
+            }
+
+            // Validate address
+            const addressType = document.querySelector('input[name="address"]:checked').value;
+            let selectedAddress = '';
+            
+            if (addressType === 'saved') {
+                const userStr = localStorage.getItem('boss_shopp_user');
+                if (userStr) {
+                    const user = JSON.parse(userStr);
+                    if (user.address && user.city && user.state) {
+                        selectedAddress = `${user.address}, ${user.city} - ${user.state}, ${user.zipCode || ''}`;
+                    } else {
+                        showToast('Endereço não encontrado. Cadastre um endereço no seu perfil.', 'error');
+                        return;
+                    }
+                }
+            } else {
+                // Validate new address fields
+                const newCep = document.getElementById('newCep').value;
+                const newStreet = document.getElementById('newStreet').value;
+                const newNumber = document.getElementById('newNumber').value;
+                const newComplement = document.getElementById('newComplement').value;
+                const newNeighborhood = document.getElementById('newNeighborhood').value;
+                const newCity = document.getElementById('newCity').value;
+                const newState = document.getElementById('newState').value;
+                
+                // Validate CEP format
+                const cepClean = newCep.replace(/\D/g, '');
+                if (cepClean.length !== 8) {
+                    showToast('CEP deve ter 8 dígitos!', 'error');
+                    document.getElementById('newCep').focus();
+                    return;
+                }
+                
+                if (!newStreet || !newNumber || !newNeighborhood || !newCity || !newState) {
+                    showToast('Preencha todos os campos obrigatórios do endereço!', 'error');
+                    return;
+                }
+                
+                selectedAddress = `${newStreet}, ${newNumber}${newComplement ? ', ' + newComplement : ''}, ${newNeighborhood}, ${newCity} - ${newState}, ${newCep}`;
+            }
+
+            // Validate payment
+            const paymentType = document.querySelector('input[name="payment"]:checked').value;
+            let paymentDetails = '';
+            
+            if (paymentType === 'credit' || paymentType === 'debit') {
+                const cardNumber = document.getElementById('cardNumber').value;
+                const cardName = document.getElementById('cardName').value;
+                const cardExpiry = document.getElementById('cardExpiry').value;
+                const cardCvv = document.getElementById('cardCvv').value;
+                
+                if (!cardNumber || !cardName || !cardExpiry || !cardCvv) {
+                    showToast('Preencha todos os dados do cartão!', 'error');
+                    return;
+                }
+                
+                const installments = document.getElementById('installmentSelect').value;
+                paymentDetails = `Cartão ${paymentType === 'credit' ? 'de Crédito' : 'de Débito'} - ${installments}x`;
+            } else if (paymentType === 'pix') {
+                paymentDetails = 'PIX - Pagamento instantâneo';
+            } else if (paymentType === 'boleto') {
+                paymentDetails = 'Boleto Bancário - Vencimento em 3 dias';
+            }
+
+            // Simulate checkout process
+            const checkoutBtn = document.querySelector('.checkout-btn');
+            checkoutBtn.innerHTML = '<div class="loading"></div> Processando...';
+            checkoutBtn.disabled = true;
+
+            setTimeout(() => {
+                // Generate order data
+                const orderNumber = Math.random().toString(36).substr(2, 9).toUpperCase();
+                const userStr = localStorage.getItem('boss_shopp_user');
+                const user = userStr ? JSON.parse(userStr) : { name: 'Cliente', email: 'cliente@email.com' };
+                
+                const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+                const shipping = subtotal >= 99 ? 0 : 15.90;
+                const discountAmount = appliedCoupon ? subtotal * appliedCoupon.discount : 0;
+                const total = subtotal + shipping - discountAmount;
+                
+                // Generate tracking code
+                const trackingCode = 'BS' + Date.now().toString().slice(-8) + Math.random().toString(36).substr(2, 4).toUpperCase();
+                
+                const orderData = {
+                    orderNumber: orderNumber,
+                    trackingCode: trackingCode,
+                    customer: user,
+                    address: selectedAddress,
+                    items: cart,
+                    subtotal: subtotal,
+                    shipping: shipping,
+                    discount: discountAmount,
+                    total: total,
+                    payment: {
+                        method: paymentDetails,
+                        details: paymentType === 'pix' ? 'Código PIX será enviado por email' : 
+                                paymentType === 'boleto' ? 'Boleto será enviado por email' : null
+                    },
+                    date: new Date().toISOString(),
+                    status: 'confirmed',
+                    tracking: {
+                        status: 'Pedido Confirmado',
+                        lastUpdate: new Date().toISOString(),
+                        steps: [
+                            {
+                                status: 'Pedido Confirmado',
+                                date: new Date().toISOString(),
+                                description: 'Seu pedido foi confirmado e está sendo preparado'
+                            }
+                        ]
+                    }
+                };
+                
+                // Save order to user's orders
+                saveOrder(orderData);
+                
+                // Clear cart
+                cart = [];
+                localStorage.setItem('cart', JSON.stringify(cart));
+                
+                // Reset checkout button
+                checkoutBtn.innerHTML = '<i class="fas fa-lock"></i> Finalizar Compra';
+                checkoutBtn.disabled = false;
+                
+                // Generate and show receipt
+                generateReceipt(orderData);
+                
+                // Show success message
+                showToast('Pedido realizado com sucesso!', 'success');
+                
+                // Update cart display
+                renderCart();
+            }, 2000);
+        }
+
+        // Show toast notification
+        function showToast(message, type = 'success') {
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => toast.classList.add('show'), 100);
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        // Add to cart function (for external use)
+        function addToCart(product) {
+            // Ensure product has required fields
+            if (!product || !product.id || !product.name || !product.price) {
+                showToast('Erro: Dados do produto inválidos', 'error');
+                return false;
+            }
+
+            const existingItem = cart.find(item => item.id === product.id);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+                showToast(`Quantidade de "${product.name}" atualizada!`, 'success');
+            } else {
+                cart.push({
+                    id: product.id,
+                    name: product.name,
+                    price: product.price,
+                    originalPrice: product.originalPrice || null,
+                    image: product.image || null,
+                    category: product.category || 'Produto',
+                    quantity: 1
+                });
+                showToast(`"${product.name}" adicionado ao carrinho!`, 'success');
+            }
+            
+            localStorage.setItem('cart', JSON.stringify(cart));
+            
+            // Update cart count in current page if elements exist
+            updateCartCount();
+            
+            // Re-render if we're on cart page
+            if (window.location.pathname.includes('purchase.html') || window.location.pathname.includes('cart.html')) {
+                renderCart();
+            }
+            
+            return true;
+        }
+
+        // Update cart count in navigation
+        function updateCartCount() {
+            const cartCountElements = document.querySelectorAll('.cart-count, #cartCount');
+            const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+            
+            cartCountElements.forEach(element => {
+                if (element) {
+                    element.textContent = itemCount > 0 ? `${itemCount} ${itemCount === 1 ? 'item' : 'itens'}` : '0 itens';
+                }
+            });
+        }
+
+        // Test functions to add products
+        function testAddProduct1() {
+            addToCart({
+                id: Date.now() + 1,
+                name: 'Smartphone Galaxy Pro Max',
+                price: 1299.90,
+                originalPrice: 1499.90,
+                category: 'Eletrônicos',
+                image: null
+            });
+        }
+
+        function testAddProduct2() {
+            addToCart({
+                id: Date.now() + 2,
+                name: 'Tênis Esportivo Premium',
+                price: 299.90,
+                originalPrice: 399.90,
+                category: 'Esportes',
+                image: null
+            });
+        }
+
+        function testAddProduct3() {
+            addToCart({
+                id: Date.now() + 3,
+                name: 'Fone Bluetooth Wireless Pro',
+                price: 199.90,
+                originalPrice: 249.90,
+                category: 'Eletrônicos',
+                image: null
+            });
+        }
+
+        // Initialize cart on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeCart();
+            updateCartCount();
+            loadUserAddress();
+            
+            // Add event listeners for card formatting
+            const cardNumberInput = document.getElementById('cardNumber');
+            const cardExpiryInput = document.getElementById('cardExpiry');
+            
+            if (cardNumberInput) {
+                cardNumberInput.addEventListener('input', function() {
+                    formatCardNumber(this);
+                });
+            }
+            
+            if (cardExpiryInput) {
+                cardExpiryInput.addEventListener('input', function() {
+                    formatCardExpiry(this);
+                });
+            }
+            
+            // Add event listeners for CEP formatting and search
+            const cepInput = document.getElementById('newCep');
+            if (cepInput) {
+                cepInput.addEventListener('input', function() {
+                    formatCEP(this);
+                    clearAddressFields();
+                });
+                
+                cepInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        searchCEP();
+                    }
+                });
+            }
+            
+            // Initialize payment method
+            selectPayment('credit');
+        });
+
+        // Export functions for global use
+        window.addToCart = addToCart;
+        window.updateCartCount = updateCartCount;
+        window.testAddProduct1 = testAddProduct1;
+        window.testAddProduct2 = testAddProduct2;
+        window.testAddProduct3 = testAddProduct3;
+        window.cart = cart;
+    </script>
+</body>
+</html>

@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Games - BOSS SHOPP</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #8B5CF6 0%, #A855F7 50%, #C084FC 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        .category-header {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .category-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.05) 0%, rgba(168, 85, 247, 0.05) 100%);
+            z-index: 0;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .category-icon {
+            font-size: 80px;
+            color: #8B5CF6;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .category-title {
+            font-size: 48px;
+            font-weight: 800;
+            color: #333;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #8B5CF6 0%, #A855F7 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .category-description {
+            font-size: 18px;
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto 30px;
+            line-height: 1.6;
+        }
+
+        .category-stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 30px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 32px;
+            font-weight: 800;
+            color: #8B5CF6;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Navigation */
+        .back-nav {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 50px;
+            padding: 12px 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+            transition: all 0.3s ease;
+        }
+
+        .back-nav:hover {
+            background: white;
+            transform: translateX(-5px);
+        }
+
+        .back-nav a {
+            color: #333;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+        }
+
+        /* Filters */
+        .filters-section {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .filters-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .filters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .filter-label {
+            font-weight: 600;
+            color: #333;
+            font-size: 14px;
+        }
+
+        .filter-select {
+            padding: 12px 16px;
+            border: 2px solid #e1e5e9;
+            border-radius: 12px;
+            font-size: 14px;
+            background: white;
+            transition: all 0.3s ease;
+        }
+
+        .filter-select:focus {
+            outline: none;
+            border-color: #8B5CF6;
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+        }
+
+        /* Products Grid */
+        .products-section {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .products-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .products-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #333;
+        }
+
+        .products-count {
+            color: #666;
+            font-size: 16px;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            justify-items: center;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            max-width: 320px;
+        }
+
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.05) 0%, rgba(168, 85, 247, 0.05) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 0;
+        }
+
+        .product-card:hover::before {
+            opacity: 1;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            border-color: #8B5CF6;
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: linear-gradient(135deg, #8B5CF6 0%, #A855F7 100%);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            z-index: 2;
+        }
+
+        .product-image {
+            width: 100%;
+            height: 200px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .product-card:hover .product-image img {
+            transform: scale(1.1);
+        }
+
+        .product-icon {
+            font-size: 60px;
+            color: #8B5CF6;
+        }
+
+        .product-info {
+            position: relative;
+            z-index: 1;
+        }
+
+        .product-category {
+            font-size: 12px;
+            color: #8B5CF6;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .product-name {
+            font-size: 18px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 12px;
+            line-height: 1.3;
+        }
+
+        .product-rating {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .product-rating .stars {
+            display: flex;
+            gap: 2px;
+        }
+
+        .product-rating .stars i {
+            color: #ffc107;
+            font-size: 14px;
+        }
+
+        .product-rating .rating-count {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .product-price {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .current-price {
+            font-size: 24px;
+            font-weight: 800;
+            color: #8B5CF6;
+        }
+
+        .original-price {
+            font-size: 16px;
+            color: #999;
+            text-decoration: line-through;
+        }
+
+        .add-to-cart {
+            width: 100%;
+            background: linear-gradient(135deg, #8B5CF6 0%, #A855F7 100%);
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .add-to-cart:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(139, 92, 246, 0.3);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            .category-header {
+                padding: 30px 20px;
+            }
+
+            .category-title {
+                font-size: 36px;
+            }
+
+            .category-stats {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .filters-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .products-grid {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                gap: 20px;
+            }
+
+            .products-header {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 16px 24px;
+            border-radius: 12px;
+            color: white;
+            font-weight: 500;
+            z-index: 1000;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+        }
+
+        .toast.success {
+            background: #10b981;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Back Navigation -->
+    <div class="back-nav">
+        <a href="index.html">
+            <i class="fas fa-arrow-left"></i>
+            Voltar à Loja
+        </a>
+    </div>
+
+    <div class="container">
+        <!-- Category Header -->
+        <div class="category-header">
+            <div class="header-content">
+                <i class="fas fa-gamepad category-icon"></i>
+                <h1 class="category-title">Games</h1>
+                <p class="category-description">
+                    Descubra o mundo dos games! Consoles, jogos, acessórios e periféricos 
+                    das melhores marcas com preços incríveis.
+                </p>
+                <div class="category-stats">
+                    <div class="stat-item">
+                        <span class="stat-number">250+</span>
+                        <span class="stat-label">Produtos</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">35%</span>
+                        <span class="stat-label">Desconto</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">4.9★</span>
+                        <span class="stat-label">Avaliação</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filters -->
+        <div class="filters-section">
+            <h2 class="filters-title">
+                <i class="fas fa-filter"></i>
+                Filtros
+            </h2>
+            <div class="filters-grid">
+                <div class="filter-group">
+                    <label class="filter-label">Categoria</label>
+                    <select class="filter-select" id="categoryFilter">
+                        <option value="">Todas as categorias</option>
+                        <option value="consoles">Consoles</option>
+                        <option value="jogos">Jogos</option>
+                        <option value="acessorios">Acessórios</option>
+                        <option value="perifericos">Periféricos</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label">Preço</label>
+                    <select class="filter-select" id="priceFilter">
+                        <option value="">Todos os preços</option>
+                        <option value="0-100">Até R$ 100</option>
+                        <option value="100-500">R$ 100 - R$ 500</option>
+                        <option value="500-2000">R$ 500 - R$ 2.000</option>
+                        <option value="2000+">Acima de R$ 2.000</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label">Plataforma</label>
+                    <select class="filter-select" id="platformFilter">
+                        <option value="">Todas as plataformas</option>
+                        <option value="playstation">PlayStation</option>
+                        <option value="xbox">Xbox</option>
+                        <option value="nintendo">Nintendo</option>
+                        <option value="pc">PC</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label">Ordenar por</label>
+                    <select class="filter-select" id="sortFilter">
+                        <option value="relevance">Relevância</option>
+                        <option value="price-low">Menor preço</option>
+                        <option value="price-high">Maior preço</option>
+                        <option value="newest">Mais recentes</option>
+                        <option value="rating">Melhor avaliação</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Products Section -->
+        <div class="products-section">
+            <div class="products-header">
+                <h2 class="products-title">Produtos de Games</h2>
+                <span class="products-count" id="productsCount">18 produtos encontrados</span>
+            </div>
+            
+            <div class="products-grid" id="productsGrid">
+                <!-- Produto 1: PlayStation 5 Pro -->
+                <div class="product-card" data-category="consoles" data-price="4249.00" data-platform="playstation">
+                    <div class="product-badge">-15%</div>
+                    <div class="product-image">
+                        <i class="fab fa-playstation product-icon"></i>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">Consoles</div>
+                        <h3 class="product-name">PlayStation 5 Pro</h3>
+                        <div class="product-rating">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <span class="rating-count">(1.789)</span>
+                        </div>
+                        <div class="product-price">
+                            <span class="current-price">R$ 4.249,00</span>
+                            <span class="original-price">R$ 4.999,00</span>
+                        </div>
+                        <button class="add-to-cart" onclick="addToCart('PlayStation 5 Pro', 4249.00, 4999.00, 'Consoles')">
+                            <i class="fas fa-shopping-cart"></i>
+                            Adicionar ao Carrinho
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Produto 2: Xbox Series X -->
+                <div class="product-card" data-category="consoles" data-price="3899.00" data-platform="xbox">
+                    <div class="product-badge">-20%</div>
+                    <div class="product-image">
+                        <i class="fab fa-xbox product-icon"></i>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">Consoles</div>
+                        <h3 class="product-name">Xbox Series X 1TB</h3>
+                        <div class="product-rating">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="rating-count">(1.234)</span>
+                        </div>
+                        <div class="product-price">
+                            <span class="current-price">R$ 3.899,00</span>
+                            <span class="original-price">R$ 4.873,75</span>
+                        </div>
+                        <button class="add-to-cart" onclick="addToCart('Xbox Series X 1TB', 3899.00, 4873.75, 'Consoles')">
+                            <i class="fas fa-shopping-cart"></i>
+                            Adicionar ao Carrinho
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Produto 3: Nintendo Switch OLED -->
+                <div class="product-card" data-category="consoles" data-price="2199.00" data-platform="nintendo">
+                    <div class="product-badge">-25%</div>
+                    <div class="product-image">
+                        <i class="fas fa-gamepad product-icon"></i>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">Consoles</div>
+                        <h3 class="product-name">Nintendo Switch OLED</h3>
+                        <div class="product-rating">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="rating-count">(892)</span>
+                        </div>
+                        <div class="product-price">
+                            <span class="current-price">R$ 2.199,00</span>
+                            <span class="original-price">R$ 2.932,00</span>
+                        </div>
+                        <button class="add-to-cart" onclick="addToCart('Nintendo Switch OLED', 2199.00, 2932.00, 'Consoles')">
+                            <i class="fas fa-shopping-cart"></i>
+                            Adicionar ao Carrinho
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Produto 4: The Last of Us Part II -->
+                <div class="product-card" data-category="jogos" data-price="149.90" data-platform="playstation">
+                    <div class="product-badge">-30%</div>
+                    <div class="product-image">
+                        <i class="fas fa-compact-disc product-icon"></i>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">Jogos</div>
+                        <h3 class="product-name">The Last of Us Part II</h3>
+                        <div class="product-rating">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="rating-count">(2.156)</span>
+                        </div>
+                        <div class="product-price">
+                            <span class="current-price">R$ 149,90</span>
+                            <span class="original-price">R$ 214,14</span>
+                        </div>
+                        <button class="add-to-cart" onclick="addToCart('The Last of Us Part II', 149.90, 214.14, 'Jogos')">
+                            <i class="fas fa-shopping-cart"></i>
+                            Adicionar ao Carrinho
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Produto 5: Controle DualSense -->
+                <div class="product-card" data-category="acessorios" data-price="399.90" data-platform="playstation">
+                    <div class="product-badge">-35%</div>
+                    <div class="product-image">
+                        <i class="fas fa-gamepad product-icon"></i>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">Acessórios</div>
+                        <h3 class="product-name">Controle DualSense PS5</h3>
+                        <div class="product-rating">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="rating-count">(567)</span>
+                        </div>
+                        <div class="product-price">
+                            <span class="current-price">R$ 399,90</span>
+                            <span class="original-price">R$ 615,23</span>
+                        </div>
+                        <button class="add-to-cart" onclick="addToCart('Controle DualSense PS5', 399.90, 615.23, 'Acessórios')">
+                            <i class="fas fa-shopping-cart"></i>
+                            Adicionar ao Carrinho
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Produto 6: Headset Gamer -->
+                <div class="product-card" data-category="perifericos" data-price="299.90" data-platform="pc">
+                    <div class="product-badge">-40%</div>
+                    <div class="product-image">
+                        <i class="fas fa-headphones product-icon"></i>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">Periféricos</div>
+                        <h3 class="product-name">Headset Gamer RGB 7.1</h3>
+                        <div class="product-rating">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="rating-count">(423)</span>
+                        </div>
+                        <div class="product-price">
+                            <span class="current-price">R$ 299,90</span>
+                            <span class="original-price">R$ 499,83</span>
+                        </div>
+                        <button class="add-to-cart" onclick="addToCart('Headset Gamer RGB 7.1', 299.90, 499.83, 'Periféricos')">
+                            <i class="fas fa-shopping-cart"></i>
+                            Adicionar ao Carrinho
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Produto 7: FIFA 24 -->
+                <div class="product-card" data-category="jogos" data-price="199.90" data-platform="playstation">
+                    <div class="product-badge">-15%</div>
+                    <div class="product-image">
+                        <i class="fas fa-futbol product-icon"></i>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">Jogos</div>
+                        <h3 class="product-name">FIFA 24 Standard Edition</h3>
+                        <div class="product-rating">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                            </div>
+                            <span class="rating-count">(1.156)</span>
+                        </div>
+                        <div class="product-price">
+                            <span class="current-price">R$ 199,90</span>
+                            <span class="original-price">R$ 235,18</span>
+                        </div>
+                        <button class="add-to-cart" onclick="addToCart('FIFA 24 Standard Edition', 199.90, 235.18, 'Jogos')">
+                            <i class="fas fa-shopping-cart"></i>
+                            Adicionar ao Carrinho
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Produto 8: Teclado Mecânico Gamer -->
+                <div class="product-card" data-category="perifericos" data-price="449.90" data-platform="pc">
+                    <div class="product-badge">-25%</div>
+                    <div class="product-image">
+                        <i class="fas fa-keyboard product-icon"></i>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">Periféricos</div>
+                        <h3 class="product-name">Teclado Mecânico RGB</h3>
+                        <div class="product-rating">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <span class="rating-count">(298)</span>
+                        </div>
+                        <div class="product-price">
+                            <span class="current-price">R$ 449,90</span>
+                            <span class="original-price">R$ 599,87</span>
+                        </div>
+                        <button class="add-to-cart" onclick="addToCart('Teclado Mecânico RGB', 449.90, 599.87, 'Periféricos')">
+                            <i class="fas fa-shopping-cart"></i>
+                            Adicionar ao Carrinho
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Produto 9: Mouse Gamer -->
+                <div class="product-card" data-category="perifericos" data-price="179.90" data-platform="pc">
+                    <div class="product-badge">-30%</div>
+                    <div class="product-image">
+                        <i class="fas fa-mouse product-icon"></i>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">Periféricos</div>
+                        <h3 class="product-name">Mouse Gamer 12000 DPI</h3>
+                        <div class="product-rating">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="rating-count">(345)</span>
+                        </div>
+                        <div class="product-price">
+                            <span class="current-price">R$ 179,90</span>
+                            <span class="original-price">R$ 257,00</span>
+                        </div>
+                        <button class="add-to-cart" onclick="addToCart('Mouse Gamer 12000 DPI', 179.90, 257.00, 'Periféricos')">
+                            <i class="fas fa-shopping-cart"></i>
+                            Adicionar ao Carrinho
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="cart-system.js"></script>
+    <script>
+        // Filter functionality
+        function filterProducts() {
+            const categoryFilter = document.getElementById('categoryFilter').value;
+            const priceFilter = document.getElementById('priceFilter').value;
+            const platformFilter = document.getElementById('platformFilter').value;
+            const sortFilter = document.getElementById('sortFilter').value;
+            
+            const products = Array.from(document.querySelectorAll('.product-card'));
+            let visibleProducts = [];
+            
+            products.forEach(product => {
+                let show = true;
+                
+                // Category filter
+                if (categoryFilter && product.dataset.category !== categoryFilter) {
+                    show = false;
+                }
+                
+                // Price filter
+                if (priceFilter && show) {
+                    const price = parseFloat(product.dataset.price);
+                    const [min, max] = priceFilter.includes('+') 
+                        ? [parseFloat(priceFilter.replace('+', '')), Infinity]
+                        : priceFilter.split('-').map(p => parseFloat(p));
+                    
+                    if (price < min || price > max) {
+                        show = false;
+                    }
+                }
+                
+                // Platform filter
+                if (platformFilter && product.dataset.platform !== platformFilter) {
+                    show = false;
+                }
+                
+                if (show) {
+                    visibleProducts.push(product);
+                    product.style.display = 'block';
+                } else {
+                    product.style.display = 'none';
+                }
+            });
+            
+            // Sort products
+            if (sortFilter && visibleProducts.length > 0) {
+                const grid = document.getElementById('productsGrid');
+                
+                visibleProducts.sort((a, b) => {
+                    switch (sortFilter) {
+                        case 'price-low':
+                            return parseFloat(a.dataset.price) - parseFloat(b.dataset.price);
+                        case 'price-high':
+                            return parseFloat(b.dataset.price) - parseFloat(a.dataset.price);
+                        case 'rating':
+                            // Simple rating sort based on stars count
+                            const aStars = a.querySelectorAll('.fas.fa-star').length;
+                            const bStars = b.querySelectorAll('.fas.fa-star').length;
+                            return bStars - aStars;
+                        default:
+                            return 0;
+                    }
+                });
+                
+                // Reorder in DOM
+                visibleProducts.forEach(product => {
+                    grid.appendChild(product);
+                });
+            }
+            
+            // Update count
+            document.getElementById('productsCount').textContent = `${visibleProducts.length} produtos encontrados`;
+        }
+
+        // Add event listeners to filters
+        document.addEventListener('DOMContentLoaded', function() {
+            const filters = ['categoryFilter', 'priceFilter', 'platformFilter', 'sortFilter'];
+            filters.forEach(filterId => {
+                const filter = document.getElementById(filterId);
+                if (filter) {
+                    filter.addEventListener('change', filterProducts);
+                }
+            });
+        });
+
+        // Show toast notification
+        function showToast(message, type = 'success') {
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => toast.classList.add('show'), 100);
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

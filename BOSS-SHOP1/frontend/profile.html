@@ -1,0 +1,2859 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Perfil - BOSS SHOPP</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #000000;
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .profile-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 30px;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .profile-sidebar {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            height: fit-content;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 20px;
+        }
+
+        .profile-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .profile-avatar {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            color: white;
+            font-size: 32px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .profile-avatar:hover {
+            transform: scale(1.05);
+        }
+
+        .profile-info h3 {
+            font-size: 20px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .profile-info p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .profile-nav {
+            list-style: none;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 15px 20px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 8px;
+            color: #666;
+            text-decoration: none;
+        }
+
+        .nav-item:hover {
+            background: #f8f9fa;
+            color: #ff6b35;
+        }
+
+        .nav-item.active {
+            background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+            color: white;
+        }
+
+        .nav-item i {
+            font-size: 18px;
+            width: 20px;
+        }
+
+        .logout-btn {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #f0f0f0;
+        }
+
+        .logout-btn:hover {
+            background: #fee;
+            color: #dc3545;
+        }
+
+        /* Main Content */
+        .profile-main {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        .section-header {
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .section-header h2 {
+            font-size: 28px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .section-header p {
+            color: #666;
+            font-size: 16px;
+        }
+
+        /* Form Styles */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 16px 20px;
+            border: 2px solid #e1e5e9;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #ff6b35;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .save-btn {
+            background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .save-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 107, 53, 0.3);
+        }
+
+        /* Cards */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .card {
+            background: #f8f9fa;
+            border: 2px solid #e1e5e9;
+            border-radius: 16px;
+            padding: 24px;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            border-color: #ff6b35;
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .card-badge {
+            background: #ff6b35;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #666;
+        }
+
+        .empty-state i {
+            font-size: 48px;
+            color: #ddd;
+            margin-bottom: 16px;
+        }
+
+        .empty-state h3 {
+            font-size: 20px;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .empty-state p {
+            margin-bottom: 24px;
+        }
+
+        .cta-btn {
+            background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+            color: white;
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+        }
+
+        /* Settings */
+        .settings-group {
+            margin-bottom: 32px;
+        }
+
+        .settings-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .settings-title i {
+            color: #ff6b35;
+        }
+
+        .setting-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .setting-item:last-child {
+            border-bottom: none;
+        }
+
+        .setting-info h4 {
+            font-size: 16px;
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 4px;
+        }
+
+        .setting-info p {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 50px;
+            height: 24px;
+            background: #ddd;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .toggle-switch.active {
+            background: #ff6b35;
+        }
+
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .toggle-switch.active::after {
+            left: 28px;
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 16px 24px;
+            border-radius: 12px;
+            color: white;
+            font-weight: 500;
+            z-index: 1000;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+        }
+
+        .toast.success {
+            background: #10b981;
+        }
+
+        .toast.error {
+            background: #ef4444;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        /* Back Button */
+        .back-to-home {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+            padding: 12px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+
+        .back-to-home:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(-4px);
+        }
+
+        /* Tracking Styles */
+        .tracking-search {
+            margin-bottom: 30px;
+        }
+
+        .search-box {
+            display: flex;
+            gap: 12px;
+            max-width: 600px;
+        }
+
+        .tracking-input {
+            flex: 1;
+            padding: 15px 20px;
+            border: 2px solid #e1e5e9;
+            border-radius: 12px;
+            font-size: 16px;
+            font-family: 'Courier New', monospace;
+            text-transform: uppercase;
+        }
+
+        .tracking-input:focus {
+            outline: none;
+            border-color: #ff6b35;
+        }
+
+        .track-btn {
+            background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .track-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 107, 53, 0.3);
+        }
+
+        .tracking-result {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .tracking-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .tracking-code {
+            font-family: 'Courier New', monospace;
+            font-size: 18px;
+            font-weight: bold;
+            color: #ff6b35;
+        }
+
+        .tracking-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: #e8f5e8;
+            color: #2e7d32;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .tracking-timeline {
+            position: relative;
+            padding-left: 30px;
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-bottom: 25px;
+        }
+
+        .timeline-item:not(:last-child)::before {
+            content: '';
+            position: absolute;
+            left: -22px;
+            top: 20px;
+            width: 2px;
+            height: calc(100% - 10px);
+            background: #e1e5e9;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: -30px;
+            top: 5px;
+            width: 16px;
+            height: 16px;
+            background: #ff6b35;
+            border-radius: 50%;
+            border: 3px solid white;
+            box-shadow: 0 0 0 2px #ff6b35;
+        }
+
+        .timeline-dot.completed {
+            background: #4caf50;
+            box-shadow: 0 0 0 2px #4caf50;
+        }
+
+        .timeline-content h4 {
+            color: #333;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .timeline-content p {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 3px;
+        }
+
+        .timeline-date {
+            color: #999;
+            font-size: 12px;
+        }
+
+        .recent-orders {
+            margin-top: 30px;
+        }
+
+        .recent-orders h3 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 20px;
+        }
+
+        .recent-order-item {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .recent-order-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .order-info h4 {
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .order-info p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .order-tracking-code {
+            font-family: 'Courier New', monospace;
+            color: #ff6b35;
+            font-weight: bold;
+        }
+
+        .track-order-btn {
+            background: #f8f9fa;
+            color: #ff6b35;
+            border: 2px solid #ff6b35;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .track-order-btn:hover {
+            background: #ff6b35;
+            color: white;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .profile-container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 10px;
+            }
+
+            .profile-sidebar {
+                position: static;
+                order: 2;
+            }
+
+            .profile-main {
+                padding: 20px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Loading */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Address Card Styles */
+        .address-card {
+            background: white;
+            border: 2px solid #e1e5e9;
+            border-radius: 16px;
+            padding: 24px;
+            transition: all 0.3s ease;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .address-card:hover {
+            border-color: #ff6b35;
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .address-card.default {
+            border-color: #ff6b35;
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.05) 0%, rgba(247, 147, 30, 0.05) 100%);
+        }
+
+        .address-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 16px;
+        }
+
+        .address-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .address-label i {
+            color: #ff6b35;
+        }
+
+        .default-badge {
+            background: #ff6b35;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            text-transform: uppercase;
+        }
+
+        .address-info {
+            margin-bottom: 16px;
+            line-height: 1.6;
+        }
+
+        .address-info .recipient {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 4px;
+        }
+
+        .address-info .street {
+            color: #666;
+            margin-bottom: 2px;
+        }
+
+        .address-info .location {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .address-info .phone {
+            color: #666;
+            font-size: 14px;
+            margin-top: 4px;
+        }
+
+        .address-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid #f0f0f0;
+        }
+
+        .address-btn {
+            flex: 1;
+            padding: 10px 16px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .address-btn.edit {
+            background: #f8f9fa;
+            color: #ff6b35;
+            border: 1px solid #ff6b35;
+        }
+
+        .address-btn.edit:hover {
+            background: #ff6b35;
+            color: white;
+        }
+
+        .address-btn.default {
+            background: #e8f5e8;
+            color: #2e7d32;
+            border: 1px solid #4caf50;
+        }
+
+        .address-btn.default:hover {
+            background: #4caf50;
+            color: white;
+        }
+
+        .address-btn.delete {
+            background: #fee;
+            color: #dc3545;
+            border: 1px solid #dc3545;
+        }
+
+        .address-btn.delete:hover {
+            background: #dc3545;
+            color: white;
+        }
+
+        .address-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* CEP Loading */
+        .cep-loading {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: none;
+        }
+
+        .form-group {
+            position: relative;
+        }
+
+        /* Address Form Animations */
+        #addressForm {
+            animation: slideDown 0.3s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Confirmation Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .modal-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            transform: scale(0.8);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.show .modal {
+            transform: scale(1);
+        }
+
+        .modal h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+
+        .modal p {
+            color: #666;
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        .modal-btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .modal-btn.confirm {
+            background: #dc3545;
+            color: white;
+        }
+
+        .modal-btn.confirm:hover {
+            background: #c82333;
+        }
+
+        .modal-btn.cancel {
+            background: #f8f9fa;
+            color: #666;
+            border: 1px solid #ddd;
+        }
+
+        .modal-btn.cancel:hover {
+            background: #e9ecef;
+        }
+
+        /* Payment Card Styles */
+        .payment-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 16px;
+            padding: 24px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .payment-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .payment-card.visa {
+            background: linear-gradient(135deg, #1a237e 0%, #3949ab 100%);
+        }
+
+        .payment-card.mastercard {
+            background: linear-gradient(135deg, #d32f2f 0%, #f57c00 100%);
+        }
+
+        .payment-card.amex {
+            background: linear-gradient(135deg, #2e7d32 0%, #66bb6a 100%);
+        }
+
+        .payment-card.elo {
+            background: linear-gradient(135deg, #ffb300 0%, #ff8f00 100%);
+        }
+
+        .payment-card.hipercard {
+            background: linear-gradient(135deg, #c62828 0%, #e53935 100%);
+        }
+
+        .payment-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .payment-card:hover::before {
+            top: -30%;
+            right: -30%;
+        }
+
+        .card-header-payment {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .card-brand {
+            font-size: 18px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .card-actions-payment {
+            display: flex;
+            gap: 8px;
+        }
+
+        .card-action-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        .card-action-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+
+        .card-number {
+            font-family: 'Courier New', monospace;
+            font-size: 20px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            margin-bottom: 16px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .card-details {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            position: relative;
+            z-index: 2;
+        }
+
+        .card-holder {
+            flex: 1;
+        }
+
+        .card-holder-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.8;
+            margin-bottom: 4px;
+        }
+
+        .card-holder-name {
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .card-expiry {
+            text-align: right;
+        }
+
+        .card-expiry-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.8;
+            margin-bottom: 4px;
+        }
+
+        .card-expiry-date {
+            font-size: 14px;
+            font-weight: 600;
+            font-family: 'Courier New', monospace;
+        }
+
+        .card-nickname {
+            position: absolute;
+            top: 12px;
+            left: 24px;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .default-payment-badge {
+            position: absolute;
+            top: 12px;
+            right: 24px;
+            background: rgba(76, 175, 80, 0.9);
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        /* Card Form Validation */
+        .form-input.valid {
+            border-color: #4caf50;
+            background-color: #f8fff9;
+        }
+
+        .form-input.invalid {
+            border-color: #f44336;
+            background-color: #fff8f8;
+        }
+
+        .validation-message {
+            font-size: 12px;
+            margin-top: 4px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .validation-message.success {
+            color: #4caf50;
+        }
+
+        .validation-message.error {
+            color: #f44336;
+        }
+
+        /* Payment Method Icons */
+        .payment-method-icons {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+            justify-content: center;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 12px;
+        }
+
+        .payment-icon {
+            width: 40px;
+            height: 25px;
+            background: white;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 600;
+            color: #666;
+            border: 1px solid #ddd;
+        }
+
+        .payment-icon.visa {
+            color: #1a237e;
+        }
+
+        .payment-icon.mastercard {
+            color: #d32f2f;
+        }
+
+        .payment-icon.amex {
+            color: #2e7d32;
+        }
+
+        .payment-icon.elo {
+            color: #ffb300;
+        }
+
+        .payment-icon.hipercard {
+            color: #c62828;
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-to-home">
+        <i class="fas fa-arrow-left"></i>
+        Voltar à loja
+    </a>
+
+    <div class="profile-container">
+        <!-- Sidebar -->
+        <div class="profile-sidebar">
+            <div class="profile-header">
+                <div class="profile-avatar" onclick="changeAvatar()">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="profile-info">
+                    <h3 id="profileName">Carregando...</h3>
+                    <p id="profileEmail">carregando@email.com</p>
+                </div>
+            </div>
+
+            <nav class="profile-nav">
+                <a href="#" class="nav-item active" data-section="account">
+                    <i class="fas fa-user"></i>
+                    <span>Minha Conta</span>
+                </a>
+                <a href="#" class="nav-item" data-section="orders">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span>Meus Pedidos</span>
+                </a>
+                <a href="#" class="nav-item" data-section="tracking">
+                    <i class="fas fa-truck"></i>
+                    <span>Rastrear Pedidos</span>
+                </a>
+                <a href="#" class="nav-item" data-section="addresses">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Endereços</span>
+                </a>
+                <a href="#" class="nav-item" data-section="payment">
+                    <i class="fas fa-credit-card"></i>
+                    <span>Pagamento</span>
+                </a>
+                <a href="#" class="nav-item" data-section="favorites">
+                    <i class="fas fa-heart"></i>
+                    <span>Favoritos</span>
+                </a>
+                <a href="#" class="nav-item" data-section="settings">
+                    <i class="fas fa-cog"></i>
+                    <span>Configurações</span>
+                </a>
+                <a href="#" class="nav-item logout-btn" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Sair</span>
+                </a>
+            </nav>
+        </div>
+
+        <!-- Main Content -->
+        <div class="profile-main">
+            <!-- Account Section -->
+            <div class="section active" id="account">
+                <div class="section-header">
+                    <h2>Minha Conta</h2>
+                    <p>Gerencie suas informações pessoais e preferências</p>
+                </div>
+
+                <form id="profileForm">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="firstName">Nome</label>
+                            <input type="text" id="firstName" class="form-input" placeholder="Seu nome">
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">Sobrenome</label>
+                            <input type="text" id="lastName" class="form-input" placeholder="Seu sobrenome">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" class="form-input" placeholder="seu@email.com" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Telefone</label>
+                            <input type="tel" id="phone" class="form-input" placeholder="(11) 99999-9999">
+                        </div>
+                        <div class="form-group">
+                            <label for="birthDate">Data de Nascimento</label>
+                            <input type="date" id="birthDate" class="form-input">
+                        </div>
+                        <div class="form-group">
+                            <label for="gender">Gênero</label>
+                            <select id="gender" class="form-input">
+                                <option value="">Selecione</option>
+                                <option value="male">Masculino</option>
+                                <option value="female">Feminino</option>
+                                <option value="other">Outro</option>
+                                <option value="prefer-not-say">Prefiro não dizer</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="cpf">CPF</label>
+                            <input type="text" id="cpf" class="form-input" placeholder="000.000.000-00">
+                        </div>
+                        <div class="form-group">
+                            <label for="zipCode">CEP</label>
+                            <input type="text" id="zipCode" class="form-input" placeholder="00000-000">
+                        </div>
+                        <div class="form-group full-width">
+                            <label for="address">Endereço Completo</label>
+                            <textarea id="address" class="form-input form-textarea" placeholder="Rua, número, complemento, bairro"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="city">Cidade</label>
+                            <input type="text" id="city" class="form-input" placeholder="Sua cidade">
+                        </div>
+                        <div class="form-group">
+                            <label for="state">Estado</label>
+                            <select id="state" class="form-input">
+                                <option value="">Selecione</option>
+                                <option value="SP">São Paulo</option>
+                                <option value="RJ">Rio de Janeiro</option>
+                                <option value="MG">Minas Gerais</option>
+                                <!-- Adicionar outros estados -->
+                            </select>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="save-btn" id="saveBtn">
+                        <i class="fas fa-save"></i>
+                        Salvar Alterações
+                    </button>
+                </form>
+            </div>
+
+            <!-- Orders Section -->
+            <div class="section" id="orders">
+                <div class="section-header">
+                    <h2>Meus Pedidos</h2>
+                    <p>Acompanhe o status dos seus pedidos</p>
+                </div>
+
+                <div class="cards-grid" id="ordersList">
+                    <div class="empty-state">
+                        <i class="fas fa-shopping-bag"></i>
+                        <h3>Carregando pedidos...</h3>
+                        <p>Por favor, aguarde enquanto carregamos seu histórico.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tracking Section -->
+            <div class="section" id="tracking">
+                <div class="section-header">
+                    <h2>Rastrear Pedidos</h2>
+                    <p>Acompanhe o status de entrega dos seus pedidos</p>
+                </div>
+
+                <div class="tracking-search">
+                    <div class="search-box">
+                        <input type="text" id="trackingInput" placeholder="Digite o código de rastreamento (ex: BS12345678ABCD)" class="tracking-input">
+                        <button onclick="trackOrder()" class="track-btn">
+                            <i class="fas fa-search"></i>
+                            Rastrear
+                        </button>
+                    </div>
+                </div>
+
+                <div class="tracking-result" id="trackingResult" style="display: none;">
+                    <!-- Tracking result will be displayed here -->
+                </div>
+
+                <div class="recent-orders">
+                    <h3>Pedidos Recentes</h3>
+                    <div class="recent-orders-list" id="recentOrdersList">
+                        <!-- Recent orders will be loaded here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Addresses Section -->
+            <div class="section" id="addresses">
+                <div class="section-header">
+                    <h2>Meus Endereços</h2>
+                    <p>Gerencie seus endereços de entrega</p>
+                    <button class="save-btn" onclick="showAddAddressForm()" style="margin-top: 15px;">
+                        <i class="fas fa-plus"></i>
+                        Adicionar Novo Endereço
+                    </button>
+                </div>
+
+                <!-- Add/Edit Address Form -->
+                <div id="addressForm" style="display: none; background: #f8f9fa; padding: 30px; border-radius: 15px; margin-bottom: 30px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
+                        <h3 id="addressFormTitle">Adicionar Novo Endereço</h3>
+                        <button onclick="hideAddressForm()" style="background: none; border: none; font-size: 24px; color: #666; cursor: pointer;">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    
+                    <form id="newAddressForm">
+                        <input type="hidden" id="editingAddressId" value="">
+                        
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="addressLabel">Nome do Endereço *</label>
+                                <input type="text" id="addressLabel" class="form-input" placeholder="Ex: Casa, Trabalho, Casa da Mãe" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="recipientName">Nome do Destinatário *</label>
+                                <input type="text" id="recipientName" class="form-input" placeholder="Nome completo" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="addressZipCode">CEP *</label>
+                                <input type="text" id="addressZipCode" class="form-input" placeholder="00000-000" required onblur="searchAddressByCEP()">
+                                <div class="cep-loading">
+                                    <div class="loading"></div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="addressStreet">Rua/Avenida *</label>
+                                <input type="text" id="addressStreet" class="form-input" placeholder="Nome da rua" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="addressNumber">Número *</label>
+                                <input type="text" id="addressNumber" class="form-input" placeholder="123" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="addressComplement">Complemento</label>
+                                <input type="text" id="addressComplement" class="form-input" placeholder="Apto, Bloco, etc.">
+                            </div>
+                            <div class="form-group">
+                                <label for="addressNeighborhood">Bairro *</label>
+                                <input type="text" id="addressNeighborhood" class="form-input" placeholder="Nome do bairro" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="addressCity">Cidade *</label>
+                                <input type="text" id="addressCity" class="form-input" placeholder="Nome da cidade" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="addressState">Estado *</label>
+                                <select id="addressState" class="form-input" required>
+                                    <option value="">Selecione o estado</option>
+                                    <option value="AC">Acre</option>
+                                    <option value="AL">Alagoas</option>
+                                    <option value="AP">Amapá</option>
+                                    <option value="AM">Amazonas</option>
+                                    <option value="BA">Bahia</option>
+                                    <option value="CE">Ceará</option>
+                                    <option value="DF">Distrito Federal</option>
+                                    <option value="ES">Espírito Santo</option>
+                                    <option value="GO">Goiás</option>
+                                    <option value="MA">Maranhão</option>
+                                    <option value="MT">Mato Grosso</option>
+                                    <option value="MS">Mato Grosso do Sul</option>
+                                    <option value="MG">Minas Gerais</option>
+                                    <option value="PA">Pará</option>
+                                    <option value="PB">Paraíba</option>
+                                    <option value="PR">Paraná</option>
+                                    <option value="PE">Pernambuco</option>
+                                    <option value="PI">Piauí</option>
+                                    <option value="RJ">Rio de Janeiro</option>
+                                    <option value="RN">Rio Grande do Norte</option>
+                                    <option value="RS">Rio Grande do Sul</option>
+                                    <option value="RO">Rondônia</option>
+                                    <option value="RR">Roraima</option>
+                                    <option value="SC">Santa Catarina</option>
+                                    <option value="SP">São Paulo</option>
+                                    <option value="SE">Sergipe</option>
+                                    <option value="TO">Tocantins</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="addressPhone">Telefone de Contato</label>
+                                <input type="tel" id="addressPhone" class="form-input" placeholder="(11) 99999-9999">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group" style="margin-top: 20px;">
+                            <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                                <input type="checkbox" id="isDefaultAddress" style="width: auto;">
+                                <span>Definir como endereço padrão</span>
+                            </label>
+                        </div>
+                        
+                        <div style="display: flex; gap: 15px; margin-top: 25px;">
+                            <button type="submit" class="save-btn">
+                                <i class="fas fa-save"></i>
+                                <span id="saveAddressText">Salvar Endereço</span>
+                            </button>
+                            <button type="button" onclick="hideAddressForm()" style="background: #6c757d; color: white; border: none; padding: 16px 32px; border-radius: 12px; font-size: 16px; font-weight: 600; cursor: pointer;">
+                                <i class="fas fa-times"></i>
+                                Cancelar
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="cards-grid" id="addressesList">
+                    <div class="empty-state">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <h3>Nenhum endereço cadastrado</h3>
+                        <p>Adicione um endereço para facilitar suas compras.</p>
+                        <button class="cta-btn" onclick="showAddAddressForm()">
+                            <i class="fas fa-plus"></i>
+                            Adicionar Primeiro Endereço
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Payment Section -->
+            <div class="section" id="payment">
+                <div class="section-header">
+                    <h2>Formas de Pagamento</h2>
+                    <p>Gerencie seus cartões e métodos de pagamento</p>
+                </div>
+
+                <!-- Add Payment Button -->
+                <div style="margin-bottom: 30px;">
+                    <button class="save-btn" onclick="showAddPaymentForm()" id="addPaymentBtn">
+                        <i class="fas fa-plus"></i>
+                        Adicionar Novo Cartão
+                    </button>
+                </div>
+
+                <!-- Add Payment Form -->
+                <div id="paymentForm" style="display: none; background: #f8f9fa; padding: 30px; border-radius: 16px; margin-bottom: 30px; border: 2px solid #e1e5e9;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                        <h3 style="color: #333; font-size: 20px; font-weight: 600;">
+                            <i class="fas fa-credit-card" style="color: #ff6b35; margin-right: 8px;"></i>
+                            Adicionar Cartão
+                        </h3>
+                        <button onclick="hideAddPaymentForm()" style="background: none; border: none; color: #666; font-size: 20px; cursor: pointer; padding: 8px;">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+
+                    <form id="newPaymentForm" onsubmit="savePaymentMethod(event)">
+                        <div class="form-grid">
+                            <div class="form-group full-width">
+                                <label for="cardNumber">Número do Cartão *</label>
+                                <input type="text" id="cardNumber" class="form-input" placeholder="0000 0000 0000 0000" maxlength="19" oninput="formatCardNumber(this)" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="cardName">Nome no Cartão *</label>
+                                <input type="text" id="cardName" class="form-input" placeholder="Nome como está no cartão" style="text-transform: uppercase;" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="cardBrand">Bandeira</label>
+                                <select id="cardBrand" class="form-input" required>
+                                    <option value="">Selecione a bandeira</option>
+                                    <option value="visa">Visa</option>
+                                    <option value="mastercard">Mastercard</option>
+                                    <option value="amex">American Express</option>
+                                    <option value="elo">Elo</option>
+                                    <option value="hipercard">Hipercard</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="cardExpiry">Validade *</label>
+                                <input type="text" id="cardExpiry" class="form-input" placeholder="MM/AA" maxlength="5" oninput="formatExpiry(this)" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="cardCVV">CVV *</label>
+                                <input type="text" id="cardCVV" class="form-input" placeholder="000" maxlength="4" oninput="formatCVV(this)" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="cardNickname">Apelido do Cartão</label>
+                                <input type="text" id="cardNickname" class="form-input" placeholder="Ex: Cartão Principal">
+                            </div>
+                        </div>
+
+                        <div style="display: flex; align-items: center; gap: 12px; margin: 20px 0; padding: 16px; background: #e3f2fd; border-radius: 8px; border-left: 4px solid #2196f3;">
+                            <i class="fas fa-shield-alt" style="color: #2196f3; font-size: 20px;"></i>
+                            <div>
+                                <strong style="color: #1976d2;">Seus dados estão seguros</strong>
+                                <p style="color: #1976d2; font-size: 14px; margin: 0;">Utilizamos criptografia de ponta para proteger suas informações.</p>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; gap: 12px; justify-content: flex-end;">
+                            <button type="button" onclick="hideAddPaymentForm()" style="background: #f8f9fa; color: #666; border: 1px solid #ddd; padding: 12px 24px; border-radius: 8px; cursor: pointer; font-weight: 500;">
+                                Cancelar
+                            </button>
+                            <button type="submit" class="save-btn">
+                                <i class="fas fa-save"></i>
+                                Salvar Cartão
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Payment Methods List -->
+                <div class="cards-grid" id="paymentList">
+                    <!-- Payment cards will be loaded here -->
+                </div>
+
+                <!-- Empty State -->
+                <div id="paymentEmptyState" class="empty-state">
+                    <i class="fas fa-credit-card"></i>
+                    <h3>Nenhum cartão cadastrado</h3>
+                    <p>Adicione um cartão para facilitar suas compras futuras.</p>
+                </div>
+            </div>
+
+            <!-- Favorites Section -->
+            <div class="section" id="favorites">
+                <div class="section-header">
+                    <h2>Meus Favoritos</h2>
+                    <p>Produtos que você salvou para depois</p>
+                </div>
+
+                <div class="cards-grid" id="favoritesList">
+                    <div class="empty-state">
+                        <i class="fas fa-heart"></i>
+                        <h3>Nenhum favorito adicionado</h3>
+                        <p>Salve produtos que você gosta para encontrá-los facilmente.</p>
+                        <a href="index.html" class="cta-btn">
+                            <i class="fas fa-shopping-bag"></i>
+                            Explorar Produtos
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings Section -->
+            <div class="section" id="settings">
+                <div class="section-header">
+                    <h2>Configurações</h2>
+                    <p>Personalize sua experiência na plataforma</p>
+                </div>
+
+                <div class="settings-group">
+                    <div class="settings-title">
+                        <i class="fas fa-bell"></i>
+                        Notificações
+                    </div>
+                    <div class="setting-item">
+                        <div class="setting-info">
+                            <h4>Ofertas e Promoções</h4>
+                            <p>Receba notificações sobre ofertas especiais</p>
+                        </div>
+                        <div class="toggle-switch active" data-setting="promotions"></div>
+                    </div>
+                    <div class="setting-item">
+                        <div class="setting-info">
+                            <h4>Status do Pedido</h4>
+                            <p>Atualizações sobre seus pedidos</p>
+                        </div>
+                        <div class="toggle-switch active" data-setting="orders"></div>
+                    </div>
+                    <div class="setting-item">
+                        <div class="setting-info">
+                            <h4>Newsletter</h4>
+                            <p>Receba nossa newsletter semanal</p>
+                        </div>
+                        <div class="toggle-switch" data-setting="newsletter"></div>
+                    </div>
+                </div>
+
+                <div class="settings-group">
+                    <div class="settings-title">
+                        <i class="fas fa-shield-alt"></i>
+                        Privacidade
+                    </div>
+                    <div class="setting-item">
+                        <div class="setting-info">
+                            <h4>Perfil Público</h4>
+                            <p>Permitir que outros vejam seu perfil</p>
+                        </div>
+                        <div class="toggle-switch" data-setting="public"></div>
+                    </div>
+                    <div class="setting-item">
+                        <div class="setting-info">
+                            <h4>Histórico de Compras</h4>
+                            <p>Mostrar histórico para recomendações</p>
+                        </div>
+                        <div class="toggle-switch active" data-setting="history"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="auth-local.js"></script>
+    <script>
+        // Navigation
+        document.querySelectorAll('.nav-item[data-section]').forEach(item => {
+            item.addEventListener('click', function(e) {
+                e.preventDefault();
+                const sectionId = this.getAttribute('data-section');
+                showSection(sectionId);
+            });
+        });
+
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Remove active from nav items
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // Show selected section
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Set active nav item
+            const navItem = document.querySelector(`[data-section="${sectionId}"]`);
+            if (navItem) {
+                navItem.classList.add('active');
+            }
+
+            // Load section data
+            loadSectionData(sectionId);
+        }
+
+        function loadSectionData(sectionId) {
+            switch(sectionId) {
+                case 'orders':
+                    loadOrders();
+                    break;
+                case 'tracking':
+                    loadRecentOrders();
+                    break;
+                case 'addresses':
+                    loadAddresses();
+                    break;
+                case 'favorites':
+                    loadFavorites();
+                    break;
+            }
+        }
+
+        // Tracking functions
+        function trackOrder() {
+            const trackingCode = document.getElementById('trackingInput').value.trim().toUpperCase();
+            
+            if (!trackingCode) {
+                alert('Por favor, digite um código de rastreamento');
+                return;
+            }
+            
+            // Find order by tracking code
+            const orders = getUserOrders();
+            const order = orders.find(o => o.trackingCode === trackingCode);
+            
+            if (!order) {
+                showTrackingError('Código de rastreamento não encontrado');
+                return;
+            }
+            
+            displayTrackingResult(order);
+        }
+
+        function getUserOrders() {
+            const userStr = localStorage.getItem('boss_shopp_user');
+            if (!userStr) return [];
+            
+            const user = JSON.parse(userStr);
+            const userId = user.id || user.email;
+            const ordersKey = `boss_shopp_orders_${userId}`;
+            
+            return JSON.parse(localStorage.getItem(ordersKey) || '[]');
+        }
+
+        function displayTrackingResult(order) {
+            const resultDiv = document.getElementById('trackingResult');
+            
+            // Simulate tracking progress
+            const trackingSteps = generateTrackingSteps(order);
+            
+            const resultHTML = `
+                <div class="tracking-header">
+                    <div>
+                        <h3>Pedido #${order.orderNumber}</h3>
+                        <div class="tracking-code">${order.trackingCode}</div>
+                    </div>
+                    <div class="tracking-status">
+                        <i class="fas fa-truck"></i>
+                        ${trackingSteps[trackingSteps.length - 1].status}
+                    </div>
+                </div>
+                
+                <div class="tracking-timeline">
+                    ${trackingSteps.map((step, index) => `
+                        <div class="timeline-item">
+                            <div class="timeline-dot ${step.completed ? 'completed' : ''}"></div>
+                            <div class="timeline-content">
+                                <h4>${step.status}</h4>
+                                <p>${step.description}</p>
+                                <div class="timeline-date">${new Date(step.date).toLocaleString('pt-BR')}</div>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+            
+            resultDiv.innerHTML = resultHTML;
+            resultDiv.style.display = 'block';
+        }
+
+        function generateTrackingSteps(order) {
+            const orderDate = new Date(order.date);
+            const now = new Date();
+            const daysDiff = Math.floor((now - orderDate) / (1000 * 60 * 60 * 24));
+            
+            const steps = [
+                {
+                    status: 'Pedido Confirmado',
+                    description: 'Seu pedido foi confirmado e está sendo preparado',
+                    date: orderDate.toISOString(),
+                    completed: true
+                }
+            ];
+            
+            if (daysDiff >= 1) {
+                steps.push({
+                    status: 'Preparando Pedido',
+                    description: 'Seus produtos estão sendo separados e embalados',
+                    date: new Date(orderDate.getTime() + 24 * 60 * 60 * 1000).toISOString(),
+                    completed: true
+                });
+            }
+            
+            if (daysDiff >= 2) {
+                steps.push({
+                    status: 'Pedido Enviado',
+                    description: 'Seu pedido foi enviado e está a caminho',
+                    date: new Date(orderDate.getTime() + 2 * 24 * 60 * 60 * 1000).toISOString(),
+                    completed: true
+                });
+            }
+            
+            if (daysDiff >= 3) {
+                steps.push({
+                    status: 'Em Trânsito',
+                    description: 'Seu pedido está sendo transportado para o destino',
+                    date: new Date(orderDate.getTime() + 3 * 24 * 60 * 60 * 1000).toISOString(),
+                    completed: true
+                });
+            }
+            
+            if (daysDiff >= 5) {
+                steps.push({
+                    status: 'Saiu para Entrega',
+                    description: 'Seu pedido saiu para entrega e chegará em breve',
+                    date: new Date(orderDate.getTime() + 5 * 24 * 60 * 60 * 1000).toISOString(),
+                    completed: true
+                });
+            }
+            
+            if (daysDiff >= 6) {
+                steps.push({
+                    status: 'Entregue',
+                    description: 'Pedido entregue com sucesso!',
+                    date: new Date(orderDate.getTime() + 6 * 24 * 60 * 60 * 1000).toISOString(),
+                    completed: true
+                });
+            } else {
+                // Add next expected step
+                const nextStep = steps.length;
+                const nextSteps = [
+                    'Preparando Pedido',
+                    'Pedido Enviado', 
+                    'Em Trânsito',
+                    'Saiu para Entrega',
+                    'Entregue'
+                ];
+                
+                if (nextStep < nextSteps.length) {
+                    steps.push({
+                        status: nextSteps[nextStep],
+                        description: 'Próxima etapa do seu pedido',
+                        date: new Date(orderDate.getTime() + (nextStep + 1) * 24 * 60 * 60 * 1000).toISOString(),
+                        completed: false
+                    });
+                }
+            }
+            
+            return steps;
+        }
+
+        function showTrackingError(message) {
+            const resultDiv = document.getElementById('trackingResult');
+            resultDiv.innerHTML = `
+                <div style="text-align: center; padding: 40px; color: #666;">
+                    <i class="fas fa-exclamation-triangle" style="font-size: 48px; color: #ff6b35; margin-bottom: 20px;"></i>
+                    <h3>${message}</h3>
+                    <p>Verifique se o código foi digitado corretamente</p>
+                </div>
+            `;
+            resultDiv.style.display = 'block';
+        }
+
+        function loadRecentOrders() {
+            const orders = getUserOrders();
+            const recentOrdersList = document.getElementById('recentOrdersList');
+            
+            if (orders.length === 0) {
+                recentOrdersList.innerHTML = `
+                    <div style="text-align: center; padding: 40px; color: #666;">
+                        <i class="fas fa-shopping-bag" style="font-size: 48px; margin-bottom: 20px;"></i>
+                        <h3>Nenhum pedido encontrado</h3>
+                        <p>Faça seu primeiro pedido para acompanhar o rastreamento</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            const recentOrders = orders.slice(0, 5); // Show last 5 orders
+            
+            recentOrdersList.innerHTML = recentOrders.map(order => `
+                <div class="recent-order-item" onclick="trackOrderByCode('${order.trackingCode}')">
+                    <div class="order-info">
+                        <h4>Pedido #${order.orderNumber}</h4>
+                        <p>Data: ${new Date(order.date).toLocaleDateString('pt-BR')}</p>
+                        <p class="order-tracking-code">${order.trackingCode}</p>
+                    </div>
+                    <button class="track-order-btn">
+                        <i class="fas fa-truck"></i>
+                        Rastrear
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        function trackOrderByCode(trackingCode) {
+            document.getElementById('trackingInput').value = trackingCode;
+            trackOrder();
+        }
+
+        // Load user data
+        async function loadUserData() {
+            const token = localStorage.getItem('boss_shopp_token');
+            if (!token) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            try {
+                const users = JSON.parse(localStorage.getItem('boss_shopp_users') || '[]');
+                const tokenData = JSON.parse(atob(token));
+                const user = users.find(u => u.id === tokenData.id);
+
+                if (!user) {
+                    window.location.href = 'login.html';
+                    return;
+                }
+
+                // Update profile header
+                document.getElementById('profileName').textContent = user.name || 'Usuário';
+                document.getElementById('profileEmail').textContent = user.email || '';
+
+                // Fill form fields
+                fillFormFields(user);
+
+            } catch (error) {
+                console.error('Erro ao carregar dados:', error);
+                window.location.href = 'login.html';
+            }
+        }
+
+        function fillFormFields(user) {
+            const nameParts = user.name ? user.name.split(' ') : ['', ''];
+            
+            document.getElementById('firstName').value = nameParts[0] || '';
+            document.getElementById('lastName').value = nameParts.slice(1).join(' ') || '';
+            document.getElementById('email').value = user.email || '';
+            document.getElementById('phone').value = user.phone || '';
+            document.getElementById('birthDate').value = user.birthDate || '';
+            document.getElementById('gender').value = user.gender || '';
+            document.getElementById('cpf').value = user.cpf || '';
+            document.getElementById('address').value = user.address || '';
+            document.getElementById('city').value = user.city || '';
+            document.getElementById('state').value = user.state || '';
+            document.getElementById('zipCode').value = user.zipCode || '';
+        }
+
+        // Save profile
+        document.getElementById('profileForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const saveBtn = document.getElementById('saveBtn');
+            saveBtn.innerHTML = '<div class="loading"></div> Salvando...';
+            saveBtn.disabled = true;
+
+            try {
+                const token = localStorage.getItem('boss_shopp_token');
+                const tokenData = JSON.parse(atob(token));
+                const users = JSON.parse(localStorage.getItem('boss_shopp_users') || '[]');
+                const userIndex = users.findIndex(u => u.id === tokenData.id);
+
+                if (userIndex !== -1) {
+                    const updatedUser = {
+                        ...users[userIndex],
+                        name: `${document.getElementById('firstName').value} ${document.getElementById('lastName').value}`.trim(),
+                        phone: document.getElementById('phone').value,
+                        birthDate: document.getElementById('birthDate').value,
+                        gender: document.getElementById('gender').value,
+                        cpf: document.getElementById('cpf').value,
+                        address: document.getElementById('address').value,
+                        city: document.getElementById('city').value,
+                        state: document.getElementById('state').value,
+                        zipCode: document.getElementById('zipCode').value,
+                        updated: new Date().toISOString()
+                    };
+
+                    users[userIndex] = updatedUser;
+                    localStorage.setItem('boss_shopp_users', JSON.stringify(users));
+
+                    // Update profile header
+                    document.getElementById('profileName').textContent = updatedUser.name;
+
+                    showToast('Perfil atualizado com sucesso!', 'success');
+                }
+            } catch (error) {
+                showToast('Erro ao salvar perfil', 'error');
+            } finally {
+                saveBtn.innerHTML = '<i class="fas fa-save"></i> Salvar Alterações';
+                saveBtn.disabled = false;
+            }
+        });
+
+        // Load orders
+        function loadOrders() {
+            const ordersList = document.getElementById('ordersList');
+            const sampleOrders = [
+                {
+                    id: 'PED-2024-001',
+                    date: '2024-12-10',
+                    status: 'Entregue',
+                    total: 'R$ 249,90',
+                    items: 3
+                },
+                {
+                    id: 'PED-2024-002',
+                    date: '2024-12-05',
+                    status: 'Em trânsito',
+                    total: 'R$ 89,90',
+                    items: 1
+                }
+            ];
+
+            if (sampleOrders.length === 0) {
+                ordersList.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-shopping-bag"></i>
+                        <h3>Nenhum pedido encontrado</h3>
+                        <p>Você ainda não fez nenhum pedido.</p>
+                        <a href="index.html" class="cta-btn">
+                            <i class="fas fa-shopping-bag"></i>
+                            Ir às Compras
+                        </a>
+                    </div>
+                `;
+            } else {
+                ordersList.innerHTML = sampleOrders.map(order => `
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">Pedido ${order.id}</div>
+                            <div class="card-badge">${order.status}</div>
+                        </div>
+                        <p><strong>Data:</strong> ${new Date(order.date).toLocaleDateString('pt-BR')}</p>
+                        <p><strong>Total:</strong> ${order.total}</p>
+                        <p><strong>Itens:</strong> ${order.items}</p>
+                    </div>
+                `).join('');
+            }
+        }
+
+        // Address Management Functions
+        function loadAddresses() {
+            const addresses = getUserAddresses();
+            const addressesList = document.getElementById('addressesList');
+            
+            if (addresses.length === 0) {
+                addressesList.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <h3>Nenhum endereço cadastrado</h3>
+                        <p>Adicione um endereço para facilitar suas compras.</p>
+                        <button class="cta-btn" onclick="showAddAddressForm()">
+                            <i class="fas fa-plus"></i>
+                            Adicionar Primeiro Endereço
+                        </button>
+                    </div>
+                `;
+                return;
+            }
+            
+            addressesList.innerHTML = addresses.map(address => `
+                <div class="address-card ${address.isDefault ? 'default' : ''}">
+                    <div class="address-header">
+                        <div class="address-label">
+                            <i class="fas fa-map-marker-alt"></i>
+                            ${address.label}
+                        </div>
+                        ${address.isDefault ? '<div class="default-badge">Padrão</div>' : ''}
+                    </div>
+                    
+                    <div class="address-info">
+                        <div class="recipient">${address.recipientName}</div>
+                        <div class="street">${address.street}, ${address.number}${address.complement ? ', ' + address.complement : ''}</div>
+                        <div class="location">${address.neighborhood}, ${address.city} - ${address.state}</div>
+                        <div class="location">CEP: ${address.zipCode}</div>
+                        ${address.phone ? `<div class="phone">Tel: ${address.phone}</div>` : ''}
+                    </div>
+                    
+                    <div class="address-actions">
+                        <button class="address-btn edit" onclick="editAddress('${address.id}')">
+                            <i class="fas fa-edit"></i>
+                            Editar
+                        </button>
+                        ${!address.isDefault ? `
+                            <button class="address-btn default" onclick="setDefaultAddress('${address.id}')">
+                                <i class="fas fa-star"></i>
+                                Tornar Padrão
+                            </button>
+                        ` : ''}
+                        <button class="address-btn delete" onclick="confirmDeleteAddress('${address.id}')" ${addresses.length === 1 ? 'disabled title="Você deve ter pelo menos um endereço"' : ''}>
+                            <i class="fas fa-trash"></i>
+                            Excluir
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function getUserAddresses() {
+            const userStr = localStorage.getItem('boss_shopp_user');
+            if (!userStr) return [];
+            
+            const user = JSON.parse(userStr);
+            const userId = user.id || user.email;
+            const addressesKey = `boss_shopp_addresses_${userId}`;
+            
+            return JSON.parse(localStorage.getItem(addressesKey) || '[]');
+        }
+
+        function saveUserAddresses(addresses) {
+            const userStr = localStorage.getItem('boss_shopp_user');
+            if (!userStr) return;
+            
+            const user = JSON.parse(userStr);
+            const userId = user.id || user.email;
+            const addressesKey = `boss_shopp_addresses_${userId}`;
+            
+            localStorage.setItem(addressesKey, JSON.stringify(addresses));
+        }
+
+        function showAddAddressForm() {
+            document.getElementById('addressForm').style.display = 'block';
+            document.getElementById('addressFormTitle').textContent = 'Adicionar Novo Endereço';
+            document.getElementById('saveAddressText').textContent = 'Salvar Endereço';
+            document.getElementById('editingAddressId').value = '';
+            document.getElementById('newAddressForm').reset();
+            
+            // Check if this will be the first address (make it default)
+            const addresses = getUserAddresses();
+            if (addresses.length === 0) {
+                document.getElementById('isDefaultAddress').checked = true;
+                document.getElementById('isDefaultAddress').disabled = true;
+            } else {
+                document.getElementById('isDefaultAddress').disabled = false;
+            }
+            
+            // Scroll to form
+            document.getElementById('addressForm').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function hideAddressForm() {
+            document.getElementById('addressForm').style.display = 'none';
+            document.getElementById('newAddressForm').reset();
+        }
+
+        function editAddress(addressId) {
+            const addresses = getUserAddresses();
+            const address = addresses.find(a => a.id === addressId);
+            
+            if (!address) return;
+            
+            // Fill form with address data
+            document.getElementById('editingAddressId').value = addressId;
+            document.getElementById('addressLabel').value = address.label;
+            document.getElementById('recipientName').value = address.recipientName;
+            document.getElementById('addressZipCode').value = address.zipCode;
+            document.getElementById('addressStreet').value = address.street;
+            document.getElementById('addressNumber').value = address.number;
+            document.getElementById('addressComplement').value = address.complement || '';
+            document.getElementById('addressNeighborhood').value = address.neighborhood;
+            document.getElementById('addressCity').value = address.city;
+            document.getElementById('addressState').value = address.state;
+            document.getElementById('addressPhone').value = address.phone || '';
+            document.getElementById('isDefaultAddress').checked = address.isDefault;
+            
+            // Update form title
+            document.getElementById('addressFormTitle').textContent = 'Editar Endereço';
+            document.getElementById('saveAddressText').textContent = 'Atualizar Endereço';
+            
+            // Show form
+            document.getElementById('addressForm').style.display = 'block';
+            document.getElementById('addressForm').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function setDefaultAddress(addressId) {
+            const addresses = getUserAddresses();
+            
+            // Remove default from all addresses
+            addresses.forEach(addr => addr.isDefault = false);
+            
+            // Set new default
+            const address = addresses.find(a => a.id === addressId);
+            if (address) {
+                address.isDefault = true;
+                saveUserAddresses(addresses);
+                loadAddresses();
+                showToast('Endereço padrão atualizado!', 'success');
+            }
+        }
+
+        function confirmDeleteAddress(addressId) {
+            const addresses = getUserAddresses();
+            const address = addresses.find(a => a.id === addressId);
+            
+            if (!address) return;
+            
+            showConfirmModal(
+                'Excluir Endereço',
+                `Tem certeza que deseja excluir o endereço "${address.label}"?`,
+                () => deleteAddress(addressId)
+            );
+        }
+
+        function deleteAddress(addressId) {
+            let addresses = getUserAddresses();
+            const addressIndex = addresses.findIndex(a => a.id === addressId);
+            
+            if (addressIndex === -1) return;
+            
+            const wasDefault = addresses[addressIndex].isDefault;
+            addresses.splice(addressIndex, 1);
+            
+            // If deleted address was default, make first remaining address default
+            if (wasDefault && addresses.length > 0) {
+                addresses[0].isDefault = true;
+            }
+            
+            saveUserAddresses(addresses);
+            loadAddresses();
+            showToast('Endereço excluído com sucesso!', 'success');
+        }
+
+        // Address form submission
+        document.getElementById('newAddressForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = {
+                id: document.getElementById('editingAddressId').value || Date.now().toString(),
+                label: document.getElementById('addressLabel').value,
+                recipientName: document.getElementById('recipientName').value,
+                zipCode: document.getElementById('addressZipCode').value,
+                street: document.getElementById('addressStreet').value,
+                number: document.getElementById('addressNumber').value,
+                complement: document.getElementById('addressComplement').value,
+                neighborhood: document.getElementById('addressNeighborhood').value,
+                city: document.getElementById('addressCity').value,
+                state: document.getElementById('addressState').value,
+                phone: document.getElementById('addressPhone').value,
+                isDefault: document.getElementById('isDefaultAddress').checked
+            };
+            
+            let addresses = getUserAddresses();
+            const editingId = document.getElementById('editingAddressId').value;
+            
+            if (editingId) {
+                // Update existing address
+                const index = addresses.findIndex(a => a.id === editingId);
+                if (index !== -1) {
+                    addresses[index] = formData;
+                }
+            } else {
+                // Add new address
+                addresses.push(formData);
+            }
+            
+            // If this address is set as default, remove default from others
+            if (formData.isDefault) {
+                addresses.forEach(addr => {
+                    if (addr.id !== formData.id) {
+                        addr.isDefault = false;
+                    }
+                });
+            }
+            
+            saveUserAddresses(addresses);
+            hideAddressForm();
+            loadAddresses();
+            showToast(editingId ? 'Endereço atualizado!' : 'Endereço adicionado!', 'success');
+        });
+
+        // CEP Search Function
+        async function searchAddressByCEP() {
+            const cep = document.getElementById('addressZipCode').value.replace(/\D/g, '');
+            
+            if (cep.length !== 8) return;
+            
+            const loadingEl = document.querySelector('.cep-loading');
+            if (loadingEl) loadingEl.style.display = 'block';
+            
+            try {
+                const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+                const data = await response.json();
+                
+                if (!data.erro) {
+                    document.getElementById('addressStreet').value = data.logradouro || '';
+                    document.getElementById('addressNeighborhood').value = data.bairro || '';
+                    document.getElementById('addressCity').value = data.localidade || '';
+                    document.getElementById('addressState').value = data.uf || '';
+                    
+                    // Focus on number field
+                    document.getElementById('addressNumber').focus();
+                    
+                    showToast('Endereço encontrado!', 'success');
+                } else {
+                    showToast('CEP não encontrado', 'error');
+                }
+            } catch (error) {
+                console.error('Erro ao buscar CEP:', error);
+                showToast('Erro ao buscar CEP', 'error');
+            } finally {
+                if (loadingEl) loadingEl.style.display = 'none';
+            }
+        }
+
+        // CEP formatting for address form
+        document.getElementById('addressZipCode').addEventListener('input', function() {
+            let value = this.value.replace(/\D/g, '');
+            value = value.replace(/(\d{5})(\d{3})/, '$1-$2');
+            this.value = value;
+        });
+
+        // Phone formatting for address form
+        document.getElementById('addressPhone').addEventListener('input', function() {
+            let value = this.value.replace(/\D/g, '');
+            if (value.length <= 11) {
+                value = value.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
+                if (value.length < 14) {
+                    value = value.replace(/(\d{2})(\d{4})(\d{4})/, '($1) $2-$3');
+                }
+            }
+            this.value = value;
+        });
+
+        // Confirmation Modal
+        function showConfirmModal(title, message, onConfirm) {
+            const modal = document.createElement('div');
+            modal.className = 'modal-overlay';
+            modal.innerHTML = `
+                <div class="modal">
+                    <h3>${title}</h3>
+                    <p>${message}</p>
+                    <div class="modal-actions">
+                        <button class="modal-btn cancel" onclick="hideConfirmModal()">Cancelar</button>
+                        <button class="modal-btn confirm" onclick="confirmAction()">Confirmar</button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            
+            // Store the confirm action
+            window.currentConfirmAction = onConfirm;
+            
+            setTimeout(() => modal.classList.add('show'), 10);
+        }
+
+        function hideConfirmModal() {
+            const modal = document.querySelector('.modal-overlay');
+            if (modal) {
+                modal.classList.remove('show');
+                setTimeout(() => modal.remove(), 300);
+            }
+        }
+
+        function confirmAction() {
+            if (window.currentConfirmAction) {
+                window.currentConfirmAction();
+                window.currentConfirmAction = null;
+            }
+            hideConfirmModal();
+        }
+
+        // Load favorites
+        function loadFavorites() {
+            const favoritesList = document.getElementById('favoritesList');
+            const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+            
+            if (favorites.length === 0) {
+                favoritesList.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-heart"></i>
+                        <h3>Nenhum favorito adicionado</h3>
+                        <p>Salve produtos que você gosta para encontrá-los facilmente.</p>
+                        <a href="index.html" class="cta-btn">
+                            <i class="fas fa-shopping-bag"></i>
+                            Explorar Produtos
+                        </a>
+                    </div>
+                `;
+            } else {
+                favoritesList.innerHTML = favorites.map(fav => `
+                    <div class="card">
+                        <div class="card-title">${fav}</div>
+                        <button onclick="removeFavorite('${fav}')" style="background: #ff4444; color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; margin-top: 10px;">
+                            <i class="fas fa-trash"></i> Remover
+                        </button>
+                    </div>
+                `).join('');
+            }
+        }
+
+        // Toggle switches
+        document.querySelectorAll('.toggle-switch').forEach(toggle => {
+            toggle.addEventListener('click', function() {
+                this.classList.toggle('active');
+                const setting = this.getAttribute('data-setting');
+                const enabled = this.classList.contains('active');
+                
+                // Save setting
+                const settings = JSON.parse(localStorage.getItem('userSettings') || '{}');
+                settings[setting] = enabled;
+                localStorage.setItem('userSettings', JSON.stringify(settings));
+                
+                showToast(`Configuração ${enabled ? 'ativada' : 'desativada'}`, 'success');
+            });
+        });
+
+        // Utility functions
+        function showToast(message, type = 'success') {
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => toast.classList.add('show'), 100);
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        function logout() {
+            if (confirm('Tem certeza que deseja sair?')) {
+                localStorage.removeItem('boss_shopp_token');
+                localStorage.removeItem('boss_shopp_user');
+                showToast('Logout realizado com sucesso!', 'success');
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 1500);
+            }
+        }
+
+        function changeAvatar() {
+            showToast('Funcionalidade de alterar avatar em desenvolvimento', 'success');
+        }
+
+        function addAddress() {
+            showAddAddressForm();
+        }
+
+        // Payment Management Functions
+        let paymentMethods = [];
+
+        function loadPaymentMethods() {
+            const userEmail = localStorage.getItem('boss_shopp_user_email');
+            if (userEmail) {
+                const savedPayments = localStorage.getItem(`boss_shopp_payments_${userEmail}`);
+                paymentMethods = savedPayments ? JSON.parse(savedPayments) : [];
+                displayPaymentMethods();
+            }
+        }
+
+        function displayPaymentMethods() {
+            const paymentList = document.getElementById('paymentList');
+            const emptyState = document.getElementById('paymentEmptyState');
+            
+            if (paymentMethods.length === 0) {
+                paymentList.innerHTML = '';
+                emptyState.style.display = 'block';
+                return;
+            }
+
+            emptyState.style.display = 'none';
+            paymentList.innerHTML = paymentMethods.map((payment, index) => `
+                <div class="payment-card ${payment.brand}" onclick="selectPaymentMethod(${index})">
+                    ${payment.nickname ? `<div class="card-nickname">${payment.nickname}</div>` : ''}
+                    ${payment.isDefault ? '<div class="default-payment-badge">Padrão</div>' : ''}
+                    
+                    <div class="card-header-payment">
+                        <div class="card-brand">${payment.brand.toUpperCase()}</div>
+                        <div class="card-actions-payment">
+                            <button class="card-action-btn" onclick="event.stopPropagation(); editPaymentMethod(${index})" title="Editar">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="card-action-btn" onclick="event.stopPropagation(); deletePaymentMethod(${index})" title="Excluir">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="card-number">**** **** **** ${payment.lastFour}</div>
+                    
+                    <div class="card-details">
+                        <div class="card-holder">
+                            <div class="card-holder-label">Portador</div>
+                            <div class="card-holder-name">${payment.holderName}</div>
+                        </div>
+                        <div class="card-expiry">
+                            <div class="card-expiry-label">Validade</div>
+                            <div class="card-expiry-date">${payment.expiry}</div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function showAddPaymentForm() {
+            document.getElementById('paymentForm').style.display = 'block';
+            document.getElementById('addPaymentBtn').style.display = 'none';
+            document.getElementById('cardNumber').focus();
+        }
+
+        function hideAddPaymentForm() {
+            document.getElementById('paymentForm').style.display = 'none';
+            document.getElementById('addPaymentBtn').style.display = 'block';
+            document.getElementById('newPaymentForm').reset();
+            clearValidation();
+        }
+
+        function savePaymentMethod(event) {
+            event.preventDefault();
+            
+            const cardNumber = document.getElementById('cardNumber').value.replace(/\s/g, '');
+            const cardName = document.getElementById('cardName').value;
+            const cardBrand = document.getElementById('cardBrand').value;
+            const cardExpiry = document.getElementById('cardExpiry').value;
+            const cardCVV = document.getElementById('cardCVV').value;
+            const cardNickname = document.getElementById('cardNickname').value;
+
+            // Validation
+            if (!validateCardForm()) {
+                showToast('Por favor, corrija os erros no formulário', 'error');
+                return;
+            }
+
+            const newPayment = {
+                id: Date.now(),
+                number: cardNumber,
+                lastFour: cardNumber.slice(-4),
+                holderName: cardName,
+                brand: cardBrand,
+                expiry: cardExpiry,
+                cvv: cardCVV, // In real app, never store CVV
+                nickname: cardNickname || `Cartão ${cardBrand.toUpperCase()}`,
+                isDefault: paymentMethods.length === 0,
+                createdAt: new Date().toISOString()
+            };
+
+            paymentMethods.push(newPayment);
+            savePaymentMethodsToStorage();
+            displayPaymentMethods();
+            hideAddPaymentForm();
+            showToast('Cartão adicionado com sucesso!', 'success');
+        }
+
+        function savePaymentMethodsToStorage() {
+            const userEmail = localStorage.getItem('boss_shopp_user_email');
+            if (userEmail) {
+                localStorage.setItem(`boss_shopp_payments_${userEmail}`, JSON.stringify(paymentMethods));
+            }
+        }
+
+        function deletePaymentMethod(index) {
+            const payment = paymentMethods[index];
+            
+            if (confirm(`Tem certeza que deseja excluir o cartão ${payment.nickname}?`)) {
+                paymentMethods.splice(index, 1);
+                
+                // If deleted card was default and there are other cards, make first one default
+                if (payment.isDefault && paymentMethods.length > 0) {
+                    paymentMethods[0].isDefault = true;
+                }
+                
+                savePaymentMethodsToStorage();
+                displayPaymentMethods();
+                showToast('Cartão removido com sucesso!', 'success');
+            }
+        }
+
+        function setDefaultPaymentMethod(index) {
+            paymentMethods.forEach((payment, i) => {
+                payment.isDefault = i === index;
+            });
+            savePaymentMethodsToStorage();
+            displayPaymentMethods();
+            showToast('Cartão padrão atualizado!', 'success');
+        }
+
+        function selectPaymentMethod(index) {
+            const payment = paymentMethods[index];
+            const options = [
+                { text: 'Definir como padrão', action: () => setDefaultPaymentMethod(index), show: !payment.isDefault },
+                { text: 'Editar cartão', action: () => editPaymentMethod(index), show: true },
+                { text: 'Excluir cartão', action: () => deletePaymentMethod(index), show: true }
+            ].filter(option => option.show);
+
+            // Simple context menu simulation
+            const action = prompt(`Escolha uma ação para ${payment.nickname}:\n` + 
+                options.map((opt, i) => `${i + 1}. ${opt.text}`).join('\n'));
+            
+            const selectedIndex = parseInt(action) - 1;
+            if (selectedIndex >= 0 && selectedIndex < options.length) {
+                options[selectedIndex].action();
+            }
+        }
+
+        function editPaymentMethod(index) {
+            const payment = paymentMethods[index];
+            
+            // Fill form with existing data
+            document.getElementById('cardNumber').value = formatCardNumberDisplay(payment.number);
+            document.getElementById('cardName').value = payment.holderName;
+            document.getElementById('cardBrand').value = payment.brand;
+            document.getElementById('cardExpiry').value = payment.expiry;
+            document.getElementById('cardNickname').value = payment.nickname;
+            
+            showAddPaymentForm();
+            
+            // Change form to edit mode
+            const form = document.getElementById('newPaymentForm');
+            form.onsubmit = function(event) {
+                event.preventDefault();
+                updatePaymentMethod(index);
+            };
+            
+            document.querySelector('#paymentForm h3').innerHTML = 
+                '<i class="fas fa-edit" style="color: #ff6b35; margin-right: 8px;"></i>Editar Cartão';
+        }
+
+        function updatePaymentMethod(index) {
+            const cardNumber = document.getElementById('cardNumber').value.replace(/\s/g, '');
+            const cardName = document.getElementById('cardName').value;
+            const cardBrand = document.getElementById('cardBrand').value;
+            const cardExpiry = document.getElementById('cardExpiry').value;
+            const cardNickname = document.getElementById('cardNickname').value;
+
+            if (!validateCardForm()) {
+                showToast('Por favor, corrija os erros no formulário', 'error');
+                return;
+            }
+
+            paymentMethods[index] = {
+                ...paymentMethods[index],
+                number: cardNumber,
+                lastFour: cardNumber.slice(-4),
+                holderName: cardName,
+                brand: cardBrand,
+                expiry: cardExpiry,
+                nickname: cardNickname || `Cartão ${cardBrand.toUpperCase()}`,
+                updatedAt: new Date().toISOString()
+            };
+
+            savePaymentMethodsToStorage();
+            displayPaymentMethods();
+            hideAddPaymentForm();
+            
+            // Reset form to add mode
+            document.getElementById('newPaymentForm').onsubmit = savePaymentMethod;
+            document.querySelector('#paymentForm h3').innerHTML = 
+                '<i class="fas fa-credit-card" style="color: #ff6b35; margin-right: 8px;"></i>Adicionar Cartão';
+            
+            showToast('Cartão atualizado com sucesso!', 'success');
+        }
+
+        // Card formatting functions
+        function formatCardNumber(input) {
+            let value = input.value.replace(/\s/g, '').replace(/[^0-9]/gi, '');
+            let formattedValue = value.match(/.{1,4}/g)?.join(' ') || value;
+            input.value = formattedValue;
+            
+            // Auto-detect card brand
+            const brand = detectCardBrand(value);
+            if (brand) {
+                document.getElementById('cardBrand').value = brand;
+            }
+            
+            validateCardNumber(input);
+        }
+
+        function formatCardNumberDisplay(number) {
+            return number.replace(/(.{4})/g, '$1 ').trim();
+        }
+
+        function formatExpiry(input) {
+            let value = input.value.replace(/\D/g, '');
+            if (value.length >= 2) {
+                value = value.substring(0, 2) + '/' + value.substring(2, 4);
+            }
+            input.value = value;
+            validateExpiry(input);
+        }
+
+        function formatCVV(input) {
+            input.value = input.value.replace(/\D/g, '');
+            validateCVV(input);
+        }
+
+        function detectCardBrand(number) {
+            const patterns = {
+                visa: /^4/,
+                mastercard: /^5[1-5]/,
+                amex: /^3[47]/,
+                elo: /^(4011|4312|4389|4514|4573|6277|6362|6363|6504|6505|6516)/,
+                hipercard: /^(606282|637095|637568|637599|637609|637612)/
+            };
+
+            for (const [brand, pattern] of Object.entries(patterns)) {
+                if (pattern.test(number)) {
+                    return brand;
+                }
+            }
+            return null;
+        }
+
+        // Validation functions
+        function validateCardForm() {
+            const cardNumber = document.getElementById('cardNumber');
+            const cardName = document.getElementById('cardName');
+            const cardBrand = document.getElementById('cardBrand');
+            const cardExpiry = document.getElementById('cardExpiry');
+            const cardCVV = document.getElementById('cardCVV');
+
+            let isValid = true;
+
+            isValid &= validateCardNumber(cardNumber);
+            isValid &= validateCardName(cardName);
+            isValid &= validateCardBrand(cardBrand);
+            isValid &= validateExpiry(cardExpiry);
+            isValid &= validateCVV(cardCVV);
+
+            return isValid;
+        }
+
+        function validateCardNumber(input) {
+            const value = input.value.replace(/\s/g, '');
+            const isValid = value.length >= 13 && value.length <= 19 && /^\d+$/.test(value);
+            
+            input.classList.toggle('valid', isValid);
+            input.classList.toggle('invalid', !isValid);
+            
+            return isValid;
+        }
+
+        function validateCardName(input) {
+            const isValid = input.value.trim().length >= 2;
+            
+            input.classList.toggle('valid', isValid);
+            input.classList.toggle('invalid', !isValid);
+            
+            return isValid;
+        }
+
+        function validateCardBrand(input) {
+            const isValid = input.value !== '';
+            
+            input.classList.toggle('valid', isValid);
+            input.classList.toggle('invalid', !isValid);
+            
+            return isValid;
+        }
+
+        function validateExpiry(input) {
+            const value = input.value;
+            const isValidFormat = /^\d{2}\/\d{2}$/.test(value);
+            
+            let isValid = false;
+            if (isValidFormat) {
+                const [month, year] = value.split('/').map(Number);
+                const currentDate = new Date();
+                const currentYear = currentDate.getFullYear() % 100;
+                const currentMonth = currentDate.getMonth() + 1;
+                
+                isValid = month >= 1 && month <= 12 && 
+                         (year > currentYear || (year === currentYear && month >= currentMonth));
+            }
+            
+            input.classList.toggle('valid', isValid);
+            input.classList.toggle('invalid', !isValid);
+            
+            return isValid;
+        }
+
+        function validateCVV(input) {
+            const value = input.value;
+            const isValid = value.length >= 3 && value.length <= 4 && /^\d+$/.test(value);
+            
+            input.classList.toggle('valid', isValid);
+            input.classList.toggle('invalid', !isValid);
+            
+            return isValid;
+        }
+
+        function clearValidation() {
+            const inputs = document.querySelectorAll('#paymentForm .form-input');
+            inputs.forEach(input => {
+                input.classList.remove('valid', 'invalid');
+            });
+        }
+
+        // Initialize payment methods when page loads
+        function initializePaymentMethods() {
+            loadPaymentMethods();
+            
+            // Add payment method icons
+            const paymentList = document.getElementById('paymentList');
+            if (paymentList && !document.querySelector('.payment-method-icons')) {
+                const iconsHtml = `
+                    <div class="payment-method-icons">
+                        <div class="payment-icon visa">VISA</div>
+                        <div class="payment-icon mastercard">MASTER</div>
+                        <div class="payment-icon amex">AMEX</div>
+                        <div class="payment-icon elo">ELO</div>
+                        <div class="payment-icon hipercard">HIPER</div>
+                    </div>
+                `;
+                paymentList.insertAdjacentHTML('afterend', iconsHtml);
+            }
+        }
+
+        function removeFavorite(item) {
+            let favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+            favorites = favorites.filter(fav => fav !== item);
+            localStorage.setItem('favorites', JSON.stringify(favorites));
+            loadFavorites();
+            showToast('Item removido dos favoritos', 'success');
+        }
+
+        // Phone formatting
+        document.getElementById('phone').addEventListener('input', function() {
+            let value = this.value.replace(/\D/g, '');
+            if (value.length <= 11) {
+                value = value.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
+                if (value.length < 14) {
+                    value = value.replace(/(\d{2})(\d{4})(\d{4})/, '($1) $2-$3');
+                }
+            }
+            this.value = value;
+        });
+
+        // CPF formatting
+        document.getElementById('cpf').addEventListener('input', function() {
+            let value = this.value.replace(/\D/g, '');
+            value = value.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+            this.value = value;
+        });
+
+        // CEP formatting
+        document.getElementById('zipCode').addEventListener('input', function() {
+            let value = this.value.replace(/\D/g, '');
+            value = value.replace(/(\d{5})(\d{3})/, '$1-$2');
+            this.value = value;
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            loadUserData();
+            initializePaymentMethods();
+            
+            // Add event listener for tracking input (Enter key)
+            const trackingInput = document.getElementById('trackingInput');
+            if (trackingInput) {
+                trackingInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        trackOrder();
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

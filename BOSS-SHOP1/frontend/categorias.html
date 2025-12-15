@@ -1,0 +1,1163 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todas as Categorias - BOSS SHOPP</title>
+    <link rel="stylesheet" href="optimized-styles.css">
+    <link rel="stylesheet" href="panel-buttons.css">
+    <link rel="stylesheet" href="pages.css">
+    <link rel="stylesheet" href="enhanced-styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: #f8f9fa;
+            overflow-x: hidden;
+        }
+        
+        /* Hero Section com Animação Aprimorada */
+        .categories-hero {
+            background: linear-gradient(135deg, #ff6b35 0%, #ff8c42 50%, #ffa45c 100%);
+            padding: 120px 0;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+        
+        .categories-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="2" fill="white" opacity="0.1"/></svg>');
+            animation: float 20s linear infinite;
+        }
+        
+        .categories-hero::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: rotate 30s linear infinite;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-100px); }
+        }
+        
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .categories-hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            font-weight: 900;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            animation: slideDown 0.8s ease-out;
+            background: linear-gradient(to right, #fff, #ffd700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .categories-hero p {
+            font-size: 1.3rem;
+            opacity: 0.95;
+            animation: slideUp 0.8s ease-out;
+            margin-bottom: 30px;
+        }
+        
+        .hero-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 12px 30px;
+            border-radius: 50px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(10px);
+            animation: pulse 2s ease-in-out infinite;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+        
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .hero-stat {
+            text-align: center;
+            background: rgba(255,255,255,0.15);
+            padding: 15px 25px;
+            border-radius: 15px;
+            backdrop-filter: blur(5px);
+            min-width: 120px;
+        }
+        
+        .hero-stat-number {
+            font-size: 2rem;
+            font-weight: 800;
+            display: block;
+        }
+        
+        .hero-stat-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(255,255,255,0.3);
+            }
+            50% {
+                transform: scale(1.05);
+                box-shadow: 0 0 0 10px rgba(255,255,255,0);
+            }
+        }
+        
+        /* Grid de Categorias */
+        .categories-section {
+            padding: 80px 0;
+            background: #f8f9fa;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 15px;
+            font-weight: 800;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(to right, #ff6b35, #ff8c42);
+            border-radius: 2px;
+        }
+        
+        .section-title p {
+            font-size: 1.1rem;
+            color: #666;
+            max-width: 600px;
+            margin: 20px auto 0;
+        }
+        
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 35px;
+            animation: fadeIn 1s ease-out;
+            padding: 20px;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        
+        /* Cards de Categoria - Estilo Aprimorado */
+        .category-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            position: relative;
+            animation: cardAppear 0.6s ease-out backwards;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .category-card:nth-child(1) { animation-delay: 0.1s; }
+        .category-card:nth-child(2) { animation-delay: 0.15s; }
+        .category-card:nth-child(3) { animation-delay: 0.2s; }
+        .category-card:nth-child(4) { animation-delay: 0.25s; }
+        .category-card:nth-child(5) { animation-delay: 0.3s; }
+        .category-card:nth-child(6) { animation-delay: 0.35s; }
+        .category-card:nth-child(7) { animation-delay: 0.4s; }
+        .category-card:nth-child(8) { animation-delay: 0.45s; }
+        .category-card:nth-child(9) { animation-delay: 0.5s; }
+        .category-card:nth-child(10) { animation-delay: 0.55s; }
+        .category-card:nth-child(11) { animation-delay: 0.6s; }
+        .category-card:nth-child(12) { animation-delay: 0.65s; }
+        .category-card:nth-child(13) { animation-delay: 0.7s; }
+        .category-card:nth-child(14) { animation-delay: 0.75s; }
+        .category-card:nth-child(15) { animation-delay: 0.8s; }
+        .category-card:nth-child(16) { animation-delay: 0.85s; }
+        
+        @keyframes cardAppear {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+        
+        .category-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255,107,53,0.1) 0%, rgba(255,140,66,0.1) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 1;
+        }
+        
+        .category-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 20px 50px rgba(255,107,53,0.3);
+        }
+        
+        .category-card:hover::before {
+            opacity: 1;
+        }
+        
+        /* Ícone da Categoria - Estilo Aprimorado */
+        .category-icon {
+            background: linear-gradient(135deg, #ff6b35 0%, #ff8c42 100%);
+            padding: 50px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .category-icon::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%);
+            animation: rotate 10s linear infinite;
+        }
+        
+        .category-icon::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="50" height="50" xmlns="http://www.w3.org/2000/svg"><circle cx="25" cy="25" r="1" fill="white" opacity="0.1"/></svg>');
+            background-size: 50px 50px;
+            opacity: 0.3;
+        }
+        
+        .category-icon i {
+            font-size: 5rem;
+            color: white;
+            position: relative;
+            z-index: 1;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            filter: drop-shadow(0 5px 10px rgba(0,0,0,0.2));
+            text-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        
+        .category-card:hover .category-icon i {
+            transform: scale(1.3) rotate(10deg);
+            text-shadow: 0 10px 20px rgba(0,0,0,0.4);
+        }
+        
+        /* Info da Categoria - Estilo Aprimorado */
+        .category-info {
+            padding: 30px;
+            text-align: center;
+            position: relative;
+            background: white;
+            z-index: 2;
+        }
+        
+        .category-info h3 {
+            font-size: 1.6rem;
+            margin-bottom: 12px;
+            color: #333;
+            font-weight: 700;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+        
+        .category-card:hover .category-info h3 {
+            color: #ff6b35;
+        }
+        
+        .category-info h3::after {
+            content: '';
+            display: block;
+            width: 40px;
+            height: 3px;
+            background: #ff6b35;
+            margin: 10px auto;
+            border-radius: 3px;
+            transition: width 0.3s ease;
+        }
+        
+        .category-card:hover .category-info h3::after {
+            width: 60px;
+        }
+        
+        .category-info p {
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+        
+        .category-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #ff6b35 0%, #ff8c42 100%);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            box-shadow: 0 3px 10px rgba(255,107,53,0.3);
+        }
+        
+        /* Botão - Estilo Aprimorado */
+        .category-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 35px;
+            background: linear-gradient(135deg, #ff6b35 0%, #ff8c42 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 5px 15px rgba(255,107,53,0.3);
+            position: relative;
+            overflow: hidden;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .category-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+        
+        .category-btn:hover::before {
+            left: 100%;
+        }
+        
+        .category-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255,107,53,0.5);
+        }
+        
+        .category-btn i {
+            transition: transform 0.3s ease;
+        }
+        
+        .category-btn:hover i {
+            transform: translateX(5px);
+        }
+        
+        /* Stats - Estilo Aprimorado */
+        .category-stats {
+            display: flex;
+            justify-content: space-around;
+            padding: 15px 0;
+            border-top: 1px solid #f0f0f0;
+            margin-top: 15px;
+            background: #fdfdfd;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-number {
+            display: block;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #ff6b35;
+        }
+        
+        .stat-label {
+            font-size: 0.8rem;
+            color: #999;
+        }
+        
+        /* Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Responsive Improvements */
+        @media (max-width: 768px) {
+            .categories-hero {
+                padding: 80px 0;
+            }
+            
+            .categories-hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .categories-hero p {
+                font-size: 1.1rem;
+            }
+            
+            .hero-stats {
+                gap: 20px;
+            }
+            
+            .hero-stat {
+                padding: 10px 15px;
+                min-width: 100px;
+            }
+            
+            .hero-stat-number {
+                font-size: 1.5rem;
+            }
+            
+            .categories-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: 25px;
+            }
+            
+            .category-icon {
+                padding: 30px;
+            }
+            
+            .category-icon i {
+                font-size: 3.5rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .categories-hero h1 {
+                font-size: 2rem;
+            }
+            
+            .categories-hero p {
+                font-size: 1rem;
+            }
+            
+            .hero-badge {
+                font-size: 0.9rem;
+                padding: 10px 20px;
+            }
+            
+            .categories-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="footer-styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-top">
+                <div class="header-links">
+                    <a href="sobre.html" class="header-link">Sobre</a>
+                    <a href="atendimento.html" class="header-link">Atendimento</a>
+                    <a href="#" class="header-link">Vendedor</a>
+                    <a href="#" class="header-link">Download</a>
+                    <a href="#" class="header-link">Conecte-se</a>
+                </div>
+                <div class="header-social">
+                    <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-content">
+                <div class="logo">
+                    <a href="index.html">
+                        <img src="boss-shop-logo.png" alt="BOSS SHOPP" class="logo-image">
+                    </a>
+                </div>
+                
+                <div class="search-bar">
+                    <input type="text" placeholder="Buscar produtos...">
+                    <button><i class="fas fa-search"></i></button>
+                </div>
+                
+                <div class="nav-icons">
+                    <a href="#" class="nav-icon"><i class="fas fa-user"></i></a>
+                    <a href="#" class="nav-icon"><i class="fas fa-heart"></i></a>
+                    <a href="#" class="nav-icon cart-icon">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-count">0</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="categories-hero">
+        <div class="hero-content">
+            <div class="hero-badge">
+                <i class="fas fa-fire"></i> 16 Categorias Disponíveis
+            </div>
+            <h1><i class="fas fa-th-large"></i> Todas as Categorias</h1>
+            <p>Explore nossa ampla variedade de produtos em todas as categorias</p>
+            
+            <div class="hero-stats">
+                <div class="hero-stat">
+                    <span class="hero-stat-number">5000+</span>
+                    <span class="hero-stat-label">Produtos</span>
+                </div>
+                <div class="hero-stat">
+                    <span class="hero-stat-number">16</span>
+                    <span class="hero-stat-label">Categorias</span>
+                </div>
+                <div class="hero-stat">
+                    <span class="hero-stat-number">98%</span>
+                    <span class="hero-stat-label">Satisfação</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section class="categories-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Escolha sua Categoria</h2>
+                <p>Encontre exatamente o que você procura com nossa seleção especializada</p>
+            </div>
+            
+            <div class="categories-grid">
+                <!-- Moda -->
+                <div class="category-card" onclick="window.location.href='categoria-moda.html'">
+                    <div class="category-icon">
+                        <i class="fas fa-tshirt"></i>
+                    </div>
+                    <div class="category-info">
+                        <span class="category-badge">Popular</span>
+                        <h3>Moda</h3>
+                        <p>Roupas e acessórios de moda</p>
+                        <a href="categoria-moda.html" class="category-btn">
+                            Ver Produtos <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                    <div class="category-stats">
+                        <div class="stat-item">
+                            <span class="stat-number">350+</span>
+                            <span class="stat-label">Itens</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">★ 4.8</span>
+                            <span class="stat-label">Avaliação</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Eletrônicos -->
+                <div class="category-card" onclick="window.location.href='categoria-eletronicos.html'">
+                    <div class="category-icon">
+                        <i class="fas fa-laptop"></i>
+                    </div>
+                    <div class="category-info">
+                        <span class="category-badge">Novidades</span>
+                        <h3>Eletrônicos</h3>
+                        <p>Dispositivos eletrônicos e gadgets</p>
+                        <a href="categoria-eletronicos.html" class="category-btn">
+                            Ver Produtos <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                    <div class="category-stats">
+                        <div class="stat-item">
+                            <span class="stat-number">280+</span>
+                            <span class="stat-label">Itens</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">★ 4.7</span>
+                            <span class="stat-label">Avaliação</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Casa -->
+                <div class="category-card" onclick="window.location.href='categoria-casa.html'">
+                    <div class="category-icon">
+                        <i class="fas fa-home"></i>
+                    </div>
+                    <div class="category-info">
+                        <span class="category-badge">Destaque</span>
+                        <h3>Casa</h3>
+                        <p>Produtos para o lar</p>
+                        <a href="categoria-casa.html" class="category-btn">
+                            Ver Produtos <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                    <div class="category-stats">
+                        <div class="stat-item">
+                            <span class="stat-number">420+</span>
+                            <span class="stat-label">Itens</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">★ 4.9</span>
+                            <span class="stat-label">Avaliação</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Games -->
+                <div class="category-card" onclick="window.location.href='categoria-games.html'">
+                    <div class="category-icon">
+                        <i class="fas fa-gamepad"></i>
+                    </div>
+                    <div class="category-info">
+                        <span class="category-badge">Top</span>
+                        <h3>Games</h3>
+                        <p>Jogos e acessórios para gamers</p>
+                        <a href="categoria-games.html" class="category-btn">
+                            Ver Produtos <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                    <div class="category-stats">
+                        <div class="stat-item">
+                            <span class="stat-number">190+</span>
+                            <span class="stat-label">Itens</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">★ 4.6</span>
+                            <span class="stat-label">Avaliação</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Esportes -->
+                <div class="category-card" onclick="window.location.href='categoria-esportes.html'">
+                    <div class="category-icon">
+                        <i class="fas fa-dumbbell"></i>
+                    </div>
+                    <div class="category-info">
+                        <span class="category-badge">Fitness</span>
+                        <h3>Esportes</h3>
+                        <p>Equipamentos esportivos</p>
+                        <a href="categoria-esportes.html" class="category-btn">
+                            Ver Produtos <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                    <div class="category-stats">
+                        <div class="stat-item">
+                            <span class="stat-number">180+</span>
+                            <span class="stat-label">Itens</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">★ 4.7</span>
+                            <span class="stat-label">Avaliação</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Infantil -->
+                <div class="category-card" onclick="window.location.href='categoria-infantil.html'">
+                    <div class="category-icon">
+                        <i class="fas fa-baby"></i>
+                    </div>
+                    <div class="category-info">
+                        <span class="category-badge">Kids</span>
+                        <h3>Infantil</h3>
+                        <p>Produtos para bebês e crianças</p>
+                        <a href="categoria-infantil.html" class="category-btn">
+                            Ver Produtos <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                    <div class="category-stats">
+                        <div class="stat-item">
+                            <span class="stat-number">240+</span>
+                            <span class="stat-label">Itens</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">★ 4.8</span>
+                            <span class="stat-label">Avaliação</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Beleza -->
+                <div class="category-card" onclick="window.location.href='categoria-beleza.html'">
+                    <div class="category-icon">
+                        <i class="fas fa-spa"></i>
+                    </div>
+                    <div class="category-info">
+                        <span class="category-badge">Novo</span>
+                        <h3>Beleza</h3>
+                        <p>Produtos de beleza e cuidados pessoais</p>
+                        <a href="categoria-beleza.html" class="category-btn">
+                            Ver Produtos <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                    <div class="category-stats">
+                        <div class="stat-item">
+                            <span class="stat-number">160+</span>
+                            <span class="stat-label">Itens</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">★ 4.5</span>
+                            <span class="stat-label">Avaliação</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Livros -->
+                <div class="category-card" onclick="window.location.href='categoria-livros.html'">
+                    <div class="category-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <div class="category-info">
+                        <span class="category-badge">Leitura</span>
+                        <h3>Livros</h3>
+                        <p>Livros, revistas e e-books</p>
+                        <a href="categoria-livros.html" class="category-btn">
+                            Ver Produtos <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                    <div class="category-stats">
+                        <div class="stat-item">
+                            <span class="stat-number">320+</span>
+                            <span class="stat-label">Itens</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">★ 4.9</span>
+                            <span class="stat-label">Avaliação</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Automotivo -->
+                <div class="category-card" onclick="window.location.href='categoria-automotivo.html'">
+                    <div class="category-icon">
+                        <i class="fas fa-car"></i>
+                    </div>
+                    <div class="category-info">
+                        <span class="category-badge">Auto</span>
+                        <h3>Automotivo</h3>
+                        <p>Acessórios e peças para veículos</p>
+                        <a href="categoria-automotivo.html" class="category-btn">
+                            Ver Produtos <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                    <div class="category-stats">
+                        <div class="stat-item">
+                            <span class="stat-number">150+</span>
+                            <span class="stat-label">Itens</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">★ 4.6</span>
+                            <span class="stat-label">Avaliação</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pet Shop -->
+                <div class="category-card" onclick="window.location.href='categoria-pet-shop.html'">
+                    <div class="category-icon">
+                        <i class="fas fa-paw"></i>
+                    </div>
+                    <div class="category-info">
+                        <span class="category-badge">Pets</span>
+                        <h3>Pet Shop</h3>
+                        <p>Produtos para animais de estimação</p>
+                        <a href="categoria-pet-shop.html" class="category-btn">
+                            Ver Produtos <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                    <div class="category-stats">
+                        <div class="stat-item">
+                            <span class="stat-number">140+</span>
+                            <span class="stat-label">Itens</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">★ 4.7</span>
+                            <span class="stat-label">Avaliação</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Alimentos -->
+                <div class="category-card" onclick="window.location.href='categoria-alimentos.html'">
+                    <div class="category-icon">
+                        <i class="fas fa-utensils"></i>
+                    </div>
+                    <div class="category-info">
+                        <span class="category-badge">Gourmet</span>
+                        <h3>Alimentos</h3>
+                        <p>Alimentos e bebidas</p>
+                        <a href="categoria-alimentos.html" class="category-btn">
+                            Ver Produtos <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                    <div class="category-stats">
+                        <div class="stat-item">
+                            <span class="stat-number">210+</span>
+                            <span class="stat-label">Itens</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">★ 4.8</span>
+                            <span class="stat-label">Avaliação</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ferramentas -->
+                <div class="category-card" onclick="window.location.href='categoria-ferramentas.html'">
+                    <div class="category-icon">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <div class="category-info">
+                        <span class="category-badge">Pro</span>
+                        <h3>Ferramentas</h3>
+                        <p>Ferramentas e equipamentos</p>
+                        <a href="categoria-ferramentas.html" class="category-btn">
+                            Ver Produtos <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                    <div class="category-stats">
+                        <div class="stat-item">
+                            <span class="stat-number">170+</span>
+                            <span class="stat-label">Itens</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">★ 4.5</span>
+                            <span class="stat-label">Avaliação</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Música -->
+                <div class="category-card" onclick="window.location.href='categoria-musica.html'">
+                    <div class="category-icon">
+                        <i class="fas fa-music"></i>
+                    </div>
+                    <div class="category-info">
+                        <span class="category-badge">Sound</span>
+                        <h3>Música</h3>
+                        <p>Instrumentos musicais e acessórios</p>
+                        <a href="categoria-musica.html" class="category-btn">
+                            Ver Produtos <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                    <div class="category-stats">
+                        <div class="stat-item">
+                            <span class="stat-number">130+</span>
+                            <span class="stat-label">Itens</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">★ 4.6</span>
+                            <span class="stat-label">Avaliação</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Saúde -->
+                <div class="category-card" onclick="window.location.href='categoria-saude.html'">
+                    <div class="category-icon">
+                        <i class="fas fa-heartbeat"></i>
+                    </div>
+                    <div class="category-info">
+                        <span class="category-badge">Wellness</span>
+                        <h3>Saúde</h3>
+                        <p>Produtos de saúde e bem-estar</p>
+                        <a href="categoria-saude.html" class="category-btn">
+                            Ver Produtos <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                    <div class="category-stats">
+                        <div class="stat-item">
+                            <span class="stat-number">190+</span>
+                            <span class="stat-label">Itens</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">★ 4.7</span>
+                            <span class="stat-label">Avaliação</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Brinquedos -->
+                <div class="category-card" onclick="window.location.href='categoria-brinquedos.html'">
+                    <div class="category-icon">
+                        <i class="fas fa-puzzle-piece"></i>
+                    </div>
+                    <div class="category-info">
+                        <span class="category-badge">Fun</span>
+                        <h3>Brinquedos</h3>
+                        <p>Brinquedos e jogos infantis</p>
+                        <a href="categoria-brinquedos.html" class="category-btn">
+                            Ver Produtos <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                    <div class="category-stats">
+                        <div class="stat-item">
+                            <span class="stat-number">220+</span>
+                            <span class="stat-label">Itens</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">★ 4.8</span>
+                            <span class="stat-label">Avaliação</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Papelaria -->
+                <div class="category-card" onclick="window.location.href='categoria-papelaria.html'">
+                    <div class="category-icon">
+                        <i class="fas fa-pen"></i>
+                    </div>
+                    <div class="category-info">
+                        <span class="category-badge">Escolar</span>
+                        <h3>Papelaria</h3>
+                        <p>Material escolar e de escritório</p>
+                        <a href="categoria-papelaria.html" class="category-btn">
+                            Ver Produtos <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                    <div class="category-stats">
+                        <div class="stat-item">
+                            <span class="stat-number">180+</span>
+                            <span class="stat-label">Itens</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">★ 4.6</span>
+                            <span class="stat-label">Avaliação</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+        <!-- Footer Moderno e Responsivo -->
+    <footer class="modern-footer">
+        <div class="container">
+            <!-- Seção Principal do Footer -->
+            <div class="footer-main">
+                <div class="footer-grid">
+                    <!-- Coluna 1: Sobre a Empresa -->
+                    <div class="footer-column">
+                        <div class="footer-logo">
+                            <img src="boss-shop-logo.png" alt="BOSS SHOPP" class="footer-logo-img">
+                            <h3>BOSS SHOPP</h3>
+                        </div>
+                        <p class="footer-description">
+                            Sua loja online de confiança, oferecendo produtos de qualidade com preços competitivos e entrega rápida em todo o Brasil.
+                        </p>
+                        <div class="footer-social">
+                            <a href="#" class="social-link" aria-label="Facebook">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                            <a href="#" class="social-link" aria-label="Instagram">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="#" class="social-link" aria-label="Twitter">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                            <a href="#" class="social-link" aria-label="WhatsApp">
+                                <i class="fab fa-whatsapp"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Coluna 2: Links Rápidos -->
+                    <div class="footer-column">
+                        <h4 class="footer-title">Links Rápidos</h4>
+                        <ul class="footer-links">
+                            <li><a href="index.html">Início</a></li>
+                            <li><a href="categorias.html">Categorias</a></li>
+                            <li><a href="sobre.html">Sobre Nós</a></li>
+                            <li><a href="como-comprar.html">Como Comprar</a></li>
+                            <li><a href="frete-entrega.html">Frete e Entrega</a></li>
+                            <li><a href="devolucoes.html">Trocas e Devoluções</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Coluna 3: Categorias -->
+                    <div class="footer-column">
+                        <h4 class="footer-title">Categorias</h4>
+                        <ul class="footer-links">
+                            <li><a href="categoria-moda.html">Moda</a></li>
+                            <li><a href="categoria-eletronicos.html">Eletrônicos</a></li>
+                            <li><a href="categoria-casa.html">Casa e Decoração</a></li>
+                            <li><a href="categoria-esportes.html">Esportes</a></li>
+                            <li><a href="categoria-games.html">Games</a></li>
+                            <li><a href="categoria-infantil.html">Infantil</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Coluna 4: Atendimento -->
+                    <div class="footer-column">
+                        <h4 class="footer-title">Atendimento</h4>
+                        <div class="contact-info">
+                            <div class="contact-item">
+                                <i class="fas fa-phone"></i>
+                                <span>(11) 4002-8922</span>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fas fa-envelope"></i>
+                                <span>contato@bossshopp.com</span>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fas fa-clock"></i>
+                                <span>Seg-Sex: 8h às 18h</span>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>São Paulo, SP</span>
+                            </div>
+                        </div>
+                        <a href="central-ajuda.html" class="help-button">
+                            <i class="fas fa-headset"></i>
+                            Central de Ajuda
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Seção de Pagamento e Segurança -->
+            <div class="footer-payment">
+                <div class="payment-security">
+                    <div class="payment-methods">
+                        <h5>Formas de Pagamento</h5>
+                        <div class="payment-icons">
+                            <i class="fab fa-cc-visa" title="Visa"></i>
+                            <i class="fab fa-cc-mastercard" title="Mastercard"></i>
+                            <i class="fab fa-cc-amex" title="American Express"></i>
+                            <i class="fab fa-pix" title="PIX"></i>
+                            <i class="fas fa-barcode" title="Boleto"></i>
+                        </div>
+                    </div>
+                    <div class="security-badges">
+                        <h5>Segurança</h5>
+                        <div class="security-icons">
+                            <i class="fas fa-shield-alt" title="Site Seguro"></i>
+                            <i class="fas fa-lock" title="SSL"></i>
+                            <i class="fas fa-certificate" title="Certificado"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Rodapé Inferior -->
+            <div class="footer-bottom">
+                <div class="footer-bottom-content">
+                    <div class="copyright">
+                        <p>&copy; 2025 BOSS SHOPP. Todos os direitos reservados.</p>
+                    </div>
+                    <div class="footer-legal">
+                        <a href="#" class="legal-link">Política de Privacidade</a>
+                        <a href="#" class="legal-link">Termos de Uso</a>
+                        <a href="#" class="legal-link">Cookies</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
