@@ -5,12 +5,10 @@ services:
     buildCommand: |
       pip install --upgrade pip
       pip install -r requirements.txt
-    startCommand: python simple_start.py
+    startCommand: python start.py
     envVars:
       - key: PORT
-        generateValue: true
-      - key: DEBUG
-        value: "True"
-      - key: DJANGO_SETTINGS_MODULE
-        value: "boss_shopp.settings"
+        value: "3000"
+      - key: RENDER
+        value: "true"
     autoDeploy: true

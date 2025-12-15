@@ -53,7 +53,23 @@ def get_footer_html():
                         </ul>
                     </div>
 
-                    <!-- Coluna 3: Categorias -->
+                    <!-- Coluna 3: Institucional & Promoções -->
+                    <div class="footer-column">
+                        <h4 class="footer-title">Institucional</h4>
+                        <ul class="footer-links">
+                            <li><a href="nossa-historia.html">Nossa História</a></li>
+                            <li><a href="trabalhe-conosco.html">Trabalhe Conosco</a></li>
+                            <li><a href="imprensa.html">Imprensa</a></li>
+                            <li><a href="investidores.html">Investidores</a></li>
+                        </ul>
+                        <h4 class="footer-title" style="margin-top: 30px;">Promoções</h4>
+                        <ul class="footer-links">
+                            <li><a href="cupons.html">Cupons de Desconto</a></li>
+                            <li><a href="ofertas.html">Ofertas Especiais</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Coluna 4: Categorias -->
                     <div class="footer-column">
                         <h4 class="footer-title">Categorias</h4>
                         <ul class="footer-links">
@@ -66,7 +82,7 @@ def get_footer_html():
                         </ul>
                     </div>
 
-                    <!-- Coluna 4: Atendimento -->
+                    <!-- Coluna 5: Atendimento -->
                     <div class="footer-column">
                         <h4 class="footer-title">Atendimento</h4>
                         <div class="contact-info">

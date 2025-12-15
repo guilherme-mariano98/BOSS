@@ -40,8 +40,8 @@ def main():
     print(f"Using frontend directory: {frontend_dir}")
     os.chdir(frontend_dir)
     
-    # Set up the server
-    PORT = 3000
+    # Set up the server - Use Render's PORT environment variable or default to 3000
+    PORT = int(os.environ.get('PORT', 3000))
     
     # Custom handler to serve index.html for root and handle SPA routing
     class CustomHandler(http.server.SimpleHTTPRequestHandler):
@@ -60,29 +60,36 @@ def main():
     
     # Start the server
     try:
-        with socketserver.TCPServer(("", PORT), CustomHandler) as httpd:
+        # Use 0.0.0.0 for Render deployment, localhost for local development
+        host = "0.0.0.0" if os.environ.get('RENDER') else ""
+        with socketserver.TCPServer((host, PORT), CustomHandler) as httpd:
             local_ip = get_local_ip()
             
             print("=" * 60)
             print("🚀 BOSS SHOPP - Frontend Server")
             print("=" * 60)
             print(f"📁 Serving files from: {frontend_dir}")
-            print(f"🌐 Local access: http://localhost:{PORT}")
-            print(f"📱 Network access: http://{local_ip}:{PORT}")
+            print(f"🌐 Server running on: {host}:{PORT}")
+            if not os.environ.get('RENDER'):
+                print(f"🏠 Local access: http://localhost:{PORT}")
+                print(f"📱 Network access: http://{local_ip}:{PORT}")
+            else:
+                print("☁️ Running on Render cloud platform")
             print("🔒 Zoom fixo em 100% ativo")
             print("🖥️ Modo tela cheia ativo")
             print("=" * 60)
             print("📋 Páginas disponíveis:")
-            print("   • http://localhost:3000 (Página inicial)")
-            print("   • http://localhost:3000/login.html (Login)")
-            print("   • http://localhost:3000/profile.html (Perfil)")
-            print("   • http://localhost:3000/categorias.html (Categorias)")
+            print(f"   • Página inicial: /")
+            print(f"   • Login: /login.html")
+            print(f"   • Perfil: /profile.html")
+            print(f"   • Categorias: /categorias.html")
             print("=" * 60)
-            print("⚡ Pressione Ctrl+C para parar o servidor")
+            print("⚡ Server is running...")
             
-            # Open browser in a separate thread
-            browser_thread = threading.Thread(target=open_browser, daemon=True)
-            browser_thread.start()
+            # Open browser in a separate thread (only for local development)
+            if not os.environ.get('RENDER'):
+                browser_thread = threading.Thread(target=open_browser, daemon=True)
+                browser_thread.start()
             
             # Start serving
             httpd.serve_forever()

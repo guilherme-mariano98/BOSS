@@ -543,13 +543,24 @@
                 font-size: 2rem;
             }
         }
-    </style>
+    
+        .page-wrapper {
+            display: flex;
+            flex-direction: column;
+            min-height: calc(100vh - 40px);
+            padding-bottom: 40px;
+        }
+
+        .content-wrapper {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px 0;
+        }</style>
     <link rel="stylesheet" href="footer-styles.css">
 </head>
-<body>
-    <!-- Header -->
-    <header class="header">
-        <div class="container">
+<body><div class="page-wrapper"><div class="content-wrapper"><div class="container">
             <div class="header-top">
                 <div class="header-links">
                     <a href="sobre.html" class="header-link">Sobre</a>
