@@ -11,6 +11,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
+        /* RESET COMPLETO */
         * {
             margin: 0;
             padding: 0;
@@ -18,443 +19,49 @@
         }
         
         body {
-            font-family: 'Montserrat', sans-serif;
+            font-family: 'Inter', sans-serif;
             background: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
             overflow-x: hidden;
         }
         
-        /* Hero Section com Animação Aprimorada */
-        .categories-hero {
-            background: linear-gradient(135deg, #ff6b35 0%, #ff8c42 50%, #ffa45c 100%);
-            padding: 120px 0;
-            text-align: center;
-            color: white;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-        }
-        
-        .categories-hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="2" fill="white" opacity="0.1"/></svg>');
-            animation: float 20s linear infinite;
-        }
-        
-        .categories-hero::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
-            animation: rotate 30s linear infinite;
-        }
-        
-        @keyframes float {
-            0% { transform: translateY(0); }
-            100% { transform: translateY(-100px); }
-        }
-        
-        @keyframes rotate {
-            from {
-                transform: rotate(0deg);
-            }
-            to {
-                transform: rotate(360deg);
-            }
-        }
-        
-        .hero-content {
-            position: relative;
-            z-index: 1;
-            max-width: 800px;
+        .container {
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 20px;
+            width: 100%;
         }
         
-        .categories-hero h1 {
-            font-size: 3.5rem;
-            margin-bottom: 20px;
-            font-weight: 900;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-            animation: slideDown 0.8s ease-out;
-            background: linear-gradient(to right, #fff, #ffd700);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+        /* HEADER DA CATEGORIA */
+        .category-header {
+            background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+            color: white;
+            text-align: center;
+            padding: 80px 20px;
+            margin-bottom: 40px;
+            border-radius: 20px;
         }
         
-        .categories-hero p {
-            font-size: 1.3rem;
-            opacity: 0.95;
-            animation: slideUp 0.8s ease-out;
-            margin-bottom: 30px;
+        .category-header h1 {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 15px;
         }
         
-        .hero-badge {
-            display: inline-block;
-            background: rgba(255,255,255,0.2);
-            padding: 12px 30px;
-            border-radius: 50px;
-            margin-bottom: 30px;
-            backdrop-filter: blur(10px);
-            animation: pulse 2s ease-in-out infinite;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            font-weight: 600;
-            letter-spacing: 1px;
+        .category-header p {
+            font-size: 20px;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
         }
         
-        .hero-stats {
+        /* ESTATÍSTICAS */
+        .category-stats {
             display: flex;
             justify-content: center;
             gap: 40px;
             margin-top: 30px;
-            flex-wrap: wrap;
-        }
-        
-        .hero-stat {
-            text-align: center;
-            background: rgba(255,255,255,0.15);
-            padding: 15px 25px;
-            border-radius: 15px;
-            backdrop-filter: blur(5px);
-            min-width: 120px;
-        }
-        
-        .hero-stat-number {
-            font-size: 2rem;
-            font-weight: 800;
-            display: block;
-        }
-        
-        .hero-stat-label {
-            font-size: 0.9rem;
-            opacity: 0.9;
-        }
-        
-        @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        @keyframes pulse {
-            0%, 100% {
-                transform: scale(1);
-                box-shadow: 0 0 0 0 rgba(255,255,255,0.3);
-            }
-            50% {
-                transform: scale(1.05);
-                box-shadow: 0 0 0 10px rgba(255,255,255,0);
-            }
-        }
-        
-        /* Grid de Categorias */
-        .categories-section {
-            padding: 80px 0;
-            background: #f8f9fa;
-        }
-        
-        .section-title {
-            text-align: center;
-            margin-bottom: 50px;
-        }
-        
-        .section-title h2 {
-            font-size: 2.5rem;
-            color: #333;
-            margin-bottom: 15px;
-            font-weight: 800;
-            position: relative;
-            display: inline-block;
-        }
-        
-        .section-title h2::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 4px;
-            background: linear-gradient(to right, #ff6b35, #ff8c42);
-            border-radius: 2px;
-        }
-        
-        .section-title p {
-            font-size: 1.1rem;
-            color: #666;
-            max-width: 600px;
-            margin: 20px auto 0;
-        }
-        
-        .categories-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 35px;
-            animation: fadeIn 1s ease-out;
-            padding: 20px;
-        }
-        
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
-        
-        /* Cards de Categoria - Estilo Aprimorado */
-        .category-card {
-            background: white;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            cursor: pointer;
-            position: relative;
-            animation: cardAppear 0.6s ease-out backwards;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .category-card:nth-child(1) { animation-delay: 0.1s; }
-        .category-card:nth-child(2) { animation-delay: 0.15s; }
-        .category-card:nth-child(3) { animation-delay: 0.2s; }
-        .category-card:nth-child(4) { animation-delay: 0.25s; }
-        .category-card:nth-child(5) { animation-delay: 0.3s; }
-        .category-card:nth-child(6) { animation-delay: 0.35s; }
-        .category-card:nth-child(7) { animation-delay: 0.4s; }
-        .category-card:nth-child(8) { animation-delay: 0.45s; }
-        .category-card:nth-child(9) { animation-delay: 0.5s; }
-        .category-card:nth-child(10) { animation-delay: 0.55s; }
-        .category-card:nth-child(11) { animation-delay: 0.6s; }
-        .category-card:nth-child(12) { animation-delay: 0.65s; }
-        .category-card:nth-child(13) { animation-delay: 0.7s; }
-        .category-card:nth-child(14) { animation-delay: 0.75s; }
-        .category-card:nth-child(15) { animation-delay: 0.8s; }
-        .category-card:nth-child(16) { animation-delay: 0.85s; }
-        
-        @keyframes cardAppear {
-            from {
-                opacity: 0;
-                transform: translateY(30px) scale(0.9);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
-        }
-        
-        .category-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(255,107,53,0.1) 0%, rgba(255,140,66,0.1) 100%);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            z-index: 1;
-        }
-        
-        .category-card:hover {
-            transform: translateY(-15px) scale(1.02);
-            box-shadow: 0 20px 50px rgba(255,107,53,0.3);
-        }
-        
-        .category-card:hover::before {
-            opacity: 1;
-        }
-        
-        /* Ícone da Categoria - Estilo Aprimorado */
-        .category-icon {
-            background: linear-gradient(135deg, #ff6b35 0%, #ff8c42 100%);
-            padding: 50px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            flex-grow: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .category-icon::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%);
-            animation: rotate 10s linear infinite;
-        }
-        
-        .category-icon::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg width="50" height="50" xmlns="http://www.w3.org/2000/svg"><circle cx="25" cy="25" r="1" fill="white" opacity="0.1"/></svg>');
-            background-size: 50px 50px;
-            opacity: 0.3;
-        }
-        
-        .category-icon i {
-            font-size: 5rem;
-            color: white;
-            position: relative;
-            z-index: 1;
-            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            filter: drop-shadow(0 5px 10px rgba(0,0,0,0.2));
-            text-shadow: 0 5px 15px rgba(0,0,0,0.3);
-        }
-        
-        .category-card:hover .category-icon i {
-            transform: scale(1.3) rotate(10deg);
-            text-shadow: 0 10px 20px rgba(0,0,0,0.4);
-        }
-        
-        /* Info da Categoria - Estilo Aprimorado */
-        .category-info {
-            padding: 30px;
-            text-align: center;
-            position: relative;
-            background: white;
-            z-index: 2;
-        }
-        
-        .category-info h3 {
-            font-size: 1.6rem;
-            margin-bottom: 12px;
-            color: #333;
-            font-weight: 700;
-            transition: color 0.3s ease;
-            position: relative;
-        }
-        
-        .category-card:hover .category-info h3 {
-            color: #ff6b35;
-        }
-        
-        .category-info h3::after {
-            content: '';
-            display: block;
-            width: 40px;
-            height: 3px;
-            background: #ff6b35;
-            margin: 10px auto;
-            border-radius: 3px;
-            transition: width 0.3s ease;
-        }
-        
-        .category-card:hover .category-info h3::after {
-            width: 60px;
-        }
-        
-        .category-info p {
-            color: #666;
-            margin-bottom: 20px;
-            font-size: 1rem;
-            line-height: 1.6;
-        }
-        
-        .category-badge {
-            display: inline-block;
-            background: linear-gradient(135deg, #ff6b35 0%, #ff8c42 100%);
-            color: white;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            margin-bottom: 15px;
-            box-shadow: 0 3px 10px rgba(255,107,53,0.3);
-        }
-        
-        /* Botão - Estilo Aprimorado */
-        .category-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            padding: 12px 35px;
-            background: linear-gradient(135deg, #ff6b35 0%, #ff8c42 100%);
-            color: white;
-            text-decoration: none;
-            border-radius: 30px;
-            font-weight: 600;
-            font-size: 1rem;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 5px 15px rgba(255,107,53,0.3);
-            position: relative;
-            overflow: hidden;
-            border: none;
-            cursor: pointer;
-        }
-        
-        .category-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            transition: left 0.5s;
-        }
-        
-        .category-btn:hover::before {
-            left: 100%;
-        }
-        
-        .category-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(255,107,53,0.5);
-        }
-        
-        .category-btn i {
-            transition: transform 0.3s ease;
-        }
-        
-        .category-btn:hover i {
-            transform: translateX(5px);
-        }
-        
-        /* Stats - Estilo Aprimorado */
-        .category-stats {
-            display: flex;
-            justify-content: space-around;
-            padding: 15px 0;
-            border-top: 1px solid #f0f0f0;
-            margin-top: 15px;
-            background: #fdfdfd;
         }
         
         .stat-item {
@@ -463,104 +70,715 @@
         
         .stat-number {
             display: block;
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: #ff6b35;
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 5px;
         }
         
         .stat-label {
-            font-size: 0.8rem;
+            font-size: 14px;
+            opacity: 0.8;
+        }
+        
+        /* FILTROS */
+        .filters-section {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 40px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .filters-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        
+        .filters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .filter-group label {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #555;
+        }
+        
+        .filter-group select {
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            background: white;
+            transition: border-color 0.3s ease;
+        }
+        
+        .filter-group select:focus {
+            outline: none;
+            border-color: #ff6b35;
+        }
+        
+        /* SEÇÃO DE PRODUTOS */
+        .products-section {
+            margin-bottom: 60px;
+        }
+        
+        .products-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .products-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #333;
+        }
+        
+        .products-count {
+            color: #666;
+            font-size: 16px;
+        }
+        
+        /* GRID DE PRODUTOS - LAYOUT FIXO */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            justify-items: center;
+            padding: 20px 0;
+        }
+        
+        /* CARDS DE PRODUTO - DESIGN FIXO */
+        .product-card {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s ease;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            max-width: 350px;
+            min-height: 500px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(255, 107, 53, 0.2);
+            border-color: #ff6b35;
+        }
+        
+        /* IMAGEM DO PRODUTO */
+        .product-image {
+            position: relative;
+            width: 100%;
+            height: 220px;
+            margin-bottom: 20px;
+            border-radius: 15px;
+            overflow: hidden;
+            background: #f8f9fa;
+        }
+        
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .product-card:hover .product-image img {
+            transform: scale(1.05);
+        }
+        
+        .wishlist-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .wishlist-btn:hover {
+            background: #ff6b35;
+            color: white;
+        }
+        
+        /* INFORMAÇÕES DO PRODUTO */
+        .product-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .product-category {
+            font-size: 12px;
+            color: #ff6b35;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+        
+        .product-info h3 {
+            font-size: 20px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 12px;
+            line-height: 1.3;
+            flex: 1;
+        }
+        
+        .product-rating {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-bottom: 15px;
+        }
+        
+        .product-rating i {
+            color: #ffc107;
+            font-size: 14px;
+        }
+        
+        .product-rating span {
+            color: #666;
+            font-size: 14px;
+            margin-left: 5px;
+        }
+        
+        .product-price {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .new-price {
+            font-size: 24px;
+            font-weight: 800;
+            color: #ff6b35;
+        }
+        
+        .old-price {
+            font-size: 16px;
             color: #999;
+            text-decoration: line-through;
         }
         
-        /* Container */
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 20px;
+        /* BOTÃO ADICIONAR AO CARRINHO */
+        .add-to-cart-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+            color: white;
+            border: none;
+            padding: 15px 20px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
         
-        /* Responsive Improvements */
-        @media (max-width: 768px) {
-            .categories-hero {
-                padding: 80px 0;
-            }
-            
-            .categories-hero h1 {
-                font-size: 2.5rem;
-            }
-            
-            .categories-hero p {
-                font-size: 1.1rem;
-            }
-            
-            .hero-stats {
-                gap: 20px;
-            }
-            
-            .hero-stat {
-                padding: 10px 15px;
-                min-width: 100px;
-            }
-            
-            .hero-stat-number {
-                font-size: 1.5rem;
-            }
-            
-            .categories-grid {
-                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        .add-to-cart-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 107, 53, 0.4);
+        }
+        
+        /* BOTÃO VOLTAR */
+        .back-to-home {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            color: #ff6b35;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            padding: 15px 25px;
+            background: white;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .back-to-home:hover {
+            background: #ff6b35;
+            color: white;
+            transform: translateX(-5px);
+        }
+        
+        /* RESPONSIVIDADE */
+        @media (max-width: 1200px) {
+            .products-grid {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
                 gap: 25px;
             }
             
-            .category-icon {
-                padding: 30px;
+            .category-stats {
+                gap: 30px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .products-grid {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 20px;
             }
             
-            .category-icon i {
-                font-size: 3.5rem;
+            .category-header {
+                padding: 60px 20px;
+            }
+            
+            .category-header h1 {
+                font-size: 36px;
+            }
+            
+            .category-stats {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .filters-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .products-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
             }
         }
         
         @media (max-width: 480px) {
-            .categories-hero h1 {
-                font-size: 2rem;
-            }
-            
-            .categories-hero p {
-                font-size: 1rem;
-            }
-            
-            .hero-badge {
-                font-size: 0.9rem;
-                padding: 10px 20px;
-            }
-            
-            .categories-grid {
+            .products-grid {
                 grid-template-columns: 1fr;
+                gap: 15px;
             }
             
-            .section-title h2 {
-                font-size: 2rem;
+            .product-card {
+                max-width: 100%;
+                min-height: 450px;
             }
+            
+            .container {
+                padding: 15px;
+            }
+        }</style>
+    <link rel="stylesheet" href="footer-styles.css">
+    <style>
+        /* RESET COMPLETO */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-    
-        .page-wrapper {
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            width: 100%;
+        }
+        
+        /* HEADER DA CATEGORIA */
+        .category-header {
+            background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+            color: white;
+            text-align: center;
+            padding: 80px 20px;
+            margin-bottom: 40px;
+            border-radius: 20px;
+        }
+        
+        .category-header h1 {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 15px;
+        }
+        
+        .category-header p {
+            font-size: 20px;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        /* ESTATÍSTICAS */
+        .category-stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 30px;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-number {
+            display: block;
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 14px;
+            opacity: 0.8;
+        }
+        
+        /* FILTROS */
+        .filters-section {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 40px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .filters-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        
+        .filters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        
+        .filter-group {
             display: flex;
             flex-direction: column;
-            min-height: calc(100vh - 40px);
-            padding-bottom: 40px;
         }
-
-        .content-wrapper {
-            flex: 1;
+        
+        .filter-group label {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #555;
+        }
+        
+        .filter-group select {
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            background: white;
+            transition: border-color 0.3s ease;
+        }
+        
+        .filter-group select:focus {
+            outline: none;
+            border-color: #ff6b35;
+        }
+        
+        /* SEÇÃO DE PRODUTOS */
+        .products-section {
+            margin-bottom: 60px;
+        }
+        
+        .products-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .products-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #333;
+        }
+        
+        .products-count {
+            color: #666;
+            font-size: 16px;
+        }
+        
+        /* GRID DE PRODUTOS - LAYOUT FIXO */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            justify-items: center;
+            padding: 20px 0;
+        }
+        
+        /* CARDS DE PRODUTO - DESIGN FIXO */
+        .product-card {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s ease;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            max-width: 350px;
+            min-height: 500px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(255, 107, 53, 0.2);
+            border-color: #ff6b35;
+        }
+        
+        /* IMAGEM DO PRODUTO */
+        .product-image {
+            position: relative;
+            width: 100%;
+            height: 220px;
+            margin-bottom: 20px;
+            border-radius: 15px;
+            overflow: hidden;
+            background: #f8f9fa;
+        }
+        
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .product-card:hover .product-image img {
+            transform: scale(1.05);
+        }
+        
+        .wishlist-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 20px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .wishlist-btn:hover {
+            background: #ff6b35;
+            color: white;
+        }
+        
+        /* INFORMAÇÕES DO PRODUTO */
+        .product-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .product-category {
+            font-size: 12px;
+            color: #ff6b35;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+        
+        .product-info h3 {
+            font-size: 20px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 12px;
+            line-height: 1.3;
+            flex: 1;
+        }
+        
+        .product-rating {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-bottom: 15px;
+        }
+        
+        .product-rating i {
+            color: #ffc107;
+            font-size: 14px;
+        }
+        
+        .product-rating span {
+            color: #666;
+            font-size: 14px;
+            margin-left: 5px;
+        }
+        
+        .product-price {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .new-price {
+            font-size: 24px;
+            font-weight: 800;
+            color: #ff6b35;
+        }
+        
+        .old-price {
+            font-size: 16px;
+            color: #999;
+            text-decoration: line-through;
+        }
+        
+        /* BOTÃO ADICIONAR AO CARRINHO */
+        .add-to-cart-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+            color: white;
+            border: none;
+            padding: 15px 20px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .add-to-cart-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 107, 53, 0.4);
+        }
+        
+        /* BOTÃO VOLTAR */
+        .back-to-home {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            color: #ff6b35;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            padding: 15px 25px;
+            background: white;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .back-to-home:hover {
+            background: #ff6b35;
+            color: white;
+            transform: translateX(-5px);
+        }
+        
+        /* RESPONSIVIDADE */
+        @media (max-width: 1200px) {
+            .products-grid {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                gap: 25px;
+            }
+            
+            .category-stats {
+                gap: 30px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .products-grid {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 20px;
+            }
+            
+            .category-header {
+                padding: 60px 20px;
+            }
+            
+            .category-header h1 {
+                font-size: 36px;
+            }
+            
+            .category-stats {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .filters-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .products-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .products-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .product-card {
+                max-width: 100%;
+                min-height: 450px;
+            }
+            
+            .container {
+                padding: 15px;
+            }
         }</style>
-    <link rel="stylesheet" href="footer-styles.css">
 </head>
-<body><div class="page-wrapper"><div class="content-wrapper"><div class="container">
+<body>
+    <a href="index.html" class="back-to-home">
+        <i class="fas fa-arrow-left"></i>
+        Voltar à loja
+    </a><div class="page-wrapper"><div class="content-wrapper"><div class="container">
             <div class="header-top">
                 <div class="header-links">
                     <a href="sobre.html" class="header-link">Sobre</a>
@@ -641,7 +859,7 @@
             
             <div class="categories-grid">
                 <!-- Moda -->
-                <div class="category-card" onclick="window.location.href='categoria-moda.html'">
+                <div class="category-card" onclick="window.location.href='moda.html'">
                     <div class="category-icon">
                         <i class="fas fa-tshirt"></i>
                     </div>
@@ -649,7 +867,7 @@
                         <span class="category-badge">Popular</span>
                         <h3>Moda</h3>
                         <p>Roupas e acessórios de moda</p>
-                        <a href="categoria-moda.html" class="category-btn">
+                        <a href="moda.html" class="category-btn">
                             Ver Produtos <i class="fas fa-arrow-right"></i>
                         </a>
                     </div>
@@ -666,7 +884,7 @@
                 </div>
 
                 <!-- Eletrônicos -->
-                <div class="category-card" onclick="window.location.href='categoria-eletronicos.html'">
+                <div class="category-card" onclick="window.location.href='eletronicos.html'">
                     <div class="category-icon">
                         <i class="fas fa-laptop"></i>
                     </div>
@@ -674,7 +892,7 @@
                         <span class="category-badge">Novidades</span>
                         <h3>Eletrônicos</h3>
                         <p>Dispositivos eletrônicos e gadgets</p>
-                        <a href="categoria-eletronicos.html" class="category-btn">
+                        <a href="eletronicos.html" class="category-btn">
                             Ver Produtos <i class="fas fa-arrow-right"></i>
                         </a>
                     </div>
@@ -691,7 +909,7 @@
                 </div>
 
                 <!-- Casa -->
-                <div class="category-card" onclick="window.location.href='categoria-casa.html'">
+                <div class="category-card" onclick="window.location.href='casa.html'">
                     <div class="category-icon">
                         <i class="fas fa-home"></i>
                     </div>
@@ -699,7 +917,7 @@
                         <span class="category-badge">Destaque</span>
                         <h3>Casa</h3>
                         <p>Produtos para o lar</p>
-                        <a href="categoria-casa.html" class="category-btn">
+                        <a href="casa.html" class="category-btn">
                             Ver Produtos <i class="fas fa-arrow-right"></i>
                         </a>
                     </div>
@@ -716,7 +934,7 @@
                 </div>
 
                 <!-- Games -->
-                <div class="category-card" onclick="window.location.href='categoria-games.html'">
+                <div class="category-card" onclick="window.location.href='games.html'">
                     <div class="category-icon">
                         <i class="fas fa-gamepad"></i>
                     </div>
@@ -724,7 +942,7 @@
                         <span class="category-badge">Top</span>
                         <h3>Games</h3>
                         <p>Jogos e acessórios para gamers</p>
-                        <a href="categoria-games.html" class="category-btn">
+                        <a href="games.html" class="category-btn">
                             Ver Produtos <i class="fas fa-arrow-right"></i>
                         </a>
                     </div>
@@ -741,7 +959,7 @@
                 </div>
 
                 <!-- Esportes -->
-                <div class="category-card" onclick="window.location.href='categoria-esportes.html'">
+                <div class="category-card" onclick="window.location.href='esportes.html'">
                     <div class="category-icon">
                         <i class="fas fa-dumbbell"></i>
                     </div>
@@ -749,7 +967,7 @@
                         <span class="category-badge">Fitness</span>
                         <h3>Esportes</h3>
                         <p>Equipamentos esportivos</p>
-                        <a href="categoria-esportes.html" class="category-btn">
+                        <a href="esportes.html" class="category-btn">
                             Ver Produtos <i class="fas fa-arrow-right"></i>
                         </a>
                     </div>
@@ -766,7 +984,7 @@
                 </div>
 
                 <!-- Infantil -->
-                <div class="category-card" onclick="window.location.href='categoria-infantil.html'">
+                <div class="category-card" onclick="window.location.href='infantil.html'">
                     <div class="category-icon">
                         <i class="fas fa-baby"></i>
                     </div>
@@ -774,7 +992,7 @@
                         <span class="category-badge">Kids</span>
                         <h3>Infantil</h3>
                         <p>Produtos para bebês e crianças</p>
-                        <a href="categoria-infantil.html" class="category-btn">
+                        <a href="infantil.html" class="category-btn">
                             Ver Produtos <i class="fas fa-arrow-right"></i>
                         </a>
                     </div>
@@ -791,7 +1009,7 @@
                 </div>
 
                 <!-- Beleza -->
-                <div class="category-card" onclick="window.location.href='categoria-beleza.html'">
+                <div class="category-card" onclick="window.location.href='beleza.html'">
                     <div class="category-icon">
                         <i class="fas fa-spa"></i>
                     </div>
@@ -799,7 +1017,7 @@
                         <span class="category-badge">Novo</span>
                         <h3>Beleza</h3>
                         <p>Produtos de beleza e cuidados pessoais</p>
-                        <a href="categoria-beleza.html" class="category-btn">
+                        <a href="beleza.html" class="category-btn">
                             Ver Produtos <i class="fas fa-arrow-right"></i>
                         </a>
                     </div>
@@ -816,7 +1034,7 @@
                 </div>
 
                 <!-- Livros -->
-                <div class="category-card" onclick="window.location.href='categoria-livros.html'">
+                <div class="category-card" onclick="window.location.href='livros.html'">
                     <div class="category-icon">
                         <i class="fas fa-book"></i>
                     </div>
@@ -824,7 +1042,7 @@
                         <span class="category-badge">Leitura</span>
                         <h3>Livros</h3>
                         <p>Livros, revistas e e-books</p>
-                        <a href="categoria-livros.html" class="category-btn">
+                        <a href="livros.html" class="category-btn">
                             Ver Produtos <i class="fas fa-arrow-right"></i>
                         </a>
                     </div>
@@ -841,7 +1059,7 @@
                 </div>
 
                 <!-- Automotivo -->
-                <div class="category-card" onclick="window.location.href='categoria-automotivo.html'">
+                <div class="category-card" onclick="window.location.href='automotivo.html'">
                     <div class="category-icon">
                         <i class="fas fa-car"></i>
                     </div>
@@ -849,7 +1067,7 @@
                         <span class="category-badge">Auto</span>
                         <h3>Automotivo</h3>
                         <p>Acessórios e peças para veículos</p>
-                        <a href="categoria-automotivo.html" class="category-btn">
+                        <a href="automotivo.html" class="category-btn">
                             Ver Produtos <i class="fas fa-arrow-right"></i>
                         </a>
                     </div>
@@ -866,7 +1084,7 @@
                 </div>
 
                 <!-- Pet Shop -->
-                <div class="category-card" onclick="window.location.href='categoria-pet-shop.html'">
+                <div class="category-card" onclick="window.location.href='pet-shop.html'">
                     <div class="category-icon">
                         <i class="fas fa-paw"></i>
                     </div>
@@ -874,7 +1092,7 @@
                         <span class="category-badge">Pets</span>
                         <h3>Pet Shop</h3>
                         <p>Produtos para animais de estimação</p>
-                        <a href="categoria-pet-shop.html" class="category-btn">
+                        <a href="pet-shop.html" class="category-btn">
                             Ver Produtos <i class="fas fa-arrow-right"></i>
                         </a>
                     </div>
@@ -891,7 +1109,7 @@
                 </div>
 
                 <!-- Alimentos -->
-                <div class="category-card" onclick="window.location.href='categoria-alimentos.html'">
+                <div class="category-card" onclick="window.location.href='alimentos.html'">
                     <div class="category-icon">
                         <i class="fas fa-utensils"></i>
                     </div>
@@ -899,7 +1117,7 @@
                         <span class="category-badge">Gourmet</span>
                         <h3>Alimentos</h3>
                         <p>Alimentos e bebidas</p>
-                        <a href="categoria-alimentos.html" class="category-btn">
+                        <a href="alimentos.html" class="category-btn">
                             Ver Produtos <i class="fas fa-arrow-right"></i>
                         </a>
                     </div>
@@ -916,7 +1134,7 @@
                 </div>
 
                 <!-- Ferramentas -->
-                <div class="category-card" onclick="window.location.href='categoria-ferramentas.html'">
+                <div class="category-card" onclick="window.location.href='ferramentas.html'">
                     <div class="category-icon">
                         <i class="fas fa-tools"></i>
                     </div>
@@ -924,7 +1142,7 @@
                         <span class="category-badge">Pro</span>
                         <h3>Ferramentas</h3>
                         <p>Ferramentas e equipamentos</p>
-                        <a href="categoria-ferramentas.html" class="category-btn">
+                        <a href="ferramentas.html" class="category-btn">
                             Ver Produtos <i class="fas fa-arrow-right"></i>
                         </a>
                     </div>
@@ -941,7 +1159,7 @@
                 </div>
 
                 <!-- Música -->
-                <div class="category-card" onclick="window.location.href='categoria-musica.html'">
+                <div class="category-card" onclick="window.location.href='musica.html'">
                     <div class="category-icon">
                         <i class="fas fa-music"></i>
                     </div>
@@ -949,7 +1167,7 @@
                         <span class="category-badge">Sound</span>
                         <h3>Música</h3>
                         <p>Instrumentos musicais e acessórios</p>
-                        <a href="categoria-musica.html" class="category-btn">
+                        <a href="musica.html" class="category-btn">
                             Ver Produtos <i class="fas fa-arrow-right"></i>
                         </a>
                     </div>
@@ -966,7 +1184,7 @@
                 </div>
 
                 <!-- Saúde -->
-                <div class="category-card" onclick="window.location.href='categoria-saude.html'">
+                <div class="category-card" onclick="window.location.href='saude.html'">
                     <div class="category-icon">
                         <i class="fas fa-heartbeat"></i>
                     </div>
@@ -974,7 +1192,7 @@
                         <span class="category-badge">Wellness</span>
                         <h3>Saúde</h3>
                         <p>Produtos de saúde e bem-estar</p>
-                        <a href="categoria-saude.html" class="category-btn">
+                        <a href="saude.html" class="category-btn">
                             Ver Produtos <i class="fas fa-arrow-right"></i>
                         </a>
                     </div>
@@ -991,7 +1209,7 @@
                 </div>
 
                 <!-- Brinquedos -->
-                <div class="category-card" onclick="window.location.href='categoria-brinquedos.html'">
+                <div class="category-card" onclick="window.location.href='brinquedos.html'">
                     <div class="category-icon">
                         <i class="fas fa-puzzle-piece"></i>
                     </div>
@@ -999,7 +1217,7 @@
                         <span class="category-badge">Fun</span>
                         <h3>Brinquedos</h3>
                         <p>Brinquedos e jogos infantis</p>
-                        <a href="categoria-brinquedos.html" class="category-btn">
+                        <a href="brinquedos.html" class="category-btn">
                             Ver Produtos <i class="fas fa-arrow-right"></i>
                         </a>
                     </div>
@@ -1016,7 +1234,7 @@
                 </div>
 
                 <!-- Papelaria -->
-                <div class="category-card" onclick="window.location.href='categoria-papelaria.html'">
+                <div class="category-card" onclick="window.location.href='papelaria.html'">
                     <div class="category-icon">
                         <i class="fas fa-pen"></i>
                     </div>
@@ -1024,7 +1242,7 @@
                         <span class="category-badge">Escolar</span>
                         <h3>Papelaria</h3>
                         <p>Material escolar e de escritório</p>
-                        <a href="categoria-papelaria.html" class="category-btn">
+                        <a href="papelaria.html" class="category-btn">
                             Ver Produtos <i class="fas fa-arrow-right"></i>
                         </a>
                     </div>
@@ -1091,12 +1309,12 @@
                     <div class="footer-column">
                         <h4 class="footer-title">Categorias</h4>
                         <ul class="footer-links">
-                            <li><a href="categoria-moda.html">Moda</a></li>
-                            <li><a href="categoria-eletronicos.html">Eletrônicos</a></li>
-                            <li><a href="categoria-casa.html">Casa e Decoração</a></li>
-                            <li><a href="categoria-esportes.html">Esportes</a></li>
-                            <li><a href="categoria-games.html">Games</a></li>
-                            <li><a href="categoria-infantil.html">Infantil</a></li>
+                            <li><a href="moda.html">Moda</a></li>
+                            <li><a href="eletronicos.html">Eletrônicos</a></li>
+                            <li><a href="casa.html">Casa e Decoração</a></li>
+                            <li><a href="esportes.html">Esportes</a></li>
+                            <li><a href="games.html">Games</a></li>
+                            <li><a href="infantil.html">Infantil</a></li>
                         </ul>
                     </div>
 
@@ -1170,5 +1388,46 @@
     </footer>
 
     <script src="script.js"></script>
+
+    <script>
+        // Função de logout
+        function logout() {
+            if (confirm('Tem certeza que deseja sair?')) {
+                localStorage.removeItem('boss_shopp_token');
+                localStorage.removeItem('user');
+                window.location.href = 'login.html';
+            }
+        }
+        
+        // Atualizar ícone do usuário
+        function updateUserIcon() {
+            const userIcon = document.getElementById('userIcon');
+            const userText = document.getElementById('userText');
+            const logoutButton = document.getElementById('logoutButton');
+            
+            const authToken = localStorage.getItem('boss_shopp_token');
+            const user = localStorage.getItem('user');
+            
+            if (authToken && user) {
+                try {
+                    const userData = JSON.parse(user);
+                    if (userText) userText.textContent = userData.name || 'Minha Conta';
+                    if (userIcon) userIcon.href = '#';
+                    if (logoutButton) logoutButton.style.display = 'flex';
+                } catch (e) {
+                    if (userText) userText.textContent = 'Minha Conta';
+                }
+            } else {
+                if (userText) userText.textContent = 'Entrar';
+                if (userIcon) userIcon.href = 'login.html';
+                if (logoutButton) logoutButton.style.display = 'none';
+            }
+        }
+        
+        // Inicializar quando a página carregar
+        document.addEventListener('DOMContentLoaded', function() {
+            updateUserIcon();
+        });
+    </script>
 </body>
 </html>

@@ -12,12 +12,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="footer-styles.css">
 </head>
-<body><div class="page-wrapper"><div class="content-wrapper"><div class="preloader">
-        <div class="loader">
-            <div class="loader-circle"></div>
-            <div class="loader-text">BOSS SHOPP</div>
-        </div>
-    </div>
+<body>
 
     <!-- Header -->
     <header class="header">
@@ -355,15 +350,53 @@
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    
     <script>
-        // Hide preloader when page is loaded
-        document.addEventListener('DOMContentLoaded', function() {
-            const preloader = document.querySelector('.preloader');
-            if (preloader) {
-                preloader.style.display = 'none';
+        // Função de logout
+        function logout() {
+            if (confirm('Tem certeza que deseja sair?')) {
+                localStorage.removeItem('authToken');
+                localStorage.removeItem('user');
+                window.location.href = 'login.html';
             }
+        }
+        
+        // Atualizar ícone do usuário
+        function updateUserIcon() {
+            const userIcon = document.getElementById('userIcon');
+            const userText = document.getElementById('userText');
+            const logoutButton = document.getElementById('logoutButton');
+            
+            const authToken = localStorage.getItem('authToken');
+            const user = localStorage.getItem('user');
+            
+            if (authToken && user) {
+                try {
+                    const userData = JSON.parse(user);
+                    userText.textContent = userData.name || 'Minha Conta';
+                    userIcon.href = '#';
+                    if (logoutButton) {
+                        logoutButton.style.display = 'flex';
+                    }
+                } catch (e) {
+                    userText.textContent = 'Minha Conta';
+                }
+            } else {
+                userText.textContent = 'Entrar';
+                userIcon.href = 'login.html';
+                if (logoutButton) {
+                    logoutButton.style.display = 'none';
+                }
+            }
+        }
+        
+        // Inicializar quando a página carregar
+        document.addEventListener('DOMContentLoaded', function() {
+            updateUserIcon();
         });
+    </script>
+    <script>
+        
         
         // FAQ toggle functionality
         document.querySelectorAll('.faq-question').forEach(question => {

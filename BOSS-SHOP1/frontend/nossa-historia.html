@@ -231,7 +231,7 @@
         }</style>
     <link rel="stylesheet" href="footer-styles.css">
 </head>
-<body><div class="page-wrapper"><div class="content-wrapper"><div class="container">
+<body><div class="container">
             <div class="header-top">
                 <div class="header-links">
                     <a href="sobre.html" class="header-link">Sobre</a>
@@ -589,18 +589,53 @@
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    
     <script>
-        // Remove preloader when page loads
-        window.addEventListener('load', function() {
-            const preloader = document.querySelector('.preloader');
-            if (preloader) {
-                preloader.style.opacity = '0';
-                setTimeout(() => {
-                    preloader.style.display = 'none';
-                }, 300);
+        // Função de logout
+        function logout() {
+            if (confirm('Tem certeza que deseja sair?')) {
+                localStorage.removeItem('authToken');
+                localStorage.removeItem('user');
+                window.location.href = 'login.html';
             }
+        }
+        
+        // Atualizar ícone do usuário
+        function updateUserIcon() {
+            const userIcon = document.getElementById('userIcon');
+            const userText = document.getElementById('userText');
+            const logoutButton = document.getElementById('logoutButton');
+            
+            const authToken = localStorage.getItem('authToken');
+            const user = localStorage.getItem('user');
+            
+            if (authToken && user) {
+                try {
+                    const userData = JSON.parse(user);
+                    userText.textContent = userData.name || 'Minha Conta';
+                    userIcon.href = '#';
+                    if (logoutButton) {
+                        logoutButton.style.display = 'flex';
+                    }
+                } catch (e) {
+                    userText.textContent = 'Minha Conta';
+                }
+            } else {
+                userText.textContent = 'Entrar';
+                userIcon.href = 'login.html';
+                if (logoutButton) {
+                    logoutButton.style.display = 'none';
+                }
+            }
+        }
+        
+        // Inicializar quando a página carregar
+        document.addEventListener('DOMContentLoaded', function() {
+            updateUserIcon();
         });
+    </script>
+    <script>
+        
     </script>
 </body>
 </html>
